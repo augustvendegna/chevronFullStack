@@ -25,9 +25,13 @@ export class ValueServiceService {
 
   getUser(email:string, password:string){
     result:Array<Object>; 
-    const result = this.http.post(`${this.configUrl}/getUser`, { email, password }).subscribe(result => result);
-    console.log(result);
-    result.unsubscribe();
+    let params = new HttpParams();
+    params = params.append('email', email);
+    params = params.append('password', password);
+    return this.http.get<Object[]>(`${this.configUrl}/getUser`, {params: params});
+    // result.subscribe();
+    //console.log(result);
+    //result.unsubscribe();
 
   }
 
