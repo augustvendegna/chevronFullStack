@@ -82,26 +82,39 @@ export class LoginComponent {
 
     var character = '';
     var i = 0;
-    while (i <= this.passwordOne.length){
-	character = this.passwordOne.charAt(i);
-	if (!isNaN(parseInt(character))) {
-		console.log("character is a number");
-		break;
-	
-	} 
-       i++;
-    }
-
     while (i <= this.passwordOne.length) {
 	    character = this.passwordOne.charAt(i);
 		  if (character.match(character.toUpperCase())) {
 			  console.log("character is uppercase");
+        console.log(character);
 			  break;
-		  }    
-		  else {
-		    console.log("needs uppercase");
-		  }
+		  } else {
+        console.log("character is not uppercase");
+      }
+      if (i === this.passwordOne.length) {
+        this.validInfo = false;
+        break;
+      }
 	    i++;
+    }
+
+    character = '';
+    i = 0;
+    while (i <= this.passwordOne.length){
+	    character = this.passwordOne.charAt(i);
+	    if (!isNaN(parseInt(character))) {
+		    console.log("character is a number");
+        console.log(character);
+		    break;
+	
+	    } else {
+        console.log("character is not a number");
+      }
+      if (i === this.passwordOne.length) {
+        this.validInfo = false;
+        break;
+      }
+      i++;
     }
 
     /*if (this.passwordOne.match('^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&]{8,}$')) {

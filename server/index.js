@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 const { Pool } = require("pg");
 const pgClient = new Pool({
   user: 'postgres',
-  host: 'dockerdietpi',
+  host: 'localhost',
   database: 'postgres',
   password: 'password',
   port: '5432'
