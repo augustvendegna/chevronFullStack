@@ -117,7 +117,7 @@ export class LoginComponent {
       this.password = this.passwordOne;
 
       this.valueService.addUser(this.first, this.last, this.email, this.password, true, true)?.subscribe(_ => {
-        this.login();
+        //this.login();
       });
     }
 
@@ -128,7 +128,8 @@ export class LoginComponent {
   public login() {
     //console.log('Username: ' + this.username);
     //console.log('Password: ' + this.password);
-    
+    const exist = this.valueService.getUser(this.email, this.password);
+    console.log(exist);
     //this.writeCreds();
   }
 

@@ -37,6 +37,14 @@ app.get("/users", async (req, res) => {
   res.send(values.rows);
 });
 
+//query for login checking
+app.post("/getUser", async (req, res) => {
+  
+  const values = await pgClient.query("SELECT * FROM users WHERE email = $1 AND password = $2", [req.body.email, req.body.password]);
+  res.send(values.rows);
+  console.log(values.rows);
+});
+
 // now the post -> insert value
 app.post("/addUser", async (req, res) => {
   if (!req.body.value) res.send({ working: false });

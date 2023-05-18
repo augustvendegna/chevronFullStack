@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 
@@ -19,6 +19,15 @@ export class ValueServiceService {
     .pipe(
       catchError(err => { return this.handleError(err) })
     );
+
+  }
+
+
+  getUser(email:string, password:string){
+    result:Array<Object>; 
+    const result = this.http.post(`${this.configUrl}/getUser`, { email, password }).subscribe(result => result);
+    console.log(result);
+    result.unsubscribe();
 
   }
 
