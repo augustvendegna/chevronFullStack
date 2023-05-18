@@ -1,0 +1,68 @@
+
+<div *ngIf="!clickedSignUp && validInfo"> 
+    
+    <div class = "parent">
+        <div class = "child">
+            <h1 class = "title"> chevron data science challenges </h1>
+            <h1>sign in:</h1>
+            <h2>email</h2>
+        
+            <input class="input" type="text" placeholder='enter email' [(ngModel)]="email"><br>
+
+            <h2>password</h2>
+	    <input class="input" type="password" placeholder='enter password' [(ngModel)]="password"><br><br>
+            <div class = "button">
+                <button class="button"(click) = "login()"> login</button>
+            </div>
+            
+        </div><br>
+        <button class ="signUp"(click) = "onSignUpClick()"> sign up</button>
+    </div>
+</div>
+
+<div *ngIf="clickedSignUp && validInfo"> 
+    
+    <div class = "parent">
+        <div class = "child">
+            <h1 class = "title"> create new account </h1>
+            <div class="two-col">
+                <div class="first">
+                    <p>first name</p>
+                    <input class="input" type="text" placeholder='your first name' [(ngModel)]="first">
+                </div>
+                <div class="last">
+                    <p>last name</p>
+                    <input class="input" type="text" placeholder='your last name' [(ngModel)]="last">
+                </div>
+            </div><br>
+
+            <p>your email (@chevron.com)</p>
+            <input class="input" type="text" placeholder='enter email' [(ngModel)]="email">
+            
+            <p>password</p>
+            <body>
+                minimum password requirements: <br>
+                 - 8 letters <br>
+                 - 1 capital<br>
+                 - 1 number<br>
+
+            </body>
+	    <input class="input" type="password" placeholder='enter password' [(ngModel)]="passwordOne" pattern="^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&]{8,}$">
+            <p>confirm password</p>
+	    <input class="input" type="password" placeholder='enter password' [(ngModel)]="passwordTwo" pattern="^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&]{8,}$">
+<br><br>
+            <div class = "button">
+                <button class="button"(click) = "createAccount()"> sign up!</button>
+            </div>
+            
+        </div><br>
+    </div>
+</div>
+
+    
+<div class = badInfo *ngIf="!validInfo">
+
+    <h1>uh oh!</h1>
+    <p>one or more of your entires was either invalid or missing entirely. please try again.</p>
+    <button class="button"(click) = "validInfo = true"> try again</button>
+</div>
