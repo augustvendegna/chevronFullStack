@@ -21,7 +21,7 @@ export class LoginComponent {
   public passwordTwo: string;
   public clickedSignUp: boolean;
   
-
+  public response: Object[];
   
 
   // const { Pool, Client } = require("pg"); // idk what that is
@@ -139,10 +139,16 @@ export class LoginComponent {
   
 
   public login() {
+    
     //console.log('Username: ' + this.username);
     //console.log('Password: ' + this.password);
-    const exist = this.valueService.getUser(this.email, this.password);
-    console.log(exist);
+
+
+    this.valueService.getUser(this.email, this.password).subscribe((data: Object[]) => {
+      this.response = data;
+    });
+    console.log(this.response);
+    // maybe unsubscribe?
     //this.writeCreds();
   }
 
