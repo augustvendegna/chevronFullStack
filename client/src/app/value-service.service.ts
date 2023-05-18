@@ -12,9 +12,10 @@ export class ValueServiceService {
 
   configUrl = 'http://localhost:5000';
 
-  addUser(first:string, last:string){
-    
-    return this.http.post(`${this.configUrl}/addUser`, { first, last })
+  addUser(first:string, last:string, email:string, password:string, is_enabled:boolean, is_admin:boolean){
+    now: String;
+    const now = formatDate(new Date());
+    return this.http.post(`${this.configUrl}/addUser`, { first, last, email, password, now, is_enabled, is_admin})
     .pipe(
       catchError(err => { return this.handleError(err) })
     );
@@ -35,4 +36,27 @@ export class ValueServiceService {
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
 
+}
+
+
+
+
+function padTo2Digits(num: number) {
+  return num.toString().padStart(2, '0');
+}
+
+function formatDate(date: Date) {
+  return (
+    [
+      date.getFullYear(),
+      padTo2Digits(date.getMonth() + 1),
+      padTo2Digits(date.getDate()),
+    ].join('-') +
+    ' ' +
+    [
+      padTo2Digits(date.getHours()),
+      padTo2Digits(date.getMinutes()),
+      padTo2Digits(date.getSeconds()),
+    ].join(':')
+  );
 }

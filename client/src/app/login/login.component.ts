@@ -20,6 +20,7 @@ export class LoginComponent {
   public passwordOne: string;
   public passwordTwo: string;
   public clickedSignUp: boolean;
+  
 
   
 
@@ -113,7 +114,9 @@ export class LoginComponent {
 
     if (this.validInfo){ // all info on the sign up page was interpreted to be correct
       console.log("Sending information to database.");
-      this.valueService.addUser(this.first, this.last)?.subscribe(_ => {
+      this.password = this.passwordOne;
+
+      this.valueService.addUser(this.first, this.last, this.email, this.password, true, true)?.subscribe(_ => {
         this.login();
       });
     }

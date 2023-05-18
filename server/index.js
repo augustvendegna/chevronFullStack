@@ -41,7 +41,7 @@ app.get("/users", async (req, res) => {
 app.post("/addUser", async (req, res) => {
   if (!req.body.value) res.send({ working: false });
 
-  pgClient.query("INSERT INTO users(first_name, last_name) VALUES($1, $2)", [req.body.first, req.body.first]);
+  pgClient.query("INSERT INTO users VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8)", [req.body.first, req.body.last, req.body.email, req.body.password, req.body.now, req.body.is_enabled, req.body.now, req.body.is_admin]);
 
   //res.send({ working: true });
 });
