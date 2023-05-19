@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ValueServiceService } from '../value-service.service';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -20,7 +21,7 @@ export class SignUpComponent {
   
   public response: Object[];
 
-  constructor(private valueService: ValueServiceService){
+  constructor(private valueService: ValueServiceService, private router : Router){
     this.clickedSignUp = false;
     this.validInfo = true;
   }
@@ -114,6 +115,9 @@ export class SignUpComponent {
       this.valueService.addUser(this.first, this.last, this.email, this.password, true, true)?.subscribe(_ => {
         //this.login();
       });
+
+      // we need to route
+      this.router.navigate(["/login"]);
     }
 
 

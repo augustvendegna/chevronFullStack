@@ -4,11 +4,9 @@
 
     <!-- This nav gives you links to click, which tells the router which route to use (defined in the routes constant in  AppRoutingModule) -->
     <nav class = "menu">
-    <b><a href="/home">home </a></b>
-    <div class = "other"><a href="/login">Sign Out</a></div>
+    <b><a routerLink="home">home </a></b>
+    <div class = "other"><a routerLink="login" (click) = "setMenuPage(false)">Sign Out</a></div>
     </nav>
-
-    <router-outlet></router-outlet>
 
     <h2> <script> window.location.href </script></h2>
   </div>

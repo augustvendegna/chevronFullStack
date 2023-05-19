@@ -23,17 +23,20 @@ export class AppComponent {
     this.isSignedin = false;
     //this.login = new LoginComponent;
     
-    this.isMenuPage = true;
+    this.isMenuPage = false;
 
     this.event = this.router.events.subscribe((event : NavigationEvent) => {
       if(event instanceof NavigationEnd){
         console.log(this.router.url);
-        if(this.router.url === "/login" || this.router.url === "/signup" || this.router.url === ""){
+        if(this.router.url === "/login" || this.router.url === "/signup" || this.router.url === "/"){
           this.isMenuPage= false;
         }
       }
     });
 
+  }
+  public setMenuPage(bool:boolean){
+    this.isMenuPage = bool;
   }
 
 }
