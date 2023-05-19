@@ -21,12 +21,6 @@ export class LoginComponent {
 
   // const { Pool, Client } = require("pg"); // idk what that is
   //Client = require("pg");
-  dbCreds = {
-    user: "postgres",
-    host: "localhost",
-    database: "users",
-    port: 5432,
-  };
 
 
   constructor(private valueService: ValueServiceService, private router : Router){
