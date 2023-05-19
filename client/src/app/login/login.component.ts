@@ -43,9 +43,16 @@ export class LoginComponent {
       this.response = data;
     });
     //check response to see if the user exists
-    console.log(this.response.length);
-    if (this.response.length == 1) {
+    resp : String;
+    var resp = JSON.stringify(this.response[0]);
+    //console.log(resp);
+    
+    resp = resp.replaceAll(":", ",");
+    var splitResp = resp.split(",");
+    //console.log(splitResp);
+    if (this.response.length == 1 && splitResp[14]) { // account is enabled as well
       // backend found a single entry in the databse that matches the provided credentials
+      localStorage.setItem('is_enabled', splitResp[21]);
       localStorage.setItem('email', this.email);
       localStorage.setItem('password', this.password); // probably not needed? dont think we will need it again
       this.router.navigate(['home']);
