@@ -22,7 +22,6 @@
     "useDefineForClassFields": false,
     "lib": [
       "ES2022",
-      "ES2021.String",
       "dom"
     ]
   },
