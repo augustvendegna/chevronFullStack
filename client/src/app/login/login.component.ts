@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ValueServiceService } from '../value-service.service';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -28,7 +29,7 @@ export class LoginComponent {
   };
 
 
-  constructor(private valueService: ValueServiceService){
+  constructor(private valueService: ValueServiceService, private router : Router){
   }
   
 
@@ -41,7 +42,17 @@ export class LoginComponent {
     this.valueService.getUser(this.email, this.password).subscribe((data: Object[]) => {
       this.response = data;
     });
-    console.log(this.response);
+    //check response to see if the user exists
+    console.log(this.response.length);
+    if (this.response.length == 1) {
+      // backend found a single entry in the databse that matches the provided credentials
+      localStorage.setItem('email', this.email);
+      localStorage.setItem('password', this.password); // probably not needed? dont think we will need it again
+      this.router.navigate(['home']);
+    }
+
+
+
     // maybe unsubscribe?
     //this.writeCreds();
   }
