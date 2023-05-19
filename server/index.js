@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 const { Pool } = require("pg");
 const pgClient = new Pool({
   user: 'postgres',
-  host: 'localhost',
+  host: 'dockerdietpi',
   database: 'postgres',
   password: 'password',
   port: '5432'
@@ -38,11 +38,11 @@ app.get("/users", async (req, res) => {
 });
 
 //query for login checking
-app.post("/getUser", async (req, res) => {
-  
-  const values = await pgClient.query("SELECT * FROM users WHERE email = $1 AND password = $2", [req.body.email, req.body.password]);
+app.get("/getUser", async (req, res) => {
+  console.log(req.query);
+  const values = await pgClient.query("SELECT * FROM users WHERE email = $1 AND password = $2", [req.query.email, req.query.password]);
   res.send(values.rows);
-  console.log(values.rows);
+  //console.log(values);
 });
 
 // now the post -> insert value
