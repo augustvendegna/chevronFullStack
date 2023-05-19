@@ -1,0 +1,71 @@
+.title {
+	font-size: 200%;
+}
+
+.parent {
+	font-family: Helvetica;
+	position: absolute;
+	top: 50vh;
+	left: 50vw;
+	transform: translate(-50%, -50%);
+	padding: 10px;
+}
+
+.child {
+	padding: 7px;
+	border: solid;
+	border-radius: 20px;
+	border-color: black;
+	color: #0066b2;
+	box-shadow: 0px 1px 10px 1px #0b2d71;
+}
+
+.button {
+	appearance: button;
+	backface-visibility: hidden;
+	background-color: #0b2d71;
+	border-radius: 20px;
+	border-width: 1;
+	box-shadow: 0px 1px 6px 1px #0b2d71;
+	box-sizing: border-box;
+	color: #fff;
+	cursor: pointer;
+	font-familty: Helvetica;
+	font-size: 110%;
+	height: 40px;
+	line-height: 1;
+	margin: 0 0 0;
+	outline: none;
+	overflow: hidden;
+	padding: 0 0;
+ 	position: center;
+	text-align: center;
+	text-transform: none;
+	transform: translateZ(0);
+	transition: all .2, box-shadow  .08s ease-in;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+	width: 100%;
+}	
+
+input {
+	margin-top: 1rem;
+}
+
+input::file-selector-button {
+	font-weight: bold;
+	color: #0b2d71;
+	padding: 0.5em;
+        border: thin solid grey;
+	border-radius: 3px;
+	transition: 1s;
+}
+
+input[type="file"]::file-selector-button:hover {
+	background-color: #0b2d71;
+	color: #ffffff;
+	border: #0b2d71;
+}
+
+

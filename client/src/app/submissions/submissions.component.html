@@ -1,0 +1,12 @@
+<div class="parent">
+	<div class="child">
+		<h2>file submission</h2>
+		<form (submit)="submitForm()" enctype="multipart/form-data">
+			<div>
+				<label for="file">select file:</label><br><br>
+				<input type="file" id="file" (change)="onFileChange($event)" />
+			</div>
+			<br><button class="button" type="submit">submit file</button>
+		</form>
+	</div>
+</div>	
