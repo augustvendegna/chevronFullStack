@@ -12,4 +12,11 @@ export class SettingsComponent {
   public changePassword(){
     
   }
+
+  public getAdminStatus(){
+    if (localStorage.getItem('is_admin') == 'false'){
+      return false;
+    }
+    return true;
+  }
 }
