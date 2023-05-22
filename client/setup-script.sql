@@ -6,9 +6,9 @@ CREATE TABLE users(
     last_name TEXT,
     email TEXT,
     password TEXT,
-    password_date DATE,
+    password_date TIMESTAMP,
     is_enabled BOOLEAN,
-    status_date DATE,
+    status_date TIMESTAMP,
     is_admin BOOLEAN,
 
     PRIMARY KEY(user_id)
@@ -18,10 +18,10 @@ CREATE TABLE challenges(
     
     challenge_id SERIAL,
     author TEXT,
-    public_start_date DATE,
-    public_end_date DATE,
-    private_start_date DATE,
-    private_end_date DATE,
+    public_start_date TIMESTAMP,
+    public_end_date TIMESTAMP,
+    private_start_date TIMESTAMP,
+    private_end_date TIMESTAMP,
 
     PRIMARY KEY(challenge_id)
 
