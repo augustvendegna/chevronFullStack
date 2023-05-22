@@ -24,6 +24,7 @@ export class LoginComponent {
 
 
   constructor(private valueService: ValueServiceService, private router : Router){
+    
   }
   
 
@@ -43,10 +44,13 @@ export class LoginComponent {
     
     resp = resp.replaceAll(":", ",");
     var splitResp = resp.split(",");
-    //console.log(splitResp);
+    console.log(splitResp);
     if (this.response.length == 1 && splitResp[14]) { // account is enabled as well
       // backend found a single entry in the databse that matches the provided credentials
       localStorage.setItem('is_enabled', splitResp[21]);
+      var first_name = splitResp[3].substring(1);
+      first_name = first_name.slice(0, -1);
+      localStorage.setItem('first_name', first_name);
       localStorage.setItem('email', this.email);
       localStorage.setItem('password', this.password); // probably not needed? dont think we will need it again
       this.router.navigate(['home']);
