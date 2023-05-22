@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { HomeComponent } from './home/home.component';
 import { SubmissionsComponent } from './submissions/submissions.component';
+import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
 
@@ -12,7 +13,8 @@ const routes: Routes = [
   {path: 'login', component:LoginComponent},
   {path: 'signup', component:SignUpComponent},
   {path: 'home', component:HomeComponent},
-  {path: 'submissions', component:SubmissionsComponent}
+  {path: 'submissions', component:SubmissionsComponent},
+  {path: 'settings', component:SettingsComponent}
 
 ];
 

@@ -6,9 +6,9 @@
     <nav class = "menu">
       <b><a routerLink="home">home </a></b>
       <b><a routerLink="submissions"> submissions </a></b>
-      <a  > settings </a>
+      <a routerLink="settings"> settings </a>
       <div class = "other">
-        <p> Hi, {{ getItem('first_name')}}.</p>
+        <p> Hi, {{ getItem('first_name')}}</p>
         <a routerLink="login" (click) = "setMenuPage(false)">sign out</a>
       </div>
     </nav>
