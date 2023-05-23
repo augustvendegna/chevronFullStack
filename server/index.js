@@ -60,13 +60,36 @@ app.get("/submissions", async (req, res) => {
   res.send(values.rows);
 });
 
-app.post("/addSubmission", async (req, res) => {
+const multer = require('multer');
+const logger = require('morgan');
+const serveIndex = require('serve-index');
+const path = require('path');
+const debug = require('debug')('myapp:server');
+
+var storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './uploads')
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname)
+  }
+})
+
+const upload = multer({ storage: storage });
+
+app.post('/addSubmission', upload.single('file'), function(req,res) {
+  debug(req.file);
+  console.log('storage location is ', req.hostname +'/' + req.file.path);
+  return res.send(req.file);
+})
+
+
+app.post("/addSubmissionInfo", async (req, res) => {
   if (!req.body.value) res.send({ working: false });
   pgClient.query("INSERT INTO submissions VALUES($1, DEFAULT, $2, $3, $4)", [req.body.fileName, req.body.now, req.body.challenge_id, req.body.is_public]);
-  
+
   //res.send({ working: true });
 });
-
 
 app.get("/getTargetUserInfo", async (req, res) => {
   const values = await pgClient.query("SELECT * FROM users WHERE email = $1", [req.query.email]);
@@ -79,8 +102,6 @@ app.post("/updateTargetUser", async (req, res) => {
   pgClient.query("UPDATE users SET is_enabled = $1, is_admin = $2, status_date = $4, WHERE email = $3", [req.body.is_enabled, req.body.is_admin, req.body.email, req.body.now]);
 });
 
-
-  //res.send({ working: true });
 app.get("/getLeaderboardInfo", async (req, res) => {
   const values = await pgClient.query("SELECT u.first_name, u.last_name, MAX(s.score) FROM users u, submissions s WHERE u.user_id = s.user_id GROUP BY u.first_name, u.last_name")
   res.send(values.rows);
