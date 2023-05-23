@@ -13,6 +13,9 @@ export class SettingsComponent {
   public response: Object[];
   public isChangingAccount: boolean;
 
+  public targetUserIsEnabled: boolean;
+  public targetUserIsAdmin: boolean;
+
 
   constructor(private valueService: ValueServiceService){
     this.isChangingAccount = false;
@@ -40,8 +43,12 @@ export class SettingsComponent {
     });
     var resp = JSON.stringify(this.response);
     resp = resp.replaceAll(":", ",");
+    resp = resp.replaceAll("\"", "");
+    resp = resp.replaceAll("}]", "");
     var splitResp = resp.split(",");
     console.log(splitResp);
+    this.targetUserIsAdmin = Boolean(splitResp[21]);
+    this.targetUserIsEnabled = Boolean(splitResp[15]);
     this.isChangingAccount = true;
   }
 
