@@ -74,6 +74,12 @@ app.get("/getTargetUserInfo", async (req, res) => {
   console.log(values.rows);
 });
 
+app.get("/getLeaderboardInfo", async (req, res) => {
+  const values = await pgClient.query("SELECT u.first_name, u.last_name, MAX(s.score) FROM users u, submissions s WHERE u.user_id = s.user_id GROUP BY u.first_name, u.last_name")
+  res.send(values.rows);
+  console.log(values.rows);
+});
+
 app.listen(5000, err => {
   console.log("Listening on port 5000");
 });
