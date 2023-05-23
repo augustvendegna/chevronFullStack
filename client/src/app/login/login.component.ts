@@ -53,6 +53,7 @@ export class LoginComponent {
       localStorage.setItem('first_name', first_name);
       localStorage.setItem('email', this.email);
       localStorage.setItem('password', this.password); // probably not needed? dont think we will need it again
+      localStorage.setItem('UID', splitResp[1])
       this.router.navigate(['home']);
     }
 
