@@ -1,4 +1,4 @@
-<div class = "child">
+<div class = "child" *ngIf="!isChangingAccount">
     <div class="userPassword">
         <h1>change password</h1>    
     </div>
@@ -16,8 +16,29 @@
     <button (click) = "changePassword()"> save changes!</button>
 </div>
 
-<div *ngIf="getAdminStatus()"> 
-    <h1> ADMIN CONTROLS</h1>
+<div *ngIf="getAdminStatus() && !isChangingAccount"> 
+    <div class = "child">
+        <div class="userPassword">
+            <h1>admin controls</h1>    
+        </div>
+        <body>
+            be careful -  you are modifying user account data!<br> <br>
+            enter desired user's email address:
+        </body>
+        <input class="input" type="text" placeholder='user email' [(ngModel)]="targetEmail"><br><br>
+        
+        <button (click) = "getTargetUserInfo()"> change parameters</button>
+    </div>
+</div>
 
+<div *ngIf="isChangingAccount">
+    <div class = "child">
+        <div class="userPassword">
+            <h1>alter user parameters</h1>    
+        </div>
+        <p> sup playa </p>
+    
+        <button (click) = "applyUserChanges()"> confirm changes</button>
+    </div>
 </div>
     

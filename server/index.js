@@ -63,8 +63,15 @@ app.get("/submissions", async (req, res) => {
 app.post("/addSubmission", async (req, res) => {
   if (!req.body.value) res.send({ working: false });
   pgClient.query("INSERT INTO submissions VALUES($1, DEFAULT, $2, $3, $4)", [req.body.fileName, req.body.now, req.body.challenge_id, req.body.is_public]);
-
+  
   //res.send({ working: true });
+});
+
+
+app.get("/getTargetUserInfo", async (req, res) => {
+  const values = await pgClient.query("SELECT * FROM users WHERE email = $1", [req.query.email]);
+  res.send(values.rows);
+  console.log(values.rows);
 });
 
 app.listen(5000, err => {
