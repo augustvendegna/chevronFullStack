@@ -44,6 +44,17 @@ export class ValueServiceService {
 
   }
 
+  getTargetUserInfo(email:string){
+    result:Array<Object>; 
+    let params = new HttpParams();
+    params = params.append('email', email);
+    return this.http.get<Object[]>(`${this.configUrl}/getTargetUserInfo`, {params: params});
+    // result.subscribe();
+    //console.log(result);
+    //result.unsubscribe();
+
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
