@@ -17,7 +17,7 @@ export class AppComponent {
   public login: LoginComponent;
   public isMenuPage : boolean = false;
 
-  event
+  event;
 
   constructor(private router:Router){
     this.isSignedin = false;
