@@ -54,6 +54,19 @@ app.post("/addUser", async (req, res) => {
   //res.send({ working: true });
 });
 
+app.get("/submissions", async (req, res) => {
+  const values = await pgClient.query("SELECT * FROM submissions");
+  //const result = [values.rows.map(row => (row.first_name + " " + row.last_name))];
+  res.send(values.rows);
+});
+
+app.post("/addSubmission", async (req, res) => {
+  if (!req.body.value) res.send({ working: false });
+  pgClient.query("INSERT INTO submissions VALUES($1, DEFAULT, $2, $3, $4)", [req.body.fileName, req.body.now, req.body.challenge_id, req.body.is_public]);
+
+  //res.send({ working: true });
+});
+
 app.listen(5000, err => {
   console.log("Listening on port 5000");
 });
