@@ -57,7 +57,6 @@ export class ValueServiceService {
 
   getLeaderboardInfo(){
     result:Array<Object>; 
-    let params = new HttpParams();
     return this.http.get<Object[]>(`${this.configUrl}/getLeadboardInfo`);
   }
 
