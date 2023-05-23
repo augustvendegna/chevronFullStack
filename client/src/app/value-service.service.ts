@@ -57,7 +57,7 @@ export class ValueServiceService {
 
   getLeaderboardInfo(){
     result:Array<Object>; 
-    return this.http.get<Object[]>(`${this.configUrl}/getLeadboardInfo`);
+    return this.http.get<Object[]>(`${this.configUrl}/getLeaderboardInfo`);
   }
 
   updateTargetUser(is_enabled:boolean, is_admin:boolean, email:string, ){
