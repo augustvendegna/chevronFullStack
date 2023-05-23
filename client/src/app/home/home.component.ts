@@ -8,4 +8,10 @@ import { Component } from '@angular/core';
 
 export class HomeComponent {
 
+  public columnNames = ['First Name', 'Last Name', 'Score'];
+  
+  constructor(){
+
+  }
+
 }
