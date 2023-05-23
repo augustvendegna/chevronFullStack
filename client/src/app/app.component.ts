@@ -31,12 +31,8 @@ export class AppComponent {
         if(this.router.url === "/login" || this.router.url === "/signup" || this.router.url === "/"){
           this.isMenuPage= false;
         }
-        else{
-          this.isMenuPage = true;
-        }
       }
     });
-
 
   }
   public setMenuPage(bool:boolean){

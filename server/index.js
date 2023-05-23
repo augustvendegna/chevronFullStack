@@ -77,8 +77,14 @@ app.get("/getTargetUserInfo", async (req, res) => {
 app.post("/updateTargetUser", async (req, res) => {
   console.log("UPDATE users SET is_enabled = $1, is_admin = $2, status_date = $4, WHERE email = $3", [req.body.is_enabled, req.body.is_admin, req.body.email, req.body.now]);
   pgClient.query("UPDATE users SET is_enabled = $1, is_admin = $2, status_date = $4, WHERE email = $3", [req.body.is_enabled, req.body.is_admin, req.body.email, req.body.now]);
-  
+});
+
+
   //res.send({ working: true });
+app.get("/getLeaderboardInfo", async (req, res) => {
+  const values = await pgClient.query("SELECT u.first_name, u.last_name, MAX(s.score) FROM users u, submissions s WHERE u.user_id = s.user_id GROUP BY u.first_name, u.last_name")
+  res.send(values.rows);
+  console.log(values.rows);
 });
 
 app.listen(5000, err => {

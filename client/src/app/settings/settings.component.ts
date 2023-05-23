@@ -24,7 +24,6 @@ export class SettingsComponent {
   }
 
   public changePassword(){
-    // comunicate with back end
     
   }
 
