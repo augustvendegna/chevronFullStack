@@ -13,6 +13,10 @@ export class SettingsComponent {
   public response: Object[];
   public isChangingAccount: boolean;
 
+  public targetUserIsAdmin: boolean;
+  public targetUserIsEnabled: boolean;
+  public invalidUser: boolean;
+
 
   constructor(private valueService: ValueServiceService){
     this.isChangingAccount = false;

@@ -15,15 +15,14 @@ export class AppComponent {
   
   public isSignedin: boolean;
   public login: LoginComponent;
-  public isMenuPage : boolean = false;
-
+  public isMenuPage : boolean = true;
+  
   event;
 
   constructor(private router:Router){
     this.isSignedin = false;
     //this.login = new LoginComponent;
     
-    this.isMenuPage = false;
 
     this.event = this.router.events.subscribe((event : NavigationEvent) => {
       if(event instanceof NavigationEnd){
@@ -31,15 +30,19 @@ export class AppComponent {
         if(this.router.url === "/login" || this.router.url === "/signup" || this.router.url === "/"){
           this.isMenuPage= false;
         }
+        else {
+          this.isMenuPage = true;
+        }
       }
     });
 
   }
   public setMenuPage(bool:boolean){
-    this.isMenuPage = bool;
+    console.log(this.isMenuPage);
+    this.isMenuPage = true;
     localStorage.removeItem('email');
     localStorage.removeItem('password');
-    localStorage.setItem('first_name', "YOURE NOT SIGNED IN!");
+    localStorage.setItem('first_name', "YOU'RE NOT SIGNED IN!");
   }
 
   public getItem(item:string){
