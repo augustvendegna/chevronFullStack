@@ -15,12 +15,10 @@ export class SettingsComponent {
 
   public targetUserIsEnabled: boolean;
   public targetUserIsAdmin: boolean;
-  public invalidUser: boolean;
 
 
   constructor(private valueService: ValueServiceService){
     this.isChangingAccount = false;
-    this.invalidUser = false;
   }
 
   public changePassword(){
@@ -38,42 +36,23 @@ export class SettingsComponent {
     return true;
   }
 
-
-  public async getTargetUserInfo(){
+  public getTargetUserInfo(){
     var respString: string;
     this.valueService.getTargetUserInfo(this.targetEmail).subscribe((data: Object[]) => {
       this.response = data;
-    
-
+    });
     var resp = JSON.stringify(this.response);
-
     resp = resp.replaceAll(":", ",");
     resp = resp.replaceAll("\"", "");
     resp = resp.replaceAll("}]", "");
     var splitResp = resp.split(",");
-    //console.log(splitResp);
-
-    if (splitResp.length == 1){
-      this.invalidUser = true;
-      return;
-    } else {this.invalidUser = false}
-
-    if (splitResp[21] == 'false'){
-      this.targetUserIsAdmin = false;
-    }
-    else { this.targetUserIsAdmin = true; }
-    if (splitResp[15] == 'false'){
-      this.targetUserIsEnabled = false;
-    }
-    else { this.targetUserIsEnabled = true; }
+    console.log(splitResp);
+    this.targetUserIsAdmin = Boolean(splitResp[21]);
+    this.targetUserIsEnabled = Boolean(splitResp[15]);
     this.isChangingAccount = true;
-    });
   }
 
-  async applyUserChanges(){
-
-    await this.valueService.updateTargetUser(this.targetUserIsEnabled, this.targetUserIsAdmin, this.targetEmail);
-
+  public applyUserChanges(){
     this.isChangingAccount = false;
   }
 }

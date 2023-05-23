@@ -62,9 +62,6 @@ export class ValueServiceService {
     .pipe(
       catchError(err => { return this.handleError(err) })
     );
-  getLeaderboardInfo(){
-    result:Array<Object>;
-    let params
   }
 
   private handleError(error: HttpErrorResponse) {
