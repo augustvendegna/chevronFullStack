@@ -36,8 +36,11 @@
         <div class="userPassword">
             <h1>alter user parameters</h1>    
         </div>
-        
-    
+        account is enabled: 
+        <input type="checkbox" [(ngModel)]="targetUserIsEnabled"><br>
+        account is has admin rights: 
+        <input type="checkbox" [(ngModel)]="targetUserIsAdmin">
+        <br><br>
         <button (click) = "applyUserChanges()"> confirm changes</button>
     </div>
 </div>
