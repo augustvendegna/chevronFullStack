@@ -74,6 +74,13 @@ app.get("/getTargetUserInfo", async (req, res) => {
   console.log(values.rows);
 });
 
+app.post("/updateTargetUser", async (req, res) => {
+  console.log("UPDATE users SET is_enabled = $1, is_admin = $2, status_date = $4, WHERE email = $3", [req.body.is_enabled, req.body.is_admin, req.body.email, req.body.now]);
+  pgClient.query("UPDATE users SET is_enabled = $1, is_admin = $2, status_date = $4, WHERE email = $3", [req.body.is_enabled, req.body.is_admin, req.body.email, req.body.now]);
+  
+  //res.send({ working: true });
+});
+
 app.listen(5000, err => {
   console.log("Listening on port 5000");
 });

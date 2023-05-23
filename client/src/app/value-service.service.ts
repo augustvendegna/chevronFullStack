@@ -55,6 +55,15 @@ export class ValueServiceService {
 
   }
 
+  updateTargetUser(is_enabled:boolean, is_admin:boolean, email:string, ){
+    now: String;
+    const now = formatDate(new Date());
+    return this.http.post(`${this.configUrl}/updateTargetUser`, { is_enabled, is_admin, email, now})
+    .pipe(
+      catchError(err => { return this.handleError(err) })
+    );
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.

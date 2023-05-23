@@ -36,15 +36,22 @@
         <div class="userPassword">
             <h1>alter user parameters</h1>    
         </div>
-        <p> user acount is enabled: </p> 
-        <input type="checkbox" id="vehicle1" name="vehicle1" value="targetUserIsEnabled">
+        <h2> selected user: {{targetEmail}}</h2>
+        <p> user acount is enabled:  
+            <input type="checkbox" [(ngModel)]="targetUserIsEnabled">
+        </p>
         
+            user acount is admin:
+            <input type="checkbox" [(ngModel)]="targetUserIsAdmin">
         
-        <br>
-            user acount is admin: {{ targetUserIsAdmin }}
-        
-        <br>
-        <button (click) = "applyUserChanges()"> confirm changes</button>
+        <br> <br>
+        <button (click) = "applyUserChanges()"> confirm parameters</button>
     </div>
+</div>
+
+<div *ngIf="invalidUser">
+
+    <p>no user is found with that email</p>
+
 </div>
     
