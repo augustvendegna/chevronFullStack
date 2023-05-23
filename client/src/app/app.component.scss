@@ -41,6 +41,17 @@ b{
     border-right:2px solid #bbb;
 }
 
+p {
+    float: left;
+    color: rgb(255, 255, 255);
+    text-align: left;
+    padding: 0px 16px;
+    text-decoration: none;
+    font-size: 15px;
+    text-transform:lowercase;
+    font-weight: bold;
+}
+
 .other{
     float: right;
     font-weight: bold;

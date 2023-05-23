@@ -9,13 +9,17 @@ import { HttpBackend, HttpClient } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { HomeComponent } from './home/home.component';
+import { SubmissionsComponent } from './submissions/submissions.component';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SignUpComponent,
-    HomeComponent
+    HomeComponent,
+    SubmissionsComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

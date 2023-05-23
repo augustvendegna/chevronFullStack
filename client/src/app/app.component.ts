@@ -37,6 +37,13 @@ export class AppComponent {
   }
   public setMenuPage(bool:boolean){
     this.isMenuPage = bool;
+    localStorage.removeItem('email');
+    localStorage.removeItem('password');
+    localStorage.setItem('first_name', "YOURE NOT SIGNED IN!");
+  }
+
+  public getItem(item:string){
+      return localStorage.getItem(item);
   }
 
 }
