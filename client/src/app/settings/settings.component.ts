@@ -48,6 +48,7 @@ export class SettingsComponent {
     var resp = JSON.stringify(this.response);
 
     resp = resp.replaceAll(":", ",");
+    resp = resp.replaceAll("}]", "");
     var splitResp = resp.split(",");
     console.log(splitResp);
     //console.log(splitResp);
