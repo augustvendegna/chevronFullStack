@@ -36,7 +36,7 @@ export class LoginComponent {
 
     this.valueService.getUser(this.email, this.password).subscribe((data: Object[]) => {
       this.response = data;
-    });
+    
     //check response to see if the user exists
     resp : String;
     var resp = JSON.stringify(this.response[0]);
@@ -56,7 +56,7 @@ export class LoginComponent {
       this.router.navigate(['home']);
     }
 
-
+    });
 
     // maybe unsubscribe?
     //this.writeCreds();

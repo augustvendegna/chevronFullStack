@@ -41,4 +41,10 @@
         <button (click) = "applyUserChanges()"> confirm changes</button>
     </div>
 </div>
+
+<div *ngIf="invalidUser">
+
+    <p>no user is found with that email</p>
+
+</div>
     
