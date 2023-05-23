@@ -28,6 +28,7 @@ CREATE TABLE challenges(
 );
 
 CREATE TABLE submissions(
+    filename TEXT,
     submission_id SERIAL,
     submission_time TIMESTAMP,
     challenge_id INT,

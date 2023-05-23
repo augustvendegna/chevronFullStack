@@ -21,8 +21,17 @@ export class ValueServiceService {
     );
 
   }
+/*
+  addSubmission(selectedFile:File, challenge_id:number, is_public:boolean){
+    now: String;
+    const now = formatDate(new Date());
+    return this.http.post(`${this.configUrl}/addSubmission`, { selectedFile, now, challenge_id, is_public})
+    .pipe(
+      catchError(err => { return this.handleError(err) })
+    );
 
-
+  }
+*/
   getUser(email:string, password:string){
     result:Array<Object>; 
     let params = new HttpParams();
