@@ -33,7 +33,6 @@ CREATE TABLE submissions(
     submission_time TIMESTAMP,
     challenge_id INT,
     is_public BOOLEAN,
-    score INT,
 
     PRIMARY KEY(submission_id)
 );

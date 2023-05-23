@@ -17,17 +17,7 @@
 </div>
 
 <div *ngIf="getAdminStatus()"> 
-    <div class = "child">
-        <div class="userPassword">
-            <h1>admin controls</h1>    
-        </div>
-        <body>
-            be careful! you are modifying user account data!<br> <br>
-            enter desired user's email address:
-        </body>
-        <input class="input" type="password" placeholder='user email' [(ngModel)]="targetEmail"><br><br>
-        
-        <button (click) = "changePassword()"> change parameters</button>
-    </div>
+    <h1> ADMIN CONTROLS</h1>
+
 </div>
     

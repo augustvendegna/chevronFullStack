@@ -8,10 +8,8 @@ import { Component } from '@angular/core';
 export class SettingsComponent {
   public passwordOne:string;
   public passwordTwo:string;
-  public targetEmail:string;
 
   public changePassword(){
-    // comunicate with back end
     
   }
 
