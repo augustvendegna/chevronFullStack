@@ -112,7 +112,7 @@ export class SignUpComponent {
       console.log("Sending information to database.");
       this.password = this.passwordOne;
 
-      this.valueService.addUser(this.first, this.last, this.email, this.password, true, true)?.subscribe(_ => {
+      this.valueService.addUser(this.first, this.last, this.email, this.password, true, false)?.subscribe(_ => {
         //this.login();
       });
 
