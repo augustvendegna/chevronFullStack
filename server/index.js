@@ -1,4 +1,5 @@
 const keys = require("./keys");
+const alg = require("./algorithms");
 
 // Express Application setup
 const express = require("express");
