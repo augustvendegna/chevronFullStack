@@ -1,24 +1,32 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "author": "August Vendegna - Heavy references to Laszlo Leber (Codeching)",
   "license": "ISC",
+  "type": "module",
   "dependencies": {
+    "@tensorflow/tfjs": "^4.6.0",
     "body-parser": "*",
     "cors": "2.8.4",
     "debug": "^4.3.4",
     "express": "^4.16.3",
+    "fscore": "^1.2.0",
     "morgan": "^1.10.0",
+    "mse": "^0.1.0",
     "multer": "^1.4.5-lts.1",
     "nodemon": "1.18.3",
     "path": "^0.12.7",
     "pg": "8.0.3",
-    "serve-index": "^1.9.1"
+    "precision-recall": "^1.0.2",
+    "rmse": "^0.0.4",
+    "serve-index": "^1.9.1",
+    "tf": "^1.0.1"
   },
   "scripts": {
     "dev": "nodemon",
     "start": "node index.js"
-  }
+  },
+  "keywords": [],
+  "description": ""
 }
