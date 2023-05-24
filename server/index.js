@@ -103,6 +103,12 @@ app.post("/updateTargetUser", async (req, res) => {
   pgClient.query("UPDATE users SET is_enabled = $1, is_admin = $2, status_date = $4 WHERE email = $3", [req.body.is_enabled, req.body.is_admin, req.body.email, req.body.now]);
 });
 
+app.post("/changePassword", async (req, res) => {
+  if (!req.body.value) res.send({ working: false });
+  console.log("UPDATE users SET password = $2, password_date = $3 WHERE email = $1", [req.body.email, req.body.password, req.body.now]);
+  pgClient.query("UPDATE users SET password = $2, password_date = $3 WHERE email = $1", [req.body.email, req.body.password, req.body.now]);
+});
+
 app.get("/getLeaderboardInfo", async (req, res) => {
   const values = await pgClient.query("SELECT u.first_name, u.last_name, MAX(s.score) FROM users u, submissions s WHERE u.user_id = s.user_id GROUP BY u.first_name, u.last_name")
   res.send(values.rows);
