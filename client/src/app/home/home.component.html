@@ -6,9 +6,8 @@
         <th>Last Name</th>
         <th>Score</th>
     </tr>
-    <tr *ngFor="let f of first_name, let l of last_name, let s of score">
-        <td>{{f}}</td>
-        <td>{{l}}</td>
-        <td>{{s}}</td>
+    <tr *ngFor="let curRow of leaderboard">
+        <td *ngFor="let r of curRow"> {{r}} </td>
+        
     </tr>
 </table>

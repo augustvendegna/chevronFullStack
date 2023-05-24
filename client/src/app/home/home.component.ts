@@ -11,10 +11,8 @@ import { Router } from '@angular/router';
 export class HomeComponent {
 
   public response: Object[];
-  public first_name:string [];
-  public last_name:string[];
-  public score:string[];
-
+  public splitResp: String[];
+  public leaderboard: [String[]] = [[]];
   
   constructor(private valueService: ValueServiceService, private router : Router){
     this.valueService.getLeaderboardInfo().subscribe((data: Object[]) => {
@@ -22,28 +20,35 @@ export class HomeComponent {
     
     //check response to see if the user exists
     resp : String;
-    var resp = JSON.stringify(this.response[0]);
+    var resp = JSON.stringify(this.response);
     //console.log(resp);
     
     resp = resp.replaceAll(":", ",");
-    var splitResp = resp.split(",");
-    console.log(splitResp);
-    var i:number;
+    resp = resp.replaceAll("}", "");
+    resp = resp.replaceAll("]", "");
+    resp = resp.replaceAll("{", "");
+    resp = resp.replaceAll("[", "");
+    resp = resp.replaceAll("\"", "");
+    this.splitResp = resp.split(",");
 
     //problems:
     //1. the data arrays aren't stored properly and are undefined
     //2. missing data from query in the code, but is shown to be retrieved
-
-    for(i = 0; i > splitResp.length/3;i++){
-      this.first_name[i] = splitResp[i];
-      this.last_name[i] = splitResp[i+1];
-      this.score[i] = splitResp[i+2];
-      localStorage.setItem('first_name', this.first_name[i]);
-      localStorage.setItem('last_name', this.last_name[i]);
-      localStorage.setItem('score', this.score[i]);
-    }
+    
+    this.updateLeaderBoard();
+    
     });
     
   }
-
+  public updateLeaderBoard(){
+    
+    for(let i = 0; i < this.splitResp.length; i+=6){
+      var curRow: String[] = [];
+      
+        curRow.push(this.splitResp[i+1]);
+        curRow.push(this.splitResp[i+3]);
+        curRow.push(this.splitResp[i+5]);
+        this.leaderboard.push(curRow);
+    }
+  }
 }
