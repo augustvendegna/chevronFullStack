@@ -19,7 +19,7 @@
 
   
 .child {
-font-family: Helvetica;
+  font-family: Helvetica;
   border: solid;
   border-radius: 20px;
   border-color: black;
@@ -77,4 +77,23 @@ button {
   border-radius: 4px;
   background: #f9f9f9;
   transition: background 0.25s, border-color 0.25s, color 0.25s;
+  }
+
+  .two-col {
+    overflow: hidden;
+  }
+  .two-col .words,
+  .two-col .upload {
+      width: 30%;
+  }
+  
+  .two-col .words{
+    float:left;
+  }
+  .two-col .upload{
+    float:left;
+  }
+
+  .text-input {
+    font-family: Helvetica;
   }

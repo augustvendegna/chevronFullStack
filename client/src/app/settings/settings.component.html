@@ -1,3 +1,49 @@
+<div *ngIf="getAdminStatus() && !isChangingAccount"> 
+    <div class = "child">
+        <div class="userPassword">
+            <h1>create new challenge</h1>    
+        </div>
+
+        <div class = "two-col">
+            <div class = "words">
+                <p> answer key file (.csv):</p>
+            </div>
+            <div class = "upload">
+                <br>
+                <input type="file" class="file-input" id="file" />
+            </div>
+        </div>   
+        
+        <hr>
+
+        <div class = "two-col">
+            <div class = "words">
+                <p> enter a description for this competition: </p>
+            </div>
+            <div class = "upload">
+                <br>
+                <textarea class = "text-input" name="description_text" cols="50" rows="10"></textarea>
+            </div>
+        </div> 
+
+        <hr>
+
+        <div class = "two-col">
+            <div class = "words">
+                <p> upload sample dataset:</p>
+            </div>
+            <div class = "upload">
+                <br>
+                <input type="file" class="file-input" id="file" />
+            </div>
+        </div>  
+
+        <button > create challenge!</button>
+
+    </div>
+    <br>
+</div>
+
 <div class = "child" *ngIf="!isChangingAccount">
     <div class="userPassword">
         <h1>change password</h1>    
@@ -29,6 +75,7 @@
         
         <button (click) = "getTargetUserInfo()"> change parameters</button>
     </div>
+    <br>
 </div>
 
 <div *ngIf="isChangingAccount">
@@ -47,6 +94,7 @@
         <br><br>
         <button (click) = "applyUserChanges()"> confirm changes</button>
     </div>
+    <br>
 </div>
 
 <div *ngIf="invalidUser">
