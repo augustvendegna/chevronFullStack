@@ -11,16 +11,6 @@ export class UploadService {
   constructor(private httpClient: HttpClient) { }
 
   configUrl = 'http://localhost:5000';
-
-  /*
-  addSubmission(selectedFile):Observable<any> {
-    const formData = new FormData();
-    formData.append('file', selectedFile, selectedFile.name);
-    //now: String;
-    //const now = formatDate(new Date());
-    return this.httpClient.post(`${this.configUrl}/addSubmission`, formData)
-  }
-  */
   
   addSubmission(selectedFile:File){
     let formParams = new FormData();
@@ -31,10 +21,10 @@ export class UploadService {
     );
   }
 
-  sentInfo(fileName:string, challenge_id:number, is_public:boolean){
+  sentInfo(fileName:string, challenge_id:number, is_public:boolean, user_id:number, score:number){
     now: String;
     const now = formatDate(new Date());
-    return this.httpClient.post(`${this.configUrl}/addSubmissionInfo`, { fileName, now, challenge_id, is_public})
+    return this.httpClient.post(`${this.configUrl}/addSubmissionInfo`, { fileName, now, challenge_id, is_public, user_id, score})
     .pipe(
       catchError(err => { return this.handleError(err) })
     );

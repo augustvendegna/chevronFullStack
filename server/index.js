@@ -79,14 +79,14 @@ const upload = multer({ storage: storage });
 
 app.post('/addSubmission', upload.single('file'), function(req,res) {
   debug(req.file);
-  console.log('storage location is ', req.hostname +'/' + req.file.path);
+  console.log('storage location is', req.hostname +'/' + req.file.path);
   return res.send(req.file);
 })
 
 
 app.post("/addSubmissionInfo", async (req, res) => {
   if (!req.body.value) res.send({ working: false });
-  pgClient.query("INSERT INTO submissions VALUES($1, DEFAULT, $2, $3, $4)", [req.body.fileName, req.body.now, req.body.challenge_id, req.body.is_public]);
+  pgClient.query("INSERT INTO submissions VALUES($1, DEFAULT, $2, $3, $4, $5, $6)", [req.body.fileName, req.body.now, req.body.challenge_id, req.body.is_public, req.body.user_id, req.body.score]);
 
   //res.send({ working: true });
 });
