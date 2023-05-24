@@ -1,7 +1,8 @@
 ///////////////// TENSORFLOW FUNCTION (Mean Absoulute Error) /////////////////////////
 
 // Importing the tensorflow library
-import * as tf from "@tensorflow/tfjs"
+//import * as tf from "@tensorflow/tfjs"
+const tf = require('@tensorflow/tfjs')
   
 // Defining the value of the tensors
 const True = tf.tensor([0,1,4,9]);
@@ -59,7 +60,8 @@ mse.print()
 
 ///////////////// NPM FUNCTION (Mean Absoulute Error) /////////////////////////
 
-import MSE from 'mse';
+//import MSE from 'mse';
+const MSE = require('mse')
 var data_1 = [
     0,   1,   4,    9
 ]; 
@@ -91,7 +93,8 @@ console.log('Calculation: ', mse_c(a, b), '\n')
 
 ///////////////// NPM FUNCTION (Root Mean Absoulute Error) /////////////////////////
 
-import RMSE from 'rmse';
+//import RMSE from 'rmse';
+const RMSE = require('rmse');
  var dataset = [{
       actual: 0,
       predicted: 0.1
@@ -144,7 +147,8 @@ console.log('Calculation: ', rsq(a, b), '\n')
 
 ///////////////// NPM (F-Score) /////////////////////////
 
-import fscore from 'fscore';
+//import fscore from 'fscore';
+const fscore = require('fscore');
 
 console.log('F-Score: ')
 console.log('NPM: ', fscore(a, b), '\n');

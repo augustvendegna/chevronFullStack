@@ -4,7 +4,6 @@
   "main": "index.js",
   "author": "August Vendegna - Heavy references to Laszlo Leber (Codeching)",
   "license": "ISC",
-  "type": "module",
   "dependencies": {
     "@tensorflow/tfjs": "^4.6.0",
     "body-parser": "*",
