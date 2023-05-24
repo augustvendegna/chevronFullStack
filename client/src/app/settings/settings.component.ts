@@ -15,12 +15,14 @@ export class SettingsComponent {
 
   public targetUserIsAdmin: boolean;
   public targetUserIsEnabled: boolean;
+  public resetTargetUserPassword: boolean;
   public invalidUser: boolean;
 
 
   constructor(private valueService: ValueServiceService){
     this.isChangingAccount = false;
     this.invalidUser = false;
+    this.resetTargetUserPassword = false;
   }
 
   public changePassword(){
@@ -75,7 +77,7 @@ export class SettingsComponent {
     }
     
     this.valueService.updatePassword(localStorage.getItem('email'), this.passwordOne)?.subscribe(_ => {
-      //this.login();
+      // nothing here
     });
     alert("password change confirmed");
   }
@@ -128,6 +130,13 @@ export class SettingsComponent {
     this.valueService.updateTargetUser(this.targetUserIsEnabled, this.targetUserIsAdmin, this.targetEmail)?.subscribe(_ => {
       //this.login();
     });
+    
+    if (this.resetTargetUserPassword){
+      this.valueService.updatePassword(this.targetEmail, "Chevron!3")?.subscribe(_ => {
+        //this.login();
+      });
+      this.resetTargetUserPassword = false;
+    }
 
     this.isChangingAccount = false;
   }

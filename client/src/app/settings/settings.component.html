@@ -36,10 +36,14 @@
         <div class="userPassword">
             <h1>alter user parameters</h1>    
         </div>
+        <h2> {{targetEmail}} </h2>
         account is enabled: 
         <input type="checkbox" [(ngModel)]="targetUserIsEnabled"><br>
         account is has admin rights: 
-        <input type="checkbox" [(ngModel)]="targetUserIsAdmin">
+        <input type="checkbox" [(ngModel)]="targetUserIsAdmin"><br>
+        reset password to: 'Chevron!3'     
+        <input type="checkbox" [(ngModel)]="resetTargetUserPassword">
+        (make sure user changes password after!)<br>
         <br><br>
         <button (click) = "applyUserChanges()"> confirm changes</button>
     </div>
