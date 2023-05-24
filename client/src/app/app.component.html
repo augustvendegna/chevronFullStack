@@ -1,0 +1,19 @@
+
+<div *ngIf="isMenuPage">
+    <h1 class = title> chevron data science challenge </h1>
+
+    <!-- This nav gives you links to click, which tells the router which route to use (defined in the routes constant in  AppRoutingModule) -->
+    <nav class = "menu">
+      <b><a routerLink="home">home </a></b>
+      <b><a routerLink="submissions"> submissions </a></b>
+      <a routerLink="settings"> settings </a>
+      <div class = "other">
+        <p> Hi, {{ getItem('first_name')}}</p>
+        <a routerLink="login" (click) = "setMenuPage(false)">sign out</a>
+      </div>
+    </nav>
+
+    <h2> <script> window.location.href </script></h2>
+  </div>
+
+<router-outlet></router-outlet>
