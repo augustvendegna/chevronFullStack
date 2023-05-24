@@ -3,10 +3,23 @@
     font-family: Helvetica;
     font-size: 200%;
     color: #0066b2;
-    display : flex;
     justify-content: center;
     text-transform: lowercase;
+    position: relative;
 }
+
+.two-col {
+    overflow: hidden;
+  }
+  .two-col .logo{
+    float:left;
+    //width: 20%;
+  }
+  .two-col .title{
+    float:right;
+    width: 65%;
+  }
+
 
 .link{
     font-size: 100%;

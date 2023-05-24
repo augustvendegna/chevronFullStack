@@ -1,7 +1,17 @@
 
-<div *ngIf="isMenuPage">
-    <h1 class = title> chevron data science challenge </h1>
 
+
+<div *ngIf="isMenuPage">
+    <div class = "two-col">
+        <img class = "logo"
+        src="/assets/CVXblueWords.svg"
+        alt="triangle with all three sides equal"
+        srcset="/assets/CVXblueWords.svg"
+        height=" 50px"
+        />
+      
+        <h1 class = "title" > chevron data science challenge </h1>
+    </div>
     <!-- This nav gives you links to click, which tells the router which route to use (defined in the routes constant in  AppRoutingModule) -->
     <nav class = "menu">
       <b><a routerLink="home">home </a></b>
