@@ -70,9 +70,11 @@ export class SettingsComponent {
     });
   }
 
-  async applyUserChanges(){
+  public applyUserChanges(){
 
-    await this.valueService.updateTargetUser(this.targetUserIsEnabled, this.targetUserIsAdmin, this.targetEmail);
+    this.valueService.updateTargetUser(this.targetUserIsEnabled, this.targetUserIsAdmin, this.targetEmail)?.subscribe(_ => {
+      //this.login();
+    });
 
     this.isChangingAccount = false;
   }

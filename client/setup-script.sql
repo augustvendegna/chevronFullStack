@@ -34,6 +34,7 @@ CREATE TABLE submissions(
     challenge_id INT,
     is_public BOOLEAN,
     user_id INT,
+    score INT,
 
     PRIMARY KEY(submission_id)
 );
