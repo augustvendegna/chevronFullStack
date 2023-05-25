@@ -127,26 +127,36 @@ app.get("/getLeaderboardInfo", async (req, res) => {
 //getting files and reading
 const csv = require('csv-parser')
 const fs = require('fs');
-const results=[];
+var results = [];
 
 //will most likely put into funciton and pass in a file name parameter to change temp.csv out with
 //instal: npm install csv-parser
-fs.createReadStream('./uploads/temp.csv').pipe(csv())
+fs.createReadStream('./uploads/user_submission_1.csv').pipe(csv())
   .on('data', (data) => {
     results.push(data);
   }) 
   .on('end', () =>{
-    console.log(results);
+    var predicted = [];
+
+    //console.log(results);
 
     //checking for format of file
     //what does passing an error look like?
     for(let i = 0; i < results.length; i++){
-      console.log(results[i]);
-      for(let j = 0; j < 4; j++){
-        console.log(results);
-      }
+      var curString = JSON.stringify(results[i]);
+      curString = curString.replaceAll("}", "");
+      curString = curString.replaceAll("\"", "");
+      var curRow = curString.split(/,|:/);
+
+
+      //console.log(parseInt(curRow[3]));
+      predicted.push(parseInt(curRow[3]));
+      
+      
+      
+      
     }
-    
+    console.log(predicted);
 
   });
 
