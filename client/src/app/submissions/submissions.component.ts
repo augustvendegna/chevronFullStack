@@ -34,6 +34,7 @@ export class SubmissionsComponent {
       });
       var response: Object[];
       var testFlag: Object[];
+      var splitResp2: Object[];
       localStorage.setItem('CID', this.challenge_id.toString());
 
         this.uploadService.sentInfo(this.fileName, this.challenge_id, true, parseInt(localStorage.getItem('UID')), this.score).subscribe(resp => {
@@ -46,16 +47,15 @@ export class SubmissionsComponent {
             var splitResp = resp.split(",");
             this.uploadService.getTestFlag(localStorage.getItem('CID')).subscribe((data: Object[]) => {
               testFlag = data;
-              var resp = JSON.stringify(testFlag[0]);
-              resp = resp.replaceAll(":", ",");
-              resp = resp.replaceAll("}", ",");
-              resp = resp.replaceAll(/["']/g, ",");
-              var splitResp = resp.split(",");
-              console.log(splitResp[4]);
+              var resp2 = JSON.stringify(testFlag[0]);
+              resp2 = resp2.replaceAll(":", ",");
+              resp2 = resp2.replaceAll("}", ",");
+              resp2 = resp2.replaceAll(/["']/g, ",");
+              var splitResp2 = resp2.split(",");
+              this.uploadService.computeScore(parseInt(splitResp[1]), splitResp2[4].toString()).subscribe(resp => {
+              });
+  
             });
-            this.uploadService.computeScore(parseInt(splitResp[1])).subscribe(resp => {
-            });
-
             });
             alert("computed")
         });

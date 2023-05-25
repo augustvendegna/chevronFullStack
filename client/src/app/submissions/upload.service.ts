@@ -40,9 +40,9 @@ export class UploadService {
 
   }
 
-  computeScore(submission_id:number) {
+  computeScore(submission_id:number, testFlag:string) {
     console.log("here");
-    return this.httpClient.post(`${this.configUrl}/computeScore`, { submission_id})
+    return this.httpClient.post(`${this.configUrl}/computeScore`, { submission_id , testFlag})
     .pipe(
       catchError(err => { return this.handleError(err) })
     );

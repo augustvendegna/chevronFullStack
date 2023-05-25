@@ -139,8 +139,9 @@ app.get("/getTestFlag", async (req, res) => {
 //getting files and reading
 
 app.post("/computeScore", (req, res) => {
-  var score = req.body.score;
+  var testFlag = req.body.testFlag;
   var submission_id = req.body.submission_id;
+  
 
   const csv = require('csv-parser')
   const fs = require('fs');
@@ -185,10 +186,13 @@ app.post("/computeScore", (req, res) => {
     }
 
     //check for flags on what tests to run
-
-    var score = alg.rmse_c(actual, predicted)
-    console.log(score);
-    pgClient.query("UPDATE submissions SET score = $1 WHERE submission_id = $2", [score, submission_id]);
+    switch(testFlag){
+      case "rmse_c":{
+      var score = alg.rmse_c(actual, predicted)
+      console.log(score);
+      pgClient.query("UPDATE submissions SET score = $1 WHERE submission_id = $2", [score, submission_id]);
+      }
+    }
 
   });
 });
