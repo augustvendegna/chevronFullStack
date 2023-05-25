@@ -125,41 +125,38 @@ app.get("/getLeaderboardInfo", async (req, res) => {
 
 
 //getting files and reading
-const csv = require('csv-parser')
-const fs = require('fs');
-var pResults = [];
-var aResults = [];
-var predicted = [];
-var actual = [];
 
-//will most likely put into funciton and pass in a file name parameter to change temp.csv out with
-//instal: npm install csv-parser
-fs.createReadStream('./uploads/user_submission_1.csv').pipe(csv())
-  .on('data', (data) => {
-    pResults.push(data);
-  }) 
-  .on('end', () =>{
-    
+app.post("/computeScore", async (req, res) => {
+  var filename = req.body.filename;
+  var challenge_id = req.body.challenge_id;
 
-    //console.log(results);
+  console.log(filename);
+  console.log(challenge_id);
 
-    //checking for format of file
-    //what does passing an error look like?
-    for(let i = 0; i < pResults.length; i++){
-      var curString = JSON.stringify(pResults[i]);
-      curString = curString.replaceAll("}", "");
-      curString = curString.replaceAll("\"", "");
-      var curRow = curString.split(/,|:/);
+  const csv = require('csv-parser')
+  const fs = require('fs');
+  var pResults = [];
+  var aResults = [];
+  var predicted = [];
+  var actual = [];
 
+  //will most likely put into funciton and pass in a file name parameter to change temp.csv out with
+  //instal: npm install csv-parser
+  fs.createReadStream('./uploads/user_submission_1.csv').pipe(csv())
+    .on('data', (data) => {
+      pResults.push(data);
+    }) 
+    .on('end', () =>{
+      for(let i = 0; i < pResults.length; i++){
+        var curString = JSON.stringify(pResults[i]);
+        curString = curString.replaceAll("}", "");
+        curString = curString.replaceAll("\"", "");
+        var curRow = curString.split(/,|:/);
 
-      //console.log(parseInt(curRow[3]));
-      predicted.push(parseInt(curRow[3]));
-      
-      
-      
-      
-    }
-    //console.log(predicted);
+        predicted.push(parseInt(curRow[3]));
+          
+      }
+  
 
   });
   
@@ -169,28 +166,19 @@ fs.createReadStream('./uploads/user_submission_1.csv').pipe(csv())
   }) 
   .on('end', () =>{
     
-
-    //console.log(results);
-
-    //checking for format of file
-    //what does passing an error look like?
     for(let i = 0; i < aResults.length; i++){
       var curString = JSON.stringify(aResults[i]);
       curString = curString.replaceAll("}", "");
       curString = curString.replaceAll("\"", "");
       var curRow = curString.split(/,|:/);
 
-
-      //console.log(parseInt(curRow[3]));
       actual.push(parseInt(curRow[3]));
-      
-      
-      
-      
     }
-    
     console.log(alg.rmse_c(actual, predicted));
+
   });
+});
+
 
 //running tests on files
 //write switch or if statements to check for testing flags

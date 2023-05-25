@@ -40,6 +40,14 @@ export class UploadService {
 
   }
 
+  computeScore(filename:string, challenge_id:number) {
+    console.log("here");
+    return this.httpClient.post(`${this.configUrl}/computeScore`, { filename, challenge_id})
+    .pipe(
+      catchError(err => { return this.handleError(err) })
+    );
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
@@ -53,7 +61,12 @@ export class UploadService {
     // Return an observable with a user-facing error message.
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
+
+  
 }
+
+
+
 
 function padTo2Digits(num: number) {
   return num.toString().padStart(2, '0');

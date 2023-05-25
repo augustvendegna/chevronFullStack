@@ -26,14 +26,21 @@ export class SubmissionsComponent {
   }
 
   submitForm() {
+    this.challenge_id = 1;
     if (this.selectedFile) {
       this.fileName = this.selectedFile.name;
       this.uploadService.addSubmission(this.selectedFile).subscribe(resp => {
-        alert("Uploaded")
+        alert("uploaded")
       })
+
+      this.uploadService.computeScore(this.fileName, this.challenge_id).subscribe(resp => {
+        alert("computed")
+      })
+
       this.uploadService.sentInfo(this.fileName, this.challenge_id, true, this.user_id, this.score).subscribe(resp => {
-        alert("Sent")
+        alert("sent")
       })
+      
     } else {
       alert("Please select a file first")
     }

@@ -126,7 +126,6 @@ function rmse_c() {
     aa = arguments[0];
     bb = arguments[1];
 	let error = 0
-    console.log(arguments);
 	for (let i = 0; i < aa.length; i++) {
 		error += Math.sqrt(mse_c(aa, bb))
 	}
