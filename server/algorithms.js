@@ -179,3 +179,5 @@ const yPred = tf.tensor2d([
 const recallResult = tf.metrics.recall(yTrue, yPred);
 console.log('Recall: ')
 recallResult.print();
+
+module.exports = {calculateMeanAbsoluteError, mse_c, rmse_c, rsq, fscore, recallResult}

@@ -116,6 +116,40 @@ app.get("/getLeaderboardInfo", async (req, res) => {
   console.log(values.rows);
 });
 
+
+//getting files and reading
+const csv = require('csv-parser')
+const fs = require('fs');
+const results=[];
+
+//will most likely put into funciton and pass in a file name parameter to change temp.csv out with
+//instal: npm install csv-parser
+fs.createReadStream('./uploads/temp.csv').pipe(csv())
+  .on('data', (data) => {
+    results.push(data);
+  }) 
+  .on('end', () =>{
+    console.log(results);
+
+    //checking for format of file
+    //what does passing an error look like?
+    for(let i = 0; i < results.length; i++){
+      console.log(results[i]);
+      for(let j = 0; j < 4; j++){
+        console.log(results);
+      }
+    }
+    
+
+  });
+
+
+//running tests on files
+//write switch or if statements to check for testing flags
+//OR write a function that takes in the results 
+
+
+
 app.listen(5000, err => {
   console.log("Listening on port 5000");
 });
