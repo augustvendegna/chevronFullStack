@@ -147,6 +147,7 @@ export class SettingsComponent {
   }
 
   public onKeyFileChange(event: any){
+    //console.log(event.target.files[0]);
     this.answerKey = event.target.files[0];
   }
 
@@ -156,6 +157,8 @@ export class SettingsComponent {
 
   public uploadNewChallenge(){
     console.log("wants to upload");
-    this.uploadService.createNewChallenge(this.answerKey, "Test Desc!", this.sampleData);
+    this.uploadService.createNewChallenge(this.answerKey, "Test Desc!", this.sampleData).subscribe(resp => {
+      alert("Uploaded")
+    });
   }
 }
