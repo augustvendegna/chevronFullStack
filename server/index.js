@@ -129,6 +129,12 @@ app.get("/getSubmissionID", async (req, res) => {
   console.log(values.rows);
 });
 
+app.get("/getTestFlag", async (req, res) => {
+  const values = await pgClient.query("SELECT testFlag FROM challenges WHERE challenge_id = $1", [req.query.CID]);
+  res.send(values.rows);
+  console.log(values.rows);
+});
+
 
 //getting files and reading
 
@@ -177,6 +183,9 @@ app.post("/computeScore", (req, res) => {
 
       actual.push(parseInt(curRow[3]));
     }
+
+    //check for flags on what tests to run
+
     var score = alg.rmse_c(actual, predicted)
     console.log(score);
     pgClient.query("UPDATE submissions SET score = $1 WHERE submission_id = $2", [score, submission_id]);

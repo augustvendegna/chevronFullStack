@@ -57,6 +57,15 @@ export class UploadService {
     );
   }
 
+  getTestFlag(CID:string){
+    let params = new HttpParams();
+    params = params.append('CID', CID);
+    return this.httpClient.get(`${this.configUrl}/getTestFlag`, {params:params})
+    .pipe(
+      catchError(err => { return this.handleError(err) })
+    );
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.

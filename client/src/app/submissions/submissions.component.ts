@@ -33,6 +33,8 @@ export class SubmissionsComponent {
         alert("uploaded")
       });
       var response: Object[];
+      var testFlag: Object[];
+      localStorage.setItem('CID', this.challenge_id.toString());
 
         this.uploadService.sentInfo(this.fileName, this.challenge_id, true, parseInt(localStorage.getItem('UID')), this.score).subscribe(resp => {
           alert("sent");
@@ -42,16 +44,25 @@ export class SubmissionsComponent {
             resp = resp.replaceAll(":", ",");
             resp = resp.replaceAll("}", ",");
             var splitResp = resp.split(",");
+            this.uploadService.getTestFlag(localStorage.getItem('CID')).subscribe((data: Object[]) => {
+              testFlag = data;
+              var resp = JSON.stringify(testFlag[0]);
+              resp = resp.replaceAll(":", ",");
+              resp = resp.replaceAll("}", ",");
+              resp = resp.replaceAll(/["']/g, ",");
+              var splitResp = resp.split(",");
+              console.log(splitResp[4]);
+            });
             this.uploadService.computeScore(parseInt(splitResp[1])).subscribe(resp => {
             });
 
-            alert("computed");
+            });
+            alert("computed")
         });
 
-      }); 
-      
-    } else {
-      alert("Please select a file first");
+      } 
+       else {
+      alert("Please select a file first")
     }
   }
 }
