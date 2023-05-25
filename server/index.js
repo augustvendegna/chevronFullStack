@@ -123,15 +123,18 @@ app.get("/getLeaderboardInfo", async (req, res) => {
   console.log(values.rows);
 });
 
+app.get("/getSubmissionID", async (req, res) => {
+  const values = await pgClient.query("SELECT submission_id FROM submissions WHERE user_id = $1 ORDER BY submission_time LIMIT 1", [req.query.UID])
+  res.send(values.rows);
+  console.log(values.rows);
+});
+
 
 //getting files and reading
 
 app.post("/computeScore", (req, res) => {
-  var filename = req.body.filename;
-  var challenge_id = req.body.challenge_id;
-
-  console.log(filename);
-  console.log(challenge_id);
+  var score = req.body.score;
+  var submission_id = req.body.submission_id;
 
   const csv = require('csv-parser')
   const fs = require('fs');
@@ -176,7 +179,7 @@ app.post("/computeScore", (req, res) => {
     }
     var score = alg.rmse_c(actual, predicted)
     console.log(score);
-    pgClient.query("UPDATE submissions SET score = $1 WHERE filename = $2", [score, filename]);
+    pgClient.query("UPDATE submissions SET score = $1 WHERE submission_id = $2", [score, submission_id]);
 
   });
 });

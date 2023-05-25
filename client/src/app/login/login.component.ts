@@ -51,6 +51,7 @@ export class LoginComponent {
       var first_name = splitResp[3].substring(1);
       first_name = first_name.slice(0, -1);
       localStorage.setItem('first_name', first_name);
+      localStorage.setItem('UID', splitResp[1]);
       localStorage.setItem('email', this.email);
       localStorage.setItem('password', this.password); // probably not needed? dont think we will need it again
       this.router.navigate(['home']);

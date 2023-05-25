@@ -32,16 +32,23 @@ export class SubmissionsComponent {
       this.uploadService.addSubmission(this.selectedFile).subscribe(resp => {
         alert("uploaded")
       })
+      var response: Object[];
 
-      this.uploadService.sentInfo(this.fileName, this.challenge_id, true, this.user_id, this.score).subscribe(resp => {
-        alert("sent");
-        this.uploadService.computeScore(this.fileName, this.challenge_id).subscribe(resp => {
-          
+        this.uploadService.sentInfo(this.fileName, this.challenge_id, true, parseInt(localStorage.getItem('UID')), this.score).subscribe(resp => {
+          alert("sent");
+          this.uploadService.getSubmissionID(parseInt(localStorage.getItem('UID'))).subscribe((data: Object[]) => {
+            response = data;
+            var resp = JSON.stringify(response[0]);
+            resp = resp.replaceAll(":", ",");
+            resp = resp.replaceAll("}", ",");
+            var splitResp = resp.split(",");
+            this.uploadService.computeScore(parseInt(splitResp[1])).subscribe(resp => {
+            });
+
+            alert("computed")
         });
-        alert("computed")
-      });
 
-      
+      }); 
       
     } else {
       alert("Please select a file first")

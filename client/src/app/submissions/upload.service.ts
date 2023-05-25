@@ -40,9 +40,18 @@ export class UploadService {
 
   }
 
-  computeScore(filename:string, challenge_id:number) {
+  computeScore(submission_id:number) {
     console.log("here");
-    return this.httpClient.post(`${this.configUrl}/computeScore`, { filename, challenge_id})
+    return this.httpClient.post(`${this.configUrl}/computeScore`, { submission_id})
+    .pipe(
+      catchError(err => { return this.handleError(err) })
+    );
+  }
+
+  getSubmissionID(UID:number) {
+    let params = new HttpParams();
+    params = params.append('UID', UID);
+    return this.httpClient.get(`${this.configUrl}/getSubmissionID`, {params:params})
     .pipe(
       catchError(err => { return this.handleError(err) })
     );
