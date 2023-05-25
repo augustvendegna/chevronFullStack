@@ -124,7 +124,7 @@ app.get("/getLeaderboardInfo", async (req, res) => {
 });
 
 app.get("/getSubmissionID", async (req, res) => {
-  const values = await pgClient.query("SELECT submission_id FROM submissions WHERE user_id = $1 ORDER BY submission_time LIMIT 1", [req.query.UID])
+  const values = await pgClient.query("SELECT submission_id FROM submissions WHERE user_id = $1 ORDER BY submission_time DESC LIMIT 1", [req.query.UID])
   res.send(values.rows);
   console.log(values.rows);
 });

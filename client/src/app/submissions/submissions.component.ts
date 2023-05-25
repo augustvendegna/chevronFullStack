@@ -31,7 +31,7 @@ export class SubmissionsComponent {
       this.fileName = this.selectedFile.name;
       this.uploadService.addSubmission(this.selectedFile).subscribe(resp => {
         alert("uploaded")
-      })
+      });
       var response: Object[];
 
         this.uploadService.sentInfo(this.fileName, this.challenge_id, true, parseInt(localStorage.getItem('UID')), this.score).subscribe(resp => {
@@ -45,13 +45,13 @@ export class SubmissionsComponent {
             this.uploadService.computeScore(parseInt(splitResp[1])).subscribe(resp => {
             });
 
-            alert("computed")
+            alert("computed");
         });
 
       }); 
       
     } else {
-      alert("Please select a file first")
+      alert("Please select a file first");
     }
   }
 }
