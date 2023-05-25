@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ValueServiceService } from '../value-service.service';
+import { UploadService } from '../submissions/upload.service';
 
 @Component({
   selector: 'app-settings',
@@ -18,8 +19,12 @@ export class SettingsComponent {
   public resetTargetUserPassword: boolean;
   public invalidUser: boolean;
 
+  public answerKey: File;
+  public sampleData: File;
+  public challengeDescription: string;
 
-  constructor(private valueService: ValueServiceService){
+
+  constructor(private valueService: ValueServiceService, private uploadService: UploadService){
     this.isChangingAccount = false;
     this.invalidUser = false;
     this.resetTargetUserPassword = false;
@@ -139,5 +144,18 @@ export class SettingsComponent {
     }
 
     this.isChangingAccount = false;
+  }
+
+  public onKeyFileChange(event: any){
+    this.answerKey = event.target.files[0];
+  }
+
+  public onSampleFileChange(event: any){
+    this.sampleData = event.target.files[0];
+  }
+
+  public uploadNewChallenge(){
+    console.log("wants to upload");
+    this.uploadService.createNewChallenge(this.answerKey, "Test Desc!", this.sampleData);
   }
 }

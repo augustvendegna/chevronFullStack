@@ -10,7 +10,7 @@
             </div>
             <div class = "upload">
                 <br>
-                <input type="file" class="file-input" id="file" />
+                <input type="file" class="file-input" id="file" (change)="onKeyFileChange($event)"/>
             </div>
         </div>   
         
@@ -34,11 +34,11 @@
             </div>
             <div class = "upload">
                 <br>
-                <input type="file" class="file-input" id="file" />
+                <input type="file" class="file-input" id="file" (change)="onSampleFileChange($event)"/>
             </div>
         </div>  
 
-        <button > create challenge!</button>
+        <button (click) = "uploadNewChallenge()"> create challenge!</button>
 
     </div>
     <br>

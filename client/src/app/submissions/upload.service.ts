@@ -30,6 +30,16 @@ export class UploadService {
     );
   }
 
+  createNewChallenge(answerKey:File, description:string, sampleData:File){
+    let formParams = new FormData();
+    formParams.append('file', answerKey, answerKey.name); // this only does the answerKey
+    return this.httpClient.post(`${this.configUrl}/addChallengeKey`, formParams)
+    .pipe(
+      catchError(err => { return this.handleError(err) })
+    );
+
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.

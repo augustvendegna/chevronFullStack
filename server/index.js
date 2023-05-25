@@ -82,7 +82,14 @@ app.post('/addSubmission', upload.single('file'), function(req,res) {
   debug(req.file);
   console.log('storage location is', req.hostname +'/' + req.file.path);
   return res.send(req.file);
-})
+});
+
+app.post('/addChallengeKey', upload.single('file'), function(req,res) {
+  console.log("what");
+  debug(req.file);
+  console.log('storage location is', req.hostname +'/' + req.file.path);
+  return res.send(req.file);
+});
 
 
 app.post("/addSubmissionInfo", async (req, res) => {
