@@ -122,12 +122,16 @@ const RMSE = require('rmse');
 
 ///////////////// CALCULATION (Root Mean Squared Error) /////////////////////////
 
-function rmse_c(a, b) {
+function rmse_c() {
+    aa = arguments[0];
+    bb = arguments[1];
 	let error = 0
-	for (let i = 0; i < a.length; i++) {
-		error += Math.sqrt(mse_c(a, b))
+    console.log(arguments);
+	for (let i = 0; i < aa.length; i++) {
+		error += Math.sqrt(mse_c(aa, bb))
 	}
-	return error / a.length
+    
+	return error / aa.length
 }
 
 console.log("Root Mean Squared Error:")
