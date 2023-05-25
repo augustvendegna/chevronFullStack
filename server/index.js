@@ -126,7 +126,7 @@ app.get("/getLeaderboardInfo", async (req, res) => {
 
 //getting files and reading
 
-app.post("/computeScore", async (req, res) => {
+app.post("/computeScore", (req, res) => {
   var filename = req.body.filename;
   var challenge_id = req.body.challenge_id;
 
@@ -174,7 +174,9 @@ app.post("/computeScore", async (req, res) => {
 
       actual.push(parseInt(curRow[3]));
     }
-    console.log(alg.rmse_c(actual, predicted));
+    var score = alg.rmse_c(actual, predicted)
+    console.log(score);
+    pgClient.query("UPDATE submissions SET score = $1 WHERE filename = $2", [score, filename]);
 
   });
 });

@@ -33,13 +33,15 @@ export class SubmissionsComponent {
         alert("uploaded")
       })
 
-      this.uploadService.computeScore(this.fileName, this.challenge_id).subscribe(resp => {
-        alert("computed")
-      })
-
       this.uploadService.sentInfo(this.fileName, this.challenge_id, true, this.user_id, this.score).subscribe(resp => {
-        alert("sent")
-      })
+        alert("sent");
+        this.uploadService.computeScore(this.fileName, this.challenge_id).subscribe(resp => {
+          
+        });
+        alert("computed")
+      });
+
+      
       
     } else {
       alert("Please select a file first")
