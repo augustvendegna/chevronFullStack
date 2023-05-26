@@ -78,16 +78,35 @@ var storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+
+
 app.post('/addSubmission', upload.single('file'), function(req,res) {
   debug(req.file);
   console.log('storage location is', req.hostname +'/' + req.file.path);
   return res.send(req.file);
 });
 
-app.post('/addChallengeKey', upload.single('file'), function(req,res) {
-  console.log("what");
+
+var challengeStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './challenges')
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname)
+  }
+})
+
+const challengeUpload = multer({ storage :challengeStorage});
+
+app.post('/addChallengeKey', challengeUpload.single('file'), async function(req,res) {
+  //console.log("what");
   debug(req.file);
+  await pgClient.query("INSERT INTO challenges VALUES(DEFAULT, 'c minus one', DEFAULT, DEFAULT, DEFAULT, DEFAULT, 'rmse_c')");
+  const values = await pgClient.query("SELECT challenge_id FROM challenges ORDER BY challenge_id DESC LIMIT 1");
+  //const result = [values.rows.map(row => (row.first_name + " " + row.last_name))];
+  console.log(values.rows);
   console.log('storage location is', req.hostname +'/' + req.file.path);
+  
   return res.send(req.file);
 });
 
