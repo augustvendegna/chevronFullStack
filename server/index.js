@@ -183,18 +183,17 @@ app.post("/computeScore", (req, res) => {
         var curRow = curString.split(/,|:/);
 
         predicted.push(parseInt(curRow[3]));
-          
       }
-  
 
   });
-  
+
+  setTimeout(() =>
   fs.createReadStream('./challenges/key_1.csv').pipe(csv())
   .on('data', (data) => {
     aResults.push(data);
   }) 
   .on('end', () =>{
-    
+
     for(let i = 0; i < aResults.length; i++){
       var curString = JSON.stringify(aResults[i]);
       curString = curString.replaceAll("}", "");
@@ -208,12 +207,11 @@ app.post("/computeScore", (req, res) => {
     switch(testFlag){
       case "rmse_c":{
       var score = alg.rmse_c(actual, predicted)
-      console.log(score);
       pgClient.query("UPDATE submissions SET score = $1 WHERE submission_id = $2", [score, submission_id]);
       }
     }
 
-  });
+  }), 10000);
 });
 
 

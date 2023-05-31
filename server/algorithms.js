@@ -129,7 +129,7 @@ function rmse_c() {
 	for (let i = 0; i < aa.length; i++) {
 		error += Math.sqrt(mse_c(aa, bb))
 	}
-    
+
 	return error / aa.length
 }
 
