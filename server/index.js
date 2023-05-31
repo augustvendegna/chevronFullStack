@@ -206,9 +206,21 @@ app.post("/computeScore", (req, res) => {
     //check for flags on what tests to run
     switch(testFlag){
       case "rmse_c":{
-      var score = alg.rmse_c(actual, predicted)
-      pgClient.query("UPDATE submissions SET score = $1 WHERE submission_id = $2", [score, submission_id]);
+        var score = alg.rmse_c(actual, predicted)
       }
+      case "MAE":{
+        var score = alg.calculateMeanAbsoluteError(actual, predicted)
+      }
+      case "mse_c":{
+        var score = alg.mse_c(actual, predicted)
+      }
+      case "rsq":{
+        var score = alg.rsq(actual, predicted);
+      }
+      case "fscore":{
+        var score = alg.fscore(actual, predicted);
+      }
+      pgClient.query("UPDATE submissions SET score = $1 WHERE submission_id = $2", [score, submission_id]);
     }
 
   }), 10000);

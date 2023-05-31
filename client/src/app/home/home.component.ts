@@ -44,9 +44,6 @@ export class HomeComponent {
     
     for(let i = 0; i < this.splitResp.length; i+=4){
       var curRow: String[] = [];
-
-        console.log(this.splitResp);
-      
         curRow.push(this.splitResp[i+1]);
         curRow.push(this.splitResp[i+3]);
         this.leaderboard.push(curRow);

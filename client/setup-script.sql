@@ -10,7 +10,7 @@ CREATE TABLE users(
     is_enabled BOOLEAN,
     status_date TIMESTAMP,
     is_admin BOOLEAN,
-    username TEXT
+    username TEXT,
 
     PRIMARY KEY(user_id)
 );
