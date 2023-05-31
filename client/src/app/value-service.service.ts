@@ -14,8 +14,9 @@ export class ValueServiceService {
 
   addUser(first:string, last:string, email:string, password:string, is_enabled:boolean, is_admin:boolean){
     now: String;
+    var username: string = email.substring(0, email.lastIndexOf('@'));
     const now = formatDate(new Date());
-    return this.http.post(`${this.configUrl}/addUser`, { first, last, email, password, now, is_enabled, is_admin})
+    return this.http.post(`${this.configUrl}/addUser`, { first, last, email, password, now, is_enabled, is_admin, username})
     .pipe(
       catchError(err => { return this.handleError(err) })
     );

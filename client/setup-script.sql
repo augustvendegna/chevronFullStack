@@ -10,6 +10,7 @@ CREATE TABLE users(
     is_enabled BOOLEAN,
     status_date TIMESTAMP,
     is_admin BOOLEAN,
+    username TEXT
 
     PRIMARY KEY(user_id)
 );
@@ -59,5 +60,6 @@ INSERT INTO users (
     '2000-12-13',
     FALSE,
     '2000-12-13',
-    FALSE
+    FALSE,
+    'smith'
 );

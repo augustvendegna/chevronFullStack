@@ -42,12 +42,13 @@ export class HomeComponent {
   }
   public updateLeaderBoard(){
     
-    for(let i = 0; i < this.splitResp.length; i+=6){
+    for(let i = 0; i < this.splitResp.length; i+=4){
       var curRow: String[] = [];
+
+        console.log(this.splitResp);
       
         curRow.push(this.splitResp[i+1]);
         curRow.push(this.splitResp[i+3]);
-        curRow.push(this.splitResp[i+5]);
         this.leaderboard.push(curRow);
     }
   }

@@ -50,7 +50,7 @@ app.get("/getUser", async (req, res) => {
 app.post("/addUser", async (req, res) => {
   if (!req.body.value) res.send({ working: false });
 
-  pgClient.query("INSERT INTO users VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8)", [req.body.first, req.body.last, req.body.email, req.body.password, req.body.now, req.body.is_enabled, req.body.now, req.body.is_admin]);
+  pgClient.query("INSERT INTO users VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9)", [req.body.first, req.body.last, req.body.email, req.body.password, req.body.now, req.body.is_enabled, req.body.now, req.body.is_admin, req.body.username]);
 
   //res.send({ working: true });
 });
@@ -137,7 +137,7 @@ app.post("/changePassword", async (req, res) => {
 });
 
 app.get("/getLeaderboardInfo", async (req, res) => {
-  const values = await pgClient.query("SELECT u.first_name, u.last_name, MAX(s.score) FROM users u, submissions s WHERE u.user_id = s.user_id GROUP BY u.first_name, u.last_name ORDER BY MAX(s.score) ASC")
+  const values = await pgClient.query("SELECT u.username, MAX(s.score) FROM users u, submissions s WHERE u.user_id = s.user_id GROUP BY u.username ORDER BY MAX(s.score) ASC")
   res.send(values.rows);
   console.log(values.rows);
 });
