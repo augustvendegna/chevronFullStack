@@ -29,6 +29,11 @@ export class SubmissionsComponent {
     this.challenge_id = 1;
     if (this.selectedFile) {
       this.fileName = this.selectedFile.name;
+      if(this.fileName.substring(this.fileName.lastIndexOf('.')+1) != "csv"){
+        alert("incorrect file type")
+
+      }
+      else{
       this.uploadService.addSubmission(this.selectedFile).subscribe(resp => {
         alert("uploaded")
       });
@@ -59,7 +64,7 @@ export class SubmissionsComponent {
             });
             alert("computed")
         });
-
+      }
       } 
        else {
       alert("Please select a file first")
