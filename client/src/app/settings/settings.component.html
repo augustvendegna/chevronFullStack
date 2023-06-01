@@ -22,7 +22,7 @@
             </div>
             <div class = "upload">
                 <br>
-                <textarea class = "text-input" name="description_text" cols="50" rows="10"></textarea>
+                <textarea class = "text-input" name="description_text" cols="50" rows="10" [(ngModel)]="challengeDescription"></textarea>
             </div>
         </div> 
 
@@ -46,7 +46,7 @@
             </div>
             <div class = "upload">
                 <br>
-                <input type="text" />
+                <input type="text" [(ngModel)]="authorName" />
             </div>
         </div> 
         
@@ -55,11 +55,11 @@
         <div class = "two-col">
             <div class = "words">
                 <p> start: </p>
-                <input type="datetime-local" />
+                <input type="datetime-local" [(ngModel)]="pubStartDate"/>
             </div>
             <div class = "upload">
                 <p> end: </p>
-                <input type="datetime-local" />
+                <input type="datetime-local" [(ngModel)]="pubEndDate"/>
                 <br> <br>
             </div>
         </div> 
@@ -70,11 +70,11 @@
         <div class = "two-col">
             <div class = "words">
                 <p> start: </p>
-                <input type="datetime-local" />
+                <input type="datetime-local" [(ngModel)]="priStartDate"/>
             </div>
             <div class = "upload">
                 <p> end: </p>
-                <input type="datetime-local" />
+                <input type="datetime-local" [(ngModel)]="priEndDate"/>
                 <br> <br>
             </div>
         </div>
@@ -88,7 +88,7 @@
             </div>
             <div class = "upload">
                 <br>
-                <select name="testtype" id="testtype">
+                <select name="testtype" id="testtype" [(ngModel)]="algoType">
                     <option value="MAE">mean absolute error</option>
                     <option value="mse_c">mean squared error</option>
                     <option value="rmse_c">root mean squared error</option>

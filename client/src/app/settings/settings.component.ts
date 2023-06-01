@@ -22,6 +22,12 @@ export class SettingsComponent {
   public answerKey: File;
   public sampleData: File;
   public challengeDescription: string;
+  public authorName: string;
+  public pubStartDate: string;
+  public pubEndDate: string;
+  public priStartDate: string;
+  public priEndDate: string;
+  public algoType: string;
 
 
   constructor(private valueService: ValueServiceService, private uploadService: UploadService){
@@ -152,12 +158,15 @@ export class SettingsComponent {
   }
 
   public onSampleFileChange(event: any){
+    //console.log(event.target.files[0]);
     this.sampleData = event.target.files[0];
   }
 
   public uploadNewChallenge(){
-    console.log("wants to upload");
-    this.uploadService.createNewChallenge(this.answerKey, "Test Desc!", this.sampleData).subscribe(resp => {
+    // needs answer key, description, sample dataset, author name, public phase start/end dates, private start + end, 
+    // and test algorihtm
+    console.log(this.challengeDescription);
+    this.uploadService.createNewChallenge(this.answerKey, this.challengeDescription, this.sampleData, this.authorName, this.pubStartDate, this.pubEndDate, this.priStartDate, this.priEndDate, this.algoType)?.subscribe(_ => {
       alert("Uploaded")
     });
   }
