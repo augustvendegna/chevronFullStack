@@ -41,10 +41,15 @@ export class LoginComponent {
     resp : String;
     var resp = JSON.stringify(this.response[0]);
     //console.log(resp);
+    try {
+      resp = resp.replaceAll(":", ",");
+      var splitResp = resp.split(",");
+      console.log(splitResp);
+    }
+    catch {
+      
+    }
     
-    resp = resp.replaceAll(":", ",");
-    var splitResp = resp.split(",");
-    console.log(splitResp);
     if (this.response.length == 1 && splitResp[15]) { // account is enabled as well
       // backend found a single entry in the databse that matches the provided credentials
       localStorage.setItem('is_admin', splitResp[21].slice(0,-1));
@@ -55,6 +60,9 @@ export class LoginComponent {
       localStorage.setItem('email', this.email);
       localStorage.setItem('password', this.password); // probably not needed? dont think we will need it again
       this.router.navigate(['home']);
+    }
+    else {
+      alert("invalid username or password.")
     }
 
     });
