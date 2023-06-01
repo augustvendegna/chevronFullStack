@@ -52,7 +52,8 @@ export class LoginComponent {
     
     if (this.response.length == 1 && splitResp[15]) { // account is enabled as well
       // backend found a single entry in the databse that matches the provided credentials
-      localStorage.setItem('is_admin', splitResp[21].slice(0,-1));
+      localStorage.setItem('is_admin', splitResp[21]);
+      console.log(localStorage.getItem('is_admin'));
       var first_name = splitResp[3].substring(1);
       first_name = first_name.slice(0, -1);
       localStorage.setItem('first_name', first_name);
