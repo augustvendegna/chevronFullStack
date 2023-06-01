@@ -220,24 +220,46 @@ app.post("/computeScore", (req, res) => {
     //check for flags on what tests to run
     switch(testFlag){
       case "rmse_c":{
-        var score = alg.rmse_c(actual, predicted)
+        var score = alg.rmse_c(actual, predicted);
+        var tempScore = score.toPrecision(2);
+        pgClient.query("UPDATE submissions SET score = $1 WHERE submission_id = $2", [score, submission_id]);
+        break;
       }
       case "MAE":{
-        var score = alg.calculateMeanAbsoluteError(actual, predicted)
+        var score = alg.calculateMeanAbsoluteError(actual, predicted);
+        var tempScore = score.toPrecision(2);
+        pgClient.query("UPDATE submissions SET score = $1 WHERE submission_id = $2", [score, submission_id]);
+        break;
       }
       case "mse_c":{
-        var score = alg.mse_c(actual, predicted)
+        var score = alg.mse_c(actual, predicted);
+        var tempScore = score.toPrecision(2);
+        pgClient.query("UPDATE submissions SET score = $1 WHERE submission_id = $2", [score, submission_id]);
+        break;
       }
       case "rsq":{
         var score = alg.rsq(actual, predicted);
+        var tempScore = parseFloat(score.toPrecision(2));
+        console.log(tempScore);
+        pgClient.query("UPDATE submissions SET score = $1 WHERE submission_id = $2", [tempScore, submission_id]);
+        break;
       }
       case "fscore":{
         var score = alg.fscore(actual, predicted);
+        var tempScore = score.toPrecision(2);
+        pgClient.query("UPDATE submissions SET score = $1 WHERE submission_id = $2", [score, submission_id]);
+        break;
       }
-      pgClient.query("UPDATE submissions SET score = $1 WHERE submission_id = $2", [score, submission_id]);
+      //not completely functional yet
+      case "recall":{
+        var score = alg.recallTest(actual, predicted);
+        var tempScore = score.toPrecision(2);
+        pgClient.query("UPDATE submissions SET score = $1 WHERE submission_id = $2", [score, submission_id]);
+        break;
+      }
     }
 
-  }), 10000);
+  }), 5000);
 });
 
 

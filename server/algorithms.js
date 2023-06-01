@@ -168,19 +168,23 @@ console.log('NPM: ', fscore(a, b), '\n');
 
 ///////////////// TENSORFLOW (Recall) /////////////////////////
 
-// Creating 2-D tensor of true values
-const yTrue = tf.tensor2d([
-	y
-]);
+function recallTest(a, b){
+    // Creating 2-D tensor of true values
+    const yTrue = tf.tensor2d([
+        a
+    ]);
 
-// Creating 2-D tensor of predicted values
-const yPred = tf.tensor2d([
-	x
-]);
+    // Creating 2-D tensor of predicted values
+    const yPred = tf.tensor2d([
+        b
+    ]);
 
-// Getting the result from the recall function
-const recallResult = tf.metrics.recall(yTrue, yPred);
+    // Getting the result from the recall function
+    const recallResult = tf.metrics.recall(yTrue, yPred);
+    return recallResult;
+}
+
 console.log('Recall: ')
-recallResult.print();
+console.log(recallTest(a, b));
 
-module.exports = {calculateMeanAbsoluteError, mse_c, rmse_c, rsq, fscore, recallResult}
+module.exports = {calculateMeanAbsoluteError, mse_c, rmse_c, rsq, fscore, recallTest}
