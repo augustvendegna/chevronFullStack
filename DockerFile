@@ -1,0 +1,33 @@
+# https://luppeng.wordpress.com/2020/02/28/install-and-start-postgresql-on-alpine-linux/
+
+
+FROM node:18.16.0-alpine
+
+RUN apk -U upgrade
+RUN apk update
+RUN apk add postgresql
+
+
+COPY client ./client/
+COPY server ./server/
+COPY setup-script.sql .
+
+# IMPORTANT!
+# DO NOT AUTO-EXPOSE PORTS !!
+EXPOSE 4200
+
+#RUN mkdir ./server/uploads
+#RUN mkdir ./server/competitions
+RUN mkdir /run/postgresql
+RUN chown postgres:postgres /run/postgresql/
+
+WORKDIR /client
+RUN npm install -g @angular/cli
+RUN echo N | ng analytics off
+
+# not sure if the following line is correct
+# RUN nohup node ./server/index.js
+# RUN cd ./client
+
+#CMD ["ng", “serve”]
+
