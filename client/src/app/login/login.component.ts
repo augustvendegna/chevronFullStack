@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { ValueServiceService } from '../value-service.service';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import * as bcrypt from "bcryptjs";
+
 
 
 @Component({
@@ -15,6 +17,7 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   public email: string;
   public password: string;
+  public passwordValid: boolean;
   
   public response: Object[];
   
@@ -34,8 +37,9 @@ export class LoginComponent {
     //console.log('Password: ' + this.password);
 
 
-    this.valueService.getUser(this.email, this.password).subscribe((data: Object[]) => {
+    this.valueService.getUser(this.email).subscribe((data: Object[]) => {
       this.response = data;
+      this.passwordValid = false;
     
     //check response to see if the user exists
     resp : String;
@@ -49,8 +53,19 @@ export class LoginComponent {
     catch {
       
     }
-    
-    if (this.response.length == 1 && splitResp[15]) { // account is enabled as well
+    console.log(this.email);
+    console.log(this.password);
+    console.log(splitResp[9].replaceAll("\"", ""));
+    bcrypt.compareSync(this.password, splitResp[9].replaceAll("\"", ""))
+    console.log(bcrypt.compareSync(this.password, splitResp[9].replaceAll("\"", "")));
+    bcrypt.compareSync(this.password, splitResp[9].replaceAll("\"", ""))
+    console.log(bcrypt.compareSync(this.password, splitResp[9].replaceAll("\"", "")));
+
+    if (bcrypt.compareSync(this.password, splitResp[9].replaceAll("\"", "")) == true) {
+      this.passwordValid = true;
+    }
+
+    if ((this.response.length == 1 && splitResp[15]) && this.passwordValid == true) { // account is enabled as well
       // backend found a single entry in the databse that matches the provided credentials
       localStorage.setItem('is_admin', splitResp[21]);
       console.log(localStorage.getItem('is_admin'));
@@ -58,9 +73,13 @@ export class LoginComponent {
       first_name = first_name.slice(0, -1);
       localStorage.setItem('first_name', first_name);
       localStorage.setItem('UID', splitResp[1]);
+      console.log(this.email);
       localStorage.setItem('email', this.email);
       localStorage.setItem('password', this.password); // probably not needed? dont think we will need it again
       this.router.navigate(['home']);
+      
+
+
     }
     else {
       alert("invalid username or password.")

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import * as bcrypt from "bcryptjs";
 
 @Injectable({
   providedIn: 'root'
@@ -33,11 +34,12 @@ export class ValueServiceService {
 
   }
 */
-  getUser(email:string, password:string){
+  getUser(email:string){
     result:Array<Object>; 
     let params = new HttpParams();
+    //const salt = 10;
+    //const key = salt + Date.now();
     params = params.append('email', email);
-    params = params.append('password', password);
     return this.http.get<Object[]>(`${this.configUrl}/getUser`, {params: params});
     // result.subscribe();
     //console.log(result);

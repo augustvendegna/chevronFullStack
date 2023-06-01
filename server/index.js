@@ -5,6 +5,7 @@ const alg = require("./algorithms");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const bcrypt = require("bcrypt");
 
 const app = express();
 app.use(cors());
@@ -41,16 +42,29 @@ app.get("/users", async (req, res) => {
 //query for login checking
 app.get("/getUser", async (req, res) => {
   console.log(req.query);
-  const values = await pgClient.query("SELECT * FROM users WHERE email = $1 AND password = $2", [req.query.email, req.query.password]);
+  const values = await pgClient.query("SELECT * FROM users WHERE email = $1", [req.query.email]);
   res.send(values.rows);
   //console.log(values);
 });
 
+//const salt = 10;
 // now the post -> insert value
 app.post("/addUser", async (req, res) => {
   if (!req.body.value) res.send({ working: false });
+  /*
+  bcrypt.genSalt(saltRounds).then(salt => {
+    console.log('Salt: ', salt);
+    return bcrypt.hash(req.body.password, salt)
+  }).then(hash => {
+    console.log('Hash: ', hash)
+  }).catch(err => console.error(err.message))
+  */
+  //const timestamp = Date.now();
+  //const key = salt + timestamp;
+  const encodedPass = bcrypt.hashSync(req.body.password, 10);
+  console.log('Salted Pass: ', encodedPass);
 
-  pgClient.query("INSERT INTO users VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9)", [req.body.first, req.body.last, req.body.email, req.body.password, req.body.now, req.body.is_enabled, req.body.now, req.body.is_admin, req.body.username]);
+  pgClient.query("INSERT INTO users VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9)", [req.body.first, req.body.last, req.body.email, encodedPass, req.body.now, req.body.is_enabled, req.body.now, req.body.is_admin, req.body.username]);
 
   //res.send({ working: true });
 });
