@@ -79,6 +79,28 @@
             </div>
         </div>
 
+        <hr>
+
+        
+        <div class = "two-col">
+            <div class = "words">
+                <p>algorithm for this challenge</p>
+            </div>
+            <div class = "upload">
+                <br>
+                <select name="testtype" id="testtype">
+                    <option value="MAE">mean absolute error</option>
+                    <option value="mse_c">mean squared error</option>
+                    <option value="rmse_c">root mean squared error</option>
+                    <option value="rsq">r square</option>
+                    <option value="fscore">f-score</option>
+                    <option value="recall">tensorflow (recall)</option>
+                  </select>
+            </div>
+        </div>
+
+        <br>
+
         <button (click) = "uploadNewChallenge()"> create challenge!</button>
 
     </div>
