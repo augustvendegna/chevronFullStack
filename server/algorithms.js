@@ -179,9 +179,17 @@ function recallTest(a, b){
         b
     ]);
 
+    console.log('Recall: ')
+    var string = JSON.stringify(fscore(a, b, { beta : 1, format : 'detailed'}));
+    string = string.replace(/.*(?=recall)/g, "");
+    string = string.replace("recall", "");
+    string = string.replace("\"", "");
+    string = string.replace(":", "");
+    string = string.replace("}", "");
+    console.log(parseFloat(string));
+
     // Getting the result from the recall function
-    const recallResult = tf.metrics.recall(yTrue, yPred);
-    return recallResult;
+    return parseFloat(string);
 }
 
 console.log('Recall: ')

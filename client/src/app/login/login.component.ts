@@ -74,6 +74,7 @@ export class LoginComponent {
       localStorage.setItem('first_name', first_name);
       localStorage.setItem('UID', splitResp[1]);
       console.log(this.email);
+      localStorage.setItem('current_challenge', '1');
       localStorage.setItem('email', this.email);
       localStorage.setItem('password', this.password); // probably not needed? dont think we will need it again
       this.router.navigate(['home']);

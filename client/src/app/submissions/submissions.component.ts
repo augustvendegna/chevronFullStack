@@ -26,7 +26,7 @@ export class SubmissionsComponent {
   }
 
   submitForm() {
-    this.challenge_id = 2;
+    this.challenge_id = parseInt(localStorage.getItem('current_challenge'));
     if (this.selectedFile) {
       this.fileName = this.selectedFile.name;
       if(this.fileName.substring(this.fileName.lastIndexOf('.')+1) != "csv"){

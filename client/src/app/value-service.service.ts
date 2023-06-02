@@ -60,7 +60,9 @@ export class ValueServiceService {
 
   getLeaderboardInfo(){
     result:Array<Object>; 
-    return this.http.get<Object[]>(`${this.configUrl}/getLeaderboardInfo`);
+    let params = new HttpParams();
+    params = params.append('CID', localStorage.getItem('current_challenge'));
+    return this.http.get<Object[]>(`${this.configUrl}/getLeaderboardInfo`, {params : params});
   }
 
   updateTargetUser(is_enabled:boolean, is_admin:boolean, email:string, ){

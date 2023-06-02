@@ -92,6 +92,11 @@ export class UploadService {
     );
   }
 
+  setChallengeID(CID: string){
+    //will work on later when we get the navbar choice working
+    //localStorage.setItem('current_challenge', CID);
+  }
+
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.

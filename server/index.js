@@ -151,7 +151,7 @@ app.post("/changePassword", async (req, res) => {
 });
 
 app.get("/getLeaderboardInfo", async (req, res) => {
-  const values = await pgClient.query("SELECT u.username, MAX(s.score) FROM users u, submissions s WHERE u.user_id = s.user_id GROUP BY u.username ORDER BY MAX(s.score) ASC")
+  const values = await pgClient.query("SELECT u.username, MAX(s.score) FROM users u, submissions s WHERE u.user_id = s.user_id AND challenge_id = $1 GROUP BY u.username ORDER BY MAX(s.score) ASC", [req.query.CID])
   res.send(values.rows);
   console.log(values.rows);
 });
