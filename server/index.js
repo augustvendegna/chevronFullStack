@@ -115,10 +115,10 @@ const challengeUpload = multer({ storage :challengeStorage});
 app.post('/addChallengeKey', challengeUpload.single('file'), async function(req,res) {
   //console.log("what");
   debug(req.file);
-  await pgClient.query("INSERT INTO challenges VALUES(DEFAULT, 'c minus one', DEFAULT, DEFAULT, DEFAULT, DEFAULT, 'rmse_c')");
-  const values = await pgClient.query("SELECT challenge_id FROM challenges ORDER BY challenge_id DESC LIMIT 1");
+  //await pgClient.query("INSERT INTO challenges VALUES(DEFAULT, 'c minus one', DEFAULT, DEFAULT, DEFAULT, DEFAULT, 'rmse_c')");
+  //const values = await pgClient.query("SELECT challenge_id FROM challenges ORDER BY challenge_id DESC LIMIT 1");
   //const result = [values.rows.map(row => (row.first_name + " " + row.last_name))];
-  console.log(values.rows);
+  //console.log(values.rows);
   console.log('storage location is', req.hostname +'/' + req.file.path);
   
   return res.send(req.file);
@@ -156,10 +156,23 @@ app.get("/getLeaderboardInfo", async (req, res) => {
   console.log(values.rows);
 });
 
-app.get("/getSubmissionID", async (req, res) => {
-  const values = await pgClient.query("SELECT submission_id FROM submissions WHERE user_id = $1 ORDER BY submission_time DESC LIMIT 1", [req.query.UID])
+app.get("/createChallengeEntry", async (req, res) => {
+
+  console.log("INSERT INTO challenges VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7)", [req.query.author, req.query.desc, req.query.pubStartDate, req.query.pubEndDate, req.query.priStartDate, req.query.priEndDate, req.query.algoType]);
+  await pgClient.query("INSERT INTO challenges VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7)", [req.query.author, req.query.desc, req.query.pubStartDate, req.query.pubEndDate, req.query.priStartDate, req.query.priEndDate, req.query.algoType]);
+  
+  // return 
+  const values = await pgClient.query("SELECT challenge_id FROM challenges ORDER BY challenge_id DESC LIMIT 1")
   res.send(values.rows);
   console.log(values.rows);
+});
+
+app.get("/getSubmissionID", async (req, res) => {
+
+  const values = await pgClient.query("SELECT submission_id FROM submissions WHERE user = $1 ORDER BY submission_id DESC LIMIT 1", [req.query.UID])
+  res.send(values.rows);
+  console.log(values.rows);
+
 });
 
 app.get("/getTestFlag", async (req, res) => {

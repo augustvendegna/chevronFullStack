@@ -19,6 +19,7 @@ CREATE TABLE challenges(
     
     challenge_id SERIAL,
     author TEXT,
+    description TEXT,
     public_start_date TIMESTAMP,
     public_end_date TIMESTAMP,
     private_start_date TIMESTAMP,
