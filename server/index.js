@@ -169,7 +169,7 @@ app.get("/createChallengeEntry", async (req, res) => {
 
 app.get("/getSubmissionID", async (req, res) => {
 
-  const values = await pgClient.query("SELECT submission_id FROM submissions WHERE user = $1 ORDER BY submission_id DESC LIMIT 1", [req.query.UID])
+  const values = await pgClient.query("SELECT submission_id FROM submissions WHERE user_id = $1 ORDER BY submission_id DESC LIMIT 1", [req.query.UID])
   res.send(values.rows);
   console.log(values.rows);
 

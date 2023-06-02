@@ -16,12 +16,15 @@ export class AppComponent {
   public isSignedin: boolean;
   public login: LoginComponent;
   public isMenuPage : boolean = true;
+  public current_chal : number;
   
   event;
 
   constructor(private router:Router){
     this.isSignedin = false;
     //this.login = new LoginComponent;
+    this.current_chal = parseInt(localStorage.getItem('currentChallenge'));
+    
     
 
     this.event = this.router.events.subscribe((event : NavigationEvent) => {
@@ -47,6 +50,12 @@ export class AppComponent {
 
   public getItem(item:string){
       return localStorage.getItem(item);
+  }
+
+  public updateChallenge(event : any) {
+    console.log(this.current_chal);
+    localStorage.setItem('current_challenge', this.current_chal.toString());
+    location.reload();
   }
 
 }
