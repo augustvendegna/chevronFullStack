@@ -44,10 +44,10 @@ export class UploadService {
     params = params.append('priStartDate', priStartDate);
     params = params.append('priEndDate', priEndDate);
     params = params.append('algoType', algoType);
-    return this.httpClient.get<Object[]>(`${this.configUrl}/createChallengeEntry`, {params:params});
-
-
-
+    let challengeResp = this.httpClient.get<Object[]>(`${this.configUrl}/createChallengeEntry`, {params:params});
+    let CID = JSON.stringify(challengeResp);
+    console.log(CID);
+    return challengeResp;
     // FOR THE ANSWER KEY
     let formParams = new FormData();
     formParams.append('file', answerKey, answerKey.name); // this only does the answerKey

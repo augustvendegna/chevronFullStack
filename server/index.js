@@ -158,7 +158,6 @@ app.get("/getLeaderboardInfo", async (req, res) => {
 
 app.get("/createChallengeEntry", async (req, res) => {
 
-  console.log("IM HEREE");
   console.log("INSERT INTO challenges VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7)", [req.query.author, req.query.desc, req.query.pubStartDate, req.query.pubEndDate, req.query.priStartDate, req.query.priEndDate, req.query.algoType]);
   await pgClient.query("INSERT INTO challenges VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7)", [req.query.author, req.query.desc, req.query.pubStartDate, req.query.pubEndDate, req.query.priStartDate, req.query.priEndDate, req.query.algoType]);
   
