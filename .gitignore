@@ -1,2 +1,12 @@
 client/.angular/
 server/node_modules/bcrypt/lib/binding/napi-v3/bcrypt_lib.node
+client/node_modules/
+server/node_modules/
+server/package
+client/node_modules/.package-lock.json
+client/node_modules/.package-lock.json
+client/node_modules/.package-lock.json
+client/package-lock.json
+client/package.json
+server/node_modules/.package-lock.json
+client/package-lock.json
