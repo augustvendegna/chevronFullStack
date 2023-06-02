@@ -61,7 +61,11 @@ export class ValueServiceService {
   getLeaderboardInfo(){
     result:Array<Object>; 
     let params = new HttpParams();
+    const now = formatDate(new Date());
+    const UID = localStorage.getItem('UID')
     params = params.append('CID', localStorage.getItem('current_challenge'));
+    params = params.append('curr_date', now);
+    params = params.append('UID', UID);
     return this.http.get<Object[]>(`${this.configUrl}/getLeaderboardInfo`, {params : params});
   }
 
