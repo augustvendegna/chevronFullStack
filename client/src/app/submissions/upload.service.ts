@@ -30,7 +30,7 @@ export class UploadService {
     );
   }
 
-  createNewChallenge(description:string, authorName:string, pubStartDate:string, pubEndDate:string, priStartDate:string, priEndDate:string, algoType:string){
+  createNewChallenge(description:string, authorName:string, pubStartDate:string, pubEndDate:string, priStartDate:string, priEndDate:string, algoType:string, challengeName:string){
     // this.answerKey, this.challengeDescription, this.sampleData, this.authorName, this.pubStartDate, 
     // this.pubEndDate, this.priStartDate, this.priEndDate, this.algoType
 
@@ -44,6 +44,7 @@ export class UploadService {
     params = params.append('priStartDate', priStartDate);
     params = params.append('priEndDate', priEndDate);
     params = params.append('algoType', algoType);
+    params = params.append('challengeName', challengeName);
     return this.httpClient.get<Object[]>(`${this.configUrl}/createChallengeEntry`, {params:params});
   }
 
