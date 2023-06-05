@@ -45,17 +45,6 @@ export class UploadService {
     params = params.append('priEndDate', priEndDate);
     params = params.append('algoType', algoType);
     return this.httpClient.get<Object[]>(`${this.configUrl}/createChallengeEntry`, {params:params});
-    
-    
-
-    // FOR THE SAMPLE DATA
-    // let formParams = new FormData();
-    // formParams.append('file', answerKey, answerKey.name); // this only does the answerKey
-    // return this.httpClient.post(`${this.configUrl}/addChallengeSample`, formParams)
-    // .pipe(
-    //   catchError(err => { return this.handleError(err) })
-    // );
-
   }
 
   uploadChallengeKey(answerKey:File, newName:string){
@@ -68,8 +57,14 @@ export class UploadService {
     );
   }
 
-  uploadSampleData(sampleData:File) {
-
+  uploadSampleData(sampleData:File, sampleName:string) {
+    // FOR THE SAMPLE DATA
+    let formParams = new FormData();
+    formParams.append('file', sampleData, sampleName); // this only does the answerKey
+    return this.httpClient.post(`${this.configUrl}/addChallengeKey`, formParams)
+    .pipe(
+      catchError(err => { return this.handleError(err) })
+    );
   }
 
   computeScore(submission_id:number, testFlag:string) {

@@ -174,6 +174,8 @@ export class SettingsComponent {
       //console.log(CID);
       let newName = CID + "_key.csv";
       this.uploadService.uploadChallengeKey(this.answerKey, newName).subscribe( resp => {});
+      let sampleName = CID + "_sample.csv"
+      this.uploadService.uploadSampleData(this.sampleData, sampleName).subscribe( resp => {});
 
       alert("made in DB")
     });
