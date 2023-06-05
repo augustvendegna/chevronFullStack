@@ -143,6 +143,7 @@ export class SettingsComponent {
     });
     
     if (this.resetTargetUserPassword){
+      // THIS NEEDS TO BE CHANGED
       this.valueService.updatePassword(this.targetEmail, "Chevron!3")?.subscribe(_ => {
         //this.login();
       });
@@ -165,9 +166,16 @@ export class SettingsComponent {
   public uploadNewChallenge(){
     // needs answer key, description, sample dataset, author name, public phase start/end dates, private start + end, 
     // and test algorihtm
-    console.log(this.challengeDescription);
-    this.uploadService.createNewChallenge(this.answerKey, this.challengeDescription, this.sampleData, this.authorName, this.pubStartDate, this.pubEndDate, this.priStartDate, this.priEndDate, this.algoType).subscribe((data: Object[]) => {
-      alert("Uploaded")
+    this.uploadService.createNewChallenge(this.challengeDescription, this.authorName, this.pubStartDate, this.pubEndDate, this.priStartDate, this.priEndDate, this.algoType).subscribe((data: Object[]) => {
+      let jsonResp = JSON.stringify(data[0]);
+      jsonResp.replaceAll('}', "");
+      let splitResp = jsonResp.split(":");
+      let CID = splitResp[1].replaceAll("}", "");
+      //console.log(CID);
+      let newName = CID + "_key.csv";
+      this.uploadService.uploadChallengeKey(this.answerKey, newName).subscribe( resp => {});
+
+      alert("made in DB")
     });
   }
 }

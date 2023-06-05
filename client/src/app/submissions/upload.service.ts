@@ -30,7 +30,7 @@ export class UploadService {
     );
   }
 
-  createNewChallenge(answerKey:File, description:string, sampleData:File, authorName:string, pubStartDate:string, pubEndDate:string, priStartDate:string, priEndDate:string, algoType:string){
+  createNewChallenge(description:string, authorName:string, pubStartDate:string, pubEndDate:string, priStartDate:string, priEndDate:string, algoType:string){
     // this.answerKey, this.challengeDescription, this.sampleData, this.authorName, this.pubStartDate, 
     // this.pubEndDate, this.priStartDate, this.priEndDate, this.algoType
 
@@ -44,25 +44,31 @@ export class UploadService {
     params = params.append('priStartDate', priStartDate);
     params = params.append('priEndDate', priEndDate);
     params = params.append('algoType', algoType);
-    let challengeResp = this.httpClient.get<Object[]>(`${this.configUrl}/createChallengeEntry`, {params:params});
-    let CID = JSON.stringify(challengeResp);
-    console.log(CID);
-    return challengeResp;
+    return this.httpClient.get<Object[]>(`${this.configUrl}/createChallengeEntry`, {params:params});
+    
+    
+
+    // FOR THE SAMPLE DATA
+    // let formParams = new FormData();
+    // formParams.append('file', answerKey, answerKey.name); // this only does the answerKey
+    // return this.httpClient.post(`${this.configUrl}/addChallengeSample`, formParams)
+    // .pipe(
+    //   catchError(err => { return this.handleError(err) })
+    // );
+
+  }
+
+  uploadChallengeKey(answerKey:File, newName:string){
     // FOR THE ANSWER KEY
     let formParams = new FormData();
-    formParams.append('file', answerKey, answerKey.name); // this only does the answerKey
+    formParams.append('file', answerKey, newName); // this only does the answerKey
     return this.httpClient.post(`${this.configUrl}/addChallengeKey`, formParams)
     .pipe(
       catchError(err => { return this.handleError(err) })
     );
+  }
 
-    // FOR THE SAMPLE DATA
-    formParams = new FormData();
-    formParams.append('file', answerKey, answerKey.name); // this only does the answerKey
-    return this.httpClient.post(`${this.configUrl}/addChallengeSample`, formParams)
-    .pipe(
-      catchError(err => { return this.handleError(err) })
-    );
+  uploadSampleData(sampleData:File) {
 
   }
 
