@@ -34,9 +34,7 @@ export class SubmissionsComponent {
 
       }
       else{
-      this.uploadService.addSubmission(this.selectedFile).subscribe(resp => {
-        alert("uploaded")
-      });
+      
       var response: Object[];
       var testFlag: Object[];
       var splitResp2: Object[];
@@ -50,6 +48,9 @@ export class SubmissionsComponent {
             resp = resp.replaceAll(":", ",");
             resp = resp.replaceAll("}", ",");
             var splitResp = resp.split(",");
+            this.uploadService.addSubmission(this.selectedFile, splitResp[1]).subscribe(resp => {
+              alert("uploaded")
+            });
             this.uploadService.getTestFlag(localStorage.getItem('CID')).subscribe((data: Object[]) => {
               testFlag = data;
               var resp2 = JSON.stringify(testFlag[0]);

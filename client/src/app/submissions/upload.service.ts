@@ -12,9 +12,10 @@ export class UploadService {
 
   configUrl = 'http://localhost:5000';
   
-  addSubmission(selectedFile:File){
+  addSubmission(selectedFile:File, SID:string){
     let formParams = new FormData();
-    formParams.append('file', selectedFile, selectedFile.name)
+    //console.log(SID+"_upload.csv");
+    formParams.append('file', selectedFile, SID+"_upload.csv")
     return this.httpClient.post(`${this.configUrl}/addSubmission`, formParams)
     .pipe(
       catchError(err => { return this.handleError(err) })
