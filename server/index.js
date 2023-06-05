@@ -179,7 +179,7 @@ app.get("/getTestFlag", async (req, res) => {
 });
 
 app.get("/getDates", async (req, res) => {
-  const values = await pgClient.query("SELECT public_end_date, private_end_date WHERE challenge_id = $1", [req.query.CID]);
+  const values = await pgClient.query("SELECT public_end_date, private_end_date FROM challenges WHERE challenge_id = $1", [req.query.CID]);
   res.send(values.rows);
   console.log(values.rows);
 });

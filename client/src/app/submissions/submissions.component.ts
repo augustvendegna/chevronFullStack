@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ValueServiceService } from '../value-service.service';
 import { Router } from '@angular/router';
 import { UploadService } from './upload.service';
+import { Timestamp } from 'rxjs';
 
 @Component({
   selector: 'app-submissions',
@@ -39,9 +40,34 @@ export class SubmissionsComponent {
       var testFlag: Object[];
       var splitResp2: Object[];
       localStorage.setItem('CID', this.challenge_id.toString());
-      var dates: Date [];
+      //var dates: Number [];
+      this.uploadService.getDates(localStorage.getItem('CID')).subscribe((data: Object []) => {
+        response = data;
+        var resp = JSON.stringify(response[0]);
+        resp = resp.replaceAll("\":\"", ",");
+        resp = resp.replaceAll(".", ",");
+        resp = resp.replaceAll("-", "/");
+        resp = resp.replaceAll("T", " ");
+        resp = resp.replaceAll("}", ",");
+        var splitResp = resp.split(",");
+        console.log(splitResp)
+        var public_end_date = new Date(splitResp[1]).getTime();
+        console.log(public_end_date);
+        var private_end_date = new Date(splitResp[4]).getTime();
+        console.log(private_end_date);
+        const now = new Date().getTime();
+        console.log(now);
+        if(now < public_end_date){
+          this.is_public = true;
+        }
+        else if(now > public_end_date && now < private_end_date){
+          this.is_public = false;
+        }
+        //dates.push(public_end_date);
+        //dates.push(private_end_date);
+        console.log(this.is_public);
 
-        this.uploadService.sentInfo(this.fileName, this.challenge_id, true, parseInt(localStorage.getItem('UID')), this.score).subscribe(resp => {
+         this.uploadService.sentInfo(this.fileName, this.challenge_id, this.is_public, parseInt(localStorage.getItem('UID')), this.score).subscribe(resp => {
           alert("sent");
           this.uploadService.getSubmissionID(parseInt(localStorage.getItem('UID'))).subscribe((data: Object[]) => {
             response = data;
@@ -66,6 +92,7 @@ export class SubmissionsComponent {
             });
             alert("computed")
         });
+      });
       }
       } 
        else {
