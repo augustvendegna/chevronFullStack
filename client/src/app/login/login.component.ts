@@ -53,14 +53,7 @@ export class LoginComponent {
     catch {
       
     }
-    console.log(this.email);
-    console.log(this.password);
-    console.log(splitResp[9].replaceAll("\"", ""));
-    bcrypt.compareSync(this.password, splitResp[9].replaceAll("\"", ""))
-    console.log(bcrypt.compareSync(this.password, splitResp[9].replaceAll("\"", "")));
-    bcrypt.compareSync(this.password, splitResp[9].replaceAll("\"", ""))
-    console.log(bcrypt.compareSync(this.password, splitResp[9].replaceAll("\"", "")));
-
+    
     if (bcrypt.compareSync(this.password, splitResp[9].replaceAll("\"", "")) == true) {
       this.passwordValid = true;
     }

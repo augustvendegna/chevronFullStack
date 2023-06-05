@@ -90,6 +90,7 @@ export class SettingsComponent {
     this.valueService.updatePassword(localStorage.getItem('email'), this.passwordOne)?.subscribe(_ => {
       // nothing here
     });
+    
     alert("password change confirmed");
   }
 

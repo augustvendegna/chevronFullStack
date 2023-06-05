@@ -79,6 +79,8 @@ export class ValueServiceService {
     
   }
 
+
+
   updatePassword(email:string, password:string){
     now: String;
     const now = formatDate(new Date());
@@ -87,6 +89,18 @@ export class ValueServiceService {
       catchError(err => { return this.handleError(err) })
     );
   }
+
+
+  /*
+  updatePassword(email:string, password:string){
+    now: String;
+    const now = formatDate(new Date());
+    return this.http.post(`${this.configUrl}/changePassword`, { email, password, now})
+    .pipe(
+      catchError(err => { return this.handleError(err) })
+    );
+  }
+  */
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {

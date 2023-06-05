@@ -146,8 +146,9 @@ app.post("/updateTargetUser", async (req, res) => {
 
 app.post("/changePassword", async (req, res) => {
   if (!req.body.value) res.send({ working: false });
-  console.log("UPDATE users SET password = $2, password_date = $3 WHERE email = $1", [req.body.email, req.body.password, req.body.now]);
-  pgClient.query("UPDATE users SET password = $2, password_date = $3 WHERE email = $1", [req.body.email, req.body.password, req.body.now]);
+  const encodedPass = bcrypt.hashSync(req.body.password, 10);
+  console.log("UPDATE users SET password = $2, password_date = $3 WHERE email = $1", [req.body.email, encodedPass, req.body.now]);
+  pgClient.query("UPDATE users SET password = $2, password_date = $3 WHERE email = $1", [req.body.email, encodedPass, req.body.now]);
 });
 
 app.get("/getLeaderboardInfo", async (req, res) => {

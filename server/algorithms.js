@@ -170,23 +170,24 @@ console.log('NPM: ', fscore(a, b), '\n');
 
 function recallTest(a, b){
     // Creating 2-D tensor of true values
+    /*
     const yTrue = tf.tensor2d([
         a
     ]);
-
+    
     // Creating 2-D tensor of predicted values
     const yPred = tf.tensor2d([
         b
     ]);
-
-    console.log('Recall: ')
+    */
+    //console.log('Recall: ')
     var string = JSON.stringify(fscore(a, b, { beta : 1, format : 'detailed'}));
     string = string.replace(/.*(?=recall)/g, "");
     string = string.replace("recall", "");
     string = string.replace("\"", "");
     string = string.replace(":", "");
     string = string.replace("}", "");
-    console.log(parseFloat(string));
+    //console.log(parseFloat(string));
 
     // Getting the result from the recall function
     return parseFloat(string);
