@@ -39,6 +39,7 @@ export class SubmissionsComponent {
       var testFlag: Object[];
       var splitResp2: Object[];
       localStorage.setItem('CID', this.challenge_id.toString());
+      var dates: Date [];
 
         this.uploadService.sentInfo(this.fileName, this.challenge_id, true, parseInt(localStorage.getItem('UID')), this.score).subscribe(resp => {
           alert("sent");

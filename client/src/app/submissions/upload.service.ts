@@ -96,6 +96,16 @@ export class UploadService {
     );
   }
 
+  getDates(CID: string){
+    result:Array<Date>;
+    let params = new HttpParams();
+    params = params.append('CID', CID);
+    return this.httpClient.get(`${this.configUrl}/getDates`, {params:params})
+    .pipe(
+      catchError(err => { return this.handleError(err) })
+    );
+  }
+
   setChallengeID(CID: string){
     //will work on later when we get the navbar choice working
     //localStorage.setItem('current_challenge', CID);
