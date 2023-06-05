@@ -51,7 +51,7 @@ export class LoginComponent {
       console.log(splitResp);
     }
     catch {
-      
+      alert("invalid username or password.")
     }
     
     if (bcrypt.compareSync(this.password, splitResp[9].replaceAll("\"", "")) == true) {
