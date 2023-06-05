@@ -28,6 +28,7 @@ export class SettingsComponent {
   public priStartDate: string;
   public priEndDate: string;
   public algoType: string;
+  public challengeName: string;
 
 
   constructor(private valueService: ValueServiceService, private uploadService: UploadService){
@@ -167,7 +168,7 @@ export class SettingsComponent {
   public uploadNewChallenge(){
     // needs answer key, description, sample dataset, author name, public phase start/end dates, private start + end, 
     // and test algorihtm
-    this.uploadService.createNewChallenge(this.challengeDescription, this.authorName, this.pubStartDate, this.pubEndDate, this.priStartDate, this.priEndDate, this.algoType).subscribe((data: Object[]) => {
+    this.uploadService.createNewChallenge(this.challengeDescription, this.authorName, this.pubStartDate, this.pubEndDate, this.priStartDate, this.priEndDate, this.algoType, this.challengeName).subscribe((data: Object[]) => {
       let jsonResp = JSON.stringify(data[0]);
       jsonResp.replaceAll('}', "");
       let splitResp = jsonResp.split(":");

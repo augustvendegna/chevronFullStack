@@ -25,6 +25,7 @@ CREATE TABLE challenges(
     private_start_date TIMESTAMP,
     private_end_date TIMESTAMP,
     testFlag TEXT,
+    challenge_name TEXT,
 
     PRIMARY KEY(challenge_id)
 

@@ -20,9 +20,9 @@
       <div class = "other">
         <p> Hi, {{ getItem('first_name')}}</p>
         <a><select name="selectedCompetition" id="selectedCompetition" [(ngModel)]="current_chal" (change)="updateChallenge($event)"> 
-          <option value="1">HotDogs</option>
-          <option value="2">Kong's Songs</option>
-          <option value="3">Uncle Bob's Memes</option>
+          <option value="1">Challenge 1</option>
+          <option value="2">Challenge 2</option>
+          <option value="3">Challenge 3</option>
         </select></a>
         <a routerLink="login" (click) = "setMenuPage(false)">sign out</a>
       </div>

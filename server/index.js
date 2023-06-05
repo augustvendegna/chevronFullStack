@@ -115,10 +115,6 @@ const challengeUpload = multer({ storage :challengeStorage});
 app.post('/addChallengeKey', challengeUpload.single('file'), async function(req,res) {
   //console.log("what");
   debug(req.file);
-  //await pgClient.query("INSERT INTO challenges VALUES(DEFAULT, 'c minus one', DEFAULT, DEFAULT, DEFAULT, DEFAULT, 'rmse_c')");
-  //const values = await pgClient.query("SELECT challenge_id FROM challenges ORDER BY challenge_id DESC LIMIT 1");
-  //const result = [values.rows.map(row => (row.first_name + " " + row.last_name))];
-  //console.log(values.rows);
   console.log('storage location is', req.hostname +'/' + req.file.path);
   
   return res.send(req.file);
@@ -159,8 +155,8 @@ app.get("/getLeaderboardInfo", async (req, res) => {
 
 app.get("/createChallengeEntry", async (req, res) => {
 
-  console.log("INSERT INTO challenges VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7)", [req.query.author, req.query.desc, req.query.pubStartDate, req.query.pubEndDate, req.query.priStartDate, req.query.priEndDate, req.query.algoType]);
-  await pgClient.query("INSERT INTO challenges VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7)", [req.query.author, req.query.desc, req.query.pubStartDate, req.query.pubEndDate, req.query.priStartDate, req.query.priEndDate, req.query.algoType]);
+  console.log("INSERT INTO challenges VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8)", [req.query.author, req.query.desc, req.query.pubStartDate, req.query.pubEndDate, req.query.priStartDate, req.query.priEndDate, req.query.algoType, req.query.challengeName]);
+  await pgClient.query("INSERT INTO challenges VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8)", [req.query.author, req.query.desc, req.query.pubStartDate, req.query.pubEndDate, req.query.priStartDate, req.query.priEndDate, req.query.algoType, req.query.challengeName]);
   
   // return 
   const values = await pgClient.query("SELECT challenge_id FROM challenges ORDER BY challenge_id DESC LIMIT 1")
