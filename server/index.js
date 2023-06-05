@@ -184,6 +184,7 @@ app.get("/getTestFlag", async (req, res) => {
 app.post("/computeScore", (req, res) => {
   var testFlag = req.body.testFlag;
   var submission_id = req.body.submission_id;
+  var CID = req.body.CID;
   
 
   const csv = require('csv-parser')
@@ -211,8 +212,12 @@ app.post("/computeScore", (req, res) => {
 
   });
 
+  //getting key to compare to
+  var keyName = "./challenges/" + CID + "_key.csv"
+  console.log(keyName);
+
   setTimeout(() =>
-  fs.createReadStream('./challenges/key_1.csv').pipe(csv())
+  fs.createReadStream(keyName).pipe(csv())
   .on('data', (data) => {
     aResults.push(data);
   }) 

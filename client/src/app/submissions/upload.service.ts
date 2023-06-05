@@ -71,7 +71,8 @@ export class UploadService {
 
   computeScore(submission_id:number, testFlag:string) {
     console.log("here");
-    return this.httpClient.post(`${this.configUrl}/computeScore`, { submission_id , testFlag})
+    var CID = localStorage.getItem('CID')
+    return this.httpClient.post(`${this.configUrl}/computeScore`, { submission_id , testFlag, CID})
     .pipe(
       catchError(err => { return this.handleError(err) })
     );
