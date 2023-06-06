@@ -185,6 +185,12 @@ app.get("/getRemainingSubmissions", async (req, res) => {
   } else {
     return res.json({status: -1, user_sub: subCount, max_sub: maxCount})
   }
+  
+
+  //if (numSubmission)
+  //return res.json({status:0})
+  //res.send(values.rows);
+  //console.log(values.rows);
 });
 
 

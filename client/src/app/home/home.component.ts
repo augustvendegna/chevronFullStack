@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ValueServiceService } from '../value-service.service';
 import { Router } from '@angular/router';
+import { UploadService } from '../submissions/upload.service';
 
 @Component({
   selector: 'app-home',
@@ -14,8 +15,28 @@ export class HomeComponent {
   public splitResp: String[];
   public leaderboard: [String[]] = [[]];
   
-  constructor(private valueService: ValueServiceService, private router : Router){
-    this.valueService.getLeaderboardInfo().subscribe((data: Object[]) => {
+  constructor(private valueService: ValueServiceService, private router : Router, private uploadService: UploadService){
+    
+    var currChallenge = localStorage.getItem('current_challenge');
+    this.uploadService.getTestFlag(currChallenge).subscribe((data: Object[]) => {
+      resp : String;
+      var temp : Object[] = data;
+      var resp = JSON.stringify(temp);
+      
+      resp = resp.replaceAll(":", ",");
+      resp = resp.replaceAll("}", "");
+      resp = resp.replaceAll("]", "");
+      resp = resp.replaceAll("{", "");
+      resp = resp.replaceAll("[", "");
+      resp = resp.replaceAll("\"", "");
+    
+      var formated = resp.split(",")
+      var testFlag = formated[1];
+      console.log(testFlag);
+
+    //console.log(localStorage.getItem('current_challenge'));
+
+    this.valueService.getLeaderboardInfo(testFlag).subscribe((data: Object[]) => {
     this.response = data;
     
     //check response to see if the user exists
@@ -38,6 +59,7 @@ export class HomeComponent {
     this.updateLeaderBoard();
     
     });
+  });
     
   }
   public updateLeaderBoard(){
