@@ -36,3 +36,49 @@ td {
     left: 50vw;
     transform: translate(-50%, -50%);
 }
+
+
+
+    
+    .input {
+    width: 50%;
+    max-width: 425px;
+    min-height: calc(0.2em + (0.2em * 2) + 0.2em);
+    
+    padding: 10px; 
+    font-size: 0.9em;
+    font-family: Helvetica; 
+    outline: none;
+    border: 1px solid #dddddd;
+
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    
+    border-radius: 4px;
+    background: #f9f9f9;
+    transition: background 0.25s, border-color 0.25s, color 0.25s;
+    }
+
+    .upload {
+        font-family: Helvetica; 
+    }
+  
+    .two-col {
+      overflow: hidden;
+    }
+    .two-col .words,
+    .two-col .upload {
+        width: 50%;
+    }
+    
+    .two-col .words{
+      float:left;
+    }
+    .two-col .upload{
+      float:right;
+    }
+  
+    .text-input {
+      font-family: Helvetica;
+    }

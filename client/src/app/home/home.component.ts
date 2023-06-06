@@ -62,6 +62,11 @@ export class HomeComponent {
   });
     
   }
+
+  public getItem(item:string){
+    return localStorage.getItem(item);
+  }
+
   public updateLeaderBoard(){
     
     for(let i = 0; i < this.splitResp.length; i+=4){

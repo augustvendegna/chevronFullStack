@@ -180,7 +180,8 @@ export class SettingsComponent {
       let sampleName = CID + "_sample.csv"
       this.uploadService.uploadSampleData(this.sampleData, sampleName).subscribe( resp => {});
 
-      alert("made in DB")
+      alert("made in DB");
+      location.reload();
     });
   }
 }

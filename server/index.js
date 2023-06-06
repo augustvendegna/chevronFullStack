@@ -215,6 +215,12 @@ app.get("/getDates", async (req, res) => {
   console.log(values.rows);
 });
 
+app.get("/getChallengeInfo", async (req, res) => {
+  const values = await pgClient.query("SELECT author, description, challenge_name FROM challenges WHERE challenge_id = $1", [req.query.CID]);
+  res.send(values.rows);
+  console.log(values.rows);
+});
+
 
 //getting files and reading
 

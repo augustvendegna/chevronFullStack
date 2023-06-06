@@ -1,14 +1,25 @@
 <div class = "parent">
-    <h2> leaderboard </h2>
 
-    <table>
-        <tr>
-            <th>username</th>
-            <th>score</th>
-        </tr>
-        <tr *ngFor="let curRow of leaderboard">
-            <td *ngFor="let r of curRow"> {{r}} </td>
-            
-        </tr>
+    <div class = "two-col">
+        <div class = "words">
+            <h2> leaderboard </h2>
+
+            <table>
+                <tr>
+                    <th>username</th>
+                    <th>score</th>
+                </tr>
+                <tr *ngFor="let curRow of leaderboard">
+                    <td *ngFor="let r of curRow"> {{r}} </td>
+                    
+                </tr>
     </table>
+            
+        </div>
+        <div class = "upload">
+                <h2> {{ getItem("challenge_name") }}</h2>
+                <p>{{ getItem("challenge_desc") }}</p>
+        </div>
+    </div>
+    
 </div>
