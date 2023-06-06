@@ -57,7 +57,7 @@ export class HomeComponent {
     //2. missing data from query in the code, but is shown to be retrieved
     
     this.updateLeaderBoard();
-    
+      
     });
   });
     
@@ -75,5 +75,6 @@ export class HomeComponent {
         curRow.push(this.splitResp[i+3]);
         this.leaderboard.push(curRow);
     }
+    //location.reload();
   }
 }
