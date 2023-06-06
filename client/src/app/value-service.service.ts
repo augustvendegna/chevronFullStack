@@ -90,6 +90,12 @@ export class ValueServiceService {
     );
   }
 
+  getChallengeInfo(){
+    result:Array<Object>; 
+    let params = new HttpParams();
+    params = params.append('CID', localStorage.getItem('current_challenge'));
+    return this.http.get<Object[]>(`${this.configUrl}/getChallengeInfo`, {params : params});
+  }
 
   /*
   updatePassword(email:string, password:string){

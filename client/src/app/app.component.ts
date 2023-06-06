@@ -20,7 +20,7 @@ export class AppComponent {
   
   event;
 
-  constructor(private router:Router){
+  constructor(private router:Router,private valueService: ValueServiceService){
     this.isSignedin = false;
     //this.login = new LoginComponent;
     this.current_chal = parseInt(localStorage.getItem('currentChallenge'));
@@ -55,7 +55,24 @@ export class AppComponent {
   public updateChallenge(event : any) {
     console.log(this.current_chal);
     localStorage.setItem('current_challenge', this.current_chal.toString());
-    location.reload();
+
+    this.valueService.getChallengeInfo().subscribe((data: Object[]) => {
+      let rawResp = JSON.stringify(data);
+      rawResp = rawResp.replaceAll("{", "");
+      rawResp = rawResp.replaceAll("\"", "");
+      rawResp = rawResp.replaceAll("}]", "");
+      rawResp = rawResp.replaceAll(":", ",");
+
+      let useable = rawResp.split(',')
+      
+      localStorage.setItem("author", useable[1]);
+      localStorage.setItem("challenge_desc", useable[3]);
+      localStorage.setItem("challenge_name", useable[5]);
+
+
+    });
+
+    //location.reload();
   }
 
 }
