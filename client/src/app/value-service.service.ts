@@ -34,6 +34,7 @@ export class ValueServiceService {
 
   }
 */
+
   getUser(email:string){
     result:Array<Object>; 
     let params = new HttpParams();
@@ -45,6 +46,13 @@ export class ValueServiceService {
     //console.log(result);
     //result.unsubscribe();
 
+  }
+
+  checkEmail(email:string) {
+    result:Array<Object>;
+    let params = new HttpParams();
+    params = params.append('email', email);
+    return this.http.get<Object[]>(`${this.configUrl}/checkUniqueEmail`, {params:params});
   }
 
   getTargetUserInfo(email:string){
