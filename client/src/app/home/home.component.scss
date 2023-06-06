@@ -1,7 +1,7 @@
 h2 {
     font-family: Helvetica;
     color: #0066b2;
-    text-align: center;
+    
 }
 table {
     font-family: Helvetica;
@@ -14,7 +14,7 @@ table {
     border-color: #ffffff;
     border-width: 2px;
     overflow: hidden;
-    
+    //text-align: right;
 }
 
 th {
@@ -31,16 +31,17 @@ td {
 }
 
 .parent {
-    position:absolute;
-    top: 50vh;
+    position:relative;
+    top: 20vh;
     left: 50vw;
     transform: translate(-50%, -50%);
+    width: 60%;
 }
 
 
 
     
-    .input {
+  .input {
     width: 50%;
     max-width: 425px;
     min-height: calc(0.2em + (0.2em * 2) + 0.2em);
@@ -50,22 +51,21 @@ td {
     font-family: Helvetica; 
     outline: none;
     border: 1px solid #dddddd;
-
-    display: flex;
-    text-align: center;
-    justify-content: center;
     
     border-radius: 4px;
     background: #f9f9f9;
     transition: background 0.25s, border-color 0.25s, color 0.25s;
-    }
+  }
 
     .upload {
         font-family: Helvetica; 
+        align-items: center;
     }
   
     .two-col {
+      display: flex;
       overflow: hidden;
+      justify-content: center;
     }
     .two-col .words,
     .two-col .upload {
@@ -76,7 +76,7 @@ td {
       float:left;
     }
     .two-col .upload{
-      float:right;
+      float:left;
     }
   
     .text-input {
