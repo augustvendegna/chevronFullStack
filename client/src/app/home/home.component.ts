@@ -53,6 +53,6 @@ export class HomeComponent {
         curRow.push(this.splitResp[i+3]);
         this.leaderboard.push(curRow);
     }
-    //location.reload();
+    
   }
 }

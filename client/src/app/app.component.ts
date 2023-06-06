@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { LoginComponent } from './login/login.component';
 import { ValueServiceService } from './value-service.service';
 import { HttpBackend, HttpClient } from '@angular/common/http';
-import { Router,NavigationEnd, Event as NavigationEvent } from '@angular/router';
+import { Router,NavigationEnd, Event as NavigationEvent, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -85,13 +85,13 @@ export class AppComponent {
       let useable = rawResp.split(',')
       console.log(rawResp);
       localStorage.setItem("author", useable[1]);
-      localStorage.setItem("challenge_desc", useable[3]);
+      let curDesc = useable[3].replaceAll("  ", ", ");
+      localStorage.setItem("challenge_desc", curDesc);
       localStorage.setItem("challenge_name", useable[5]);
 
-
+      location.reload();
     });
-
-    location.reload();
+    
   }
 
 }
