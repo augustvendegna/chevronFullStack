@@ -1,26 +1,3 @@
-///////////////// TENSORFLOW FUNCTION (Mean Absoulute Error) /////////////////////////
-
-// Importing the tensorflow library
-//import * as tf from "@tensorflow/tfjs"
-
-const tf = require('@tensorflow/tfjs')
-
-/*
-const c = [0,1,4,9];
-const d = [0.1,0.9,3.5,10];
-
-// Defining the value of the tensors
-const True = tf.tensor(c);
-const Prediction = tf.tensor(d);
-  
-// Calculating mean absolute error
-const error_t = tf.metrics.meanAbsoluteError(True, Prediction);
-  
-// Printing the tensor
-console.log("Mean Absolute Error:")
-error_t.print();
-*/
-
 ///////////////// CALCULATION (Mean Absolute Error) /////////////////////////
 
 const calculateMeanAbsoluteError = (y, x) => {
@@ -46,41 +23,6 @@ console.log("Mean Absolute Error: ")
 console.log('Calculation: ', error_c, '\n');  // 0.425
 
 
-///////////////// TENSORFLOW FUNCTION (Mean Squared Error) /////////////////////////
-
-/*
-// Defining label tensor
-const y_true = tf.tensor2d([
-	y
-]);
-
-// Defining prediction tensor
-const y_pred = tf.tensor2d([
-	x
-]);
-
-// Calculating mean squared error
-const mse = tf.losses.meanSquaredError(y_true,y_pred)
-
-// Printing the output
-console.log("Mean Squared Error:")
-mse.print()
-*/
-
-///////////////// NPM FUNCTION (Mean Squared Error) /////////////////////////
-
-/*
-//import MSE from 'mse';
-const MSE = require('mse')
-var data_1 = y;
-var data_2 = x;
-
-var result = MSE(data_1, data_2); // results in a calcuation of 5.3125
-if (result != 0) {
-    console.log('NPM: ' + result);
-}
-*/
-
 ///////////////// CALCULATION (Mean Squared Error) /////////////////////////
 
 function mse_c(a, b) {
@@ -97,28 +39,6 @@ const b = [0.1, 0.9, 3.5, 10]
 console.log("Mean Squared Error:")
 console.log('Calculation: ', mse_c(a, b), '\n')
 
-///////////////// NPM FUNCTION (Root Mean Absoulute Error) /////////////////////////
-
-/*
-//import RMSE from 'rmse';
-const RMSE = require('rmse');
- var dataset = [{
-      actual: 0,
-      predicted: 0.1
-    }, {
-      actual: 1,
-      predicted: 0.9
-    }, {
-      actual: 4,
-      predicted: 3.5
-    }, {
-        actual: 9,
-        predicted: 10
-    }];
-    
-    console.log("Root Mean Squared Error:")
-    console.log('NPM: ', RMSE.rmse(dataset))
-*/
 
 ///////////////// CALCULATION (Root Mean Squared Error) /////////////////////////
 
@@ -169,25 +89,12 @@ console.log('NPM: ', fscore(a, b), '\n');
 ///////////////// TENSORFLOW (Recall) /////////////////////////
 
 function recallTest(a, b){
-    // Creating 2-D tensor of true values
-    /*
-    const yTrue = tf.tensor2d([
-        a
-    ]);
-    
-    // Creating 2-D tensor of predicted values
-    const yPred = tf.tensor2d([
-        b
-    ]);
-    */
-    //console.log('Recall: ')
     var string = JSON.stringify(fscore(a, b, { beta : 1, format : 'detailed'}));
     string = string.replace(/.*(?=recall)/g, "");
     string = string.replace("recall", "");
     string = string.replace("\"", "");
     string = string.replace(":", "");
     string = string.replace("}", "");
-    //console.log(parseFloat(string));
 
     // Getting the result from the recall function
     return parseFloat(string);
