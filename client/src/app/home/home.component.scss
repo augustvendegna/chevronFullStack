@@ -35,14 +35,17 @@ td {
     top: 20vh;
     left: 50vw;
     transform: translate(-50%, -50%);
-    width: 60%;
+    width: 70%;
 }
 
+p {
+  color: #0066b2;
+}
 
 
     
   .input {
-    width: 50%;
+    //width: 50%;
     max-width: 425px;
     min-height: calc(0.2em + (0.2em * 2) + 0.2em);
     
@@ -59,7 +62,9 @@ td {
 
     .upload {
         font-family: Helvetica; 
-        align-items: center;
+        //align-items: center;
+        //width: 50%;
+        padding: 0px 10px; 
     }
   
     .two-col {
@@ -69,7 +74,7 @@ td {
     }
     .two-col .words,
     .two-col .upload {
-        width: 50%;
+        //width: 50%;
     }
     
     .two-col .words{

@@ -56,6 +56,8 @@ export class AppComponent {
     this.valueService.getChallanges().subscribe((data: Object[]) => {
       let rawResp = JSON.stringify(data);
       rawResp = rawResp.replaceAll("{", "");
+      rawResp = rawResp.replaceAll("}", "");
+      rawResp = rawResp.replaceAll("]", "");
       rawResp = rawResp.replaceAll("\"", "");
       rawResp = rawResp.replaceAll("}]", "");
       rawResp = rawResp.replaceAll(":", ",");
@@ -78,12 +80,14 @@ export class AppComponent {
     this.valueService.getChallengeInfo().subscribe((data: Object[]) => {
       let rawResp = JSON.stringify(data);
       rawResp = rawResp.replaceAll("{", "");
+      rawResp = rawResp.replaceAll("}", "");
+      rawResp = rawResp.replaceAll("]", "");
       rawResp = rawResp.replaceAll("\"", "");
-      rawResp = rawResp.replaceAll("}]", "");
+      rawResp = rawResp.replaceAll('}]', "");
       rawResp = rawResp.replaceAll(":", ",");
 
       let useable = rawResp.split(',')
-      console.log(rawResp);
+      console.log(useable);
       localStorage.setItem("author", useable[1]);
       let curDesc = useable[3].replaceAll("  ", ", ");
       localStorage.setItem("challenge_desc", curDesc);
