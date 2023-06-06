@@ -77,4 +77,9 @@ export class HomeComponent {
     }
     
   }
+
+  public downloadFile(){
+    window.open("https://google.com");
+  }
+
 }
