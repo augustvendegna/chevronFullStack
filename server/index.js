@@ -79,6 +79,7 @@ const multer = require('multer');
 const logger = require('morgan');
 const serveIndex = require('serve-index');
 const path = require('path');
+const { max } = require("@tensorflow/tfjs");
 const debug = require('debug')('myapp:server');
 
 var storage = multer.diskStorage({
@@ -155,14 +156,44 @@ app.get("/getLeaderboardInfo", async (req, res) => {
 
 app.get("/createChallengeEntry", async (req, res) => {
 
-  console.log("INSERT INTO challenges VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8)", [req.query.author, req.query.desc, req.query.pubStartDate, req.query.pubEndDate, req.query.priStartDate, req.query.priEndDate, req.query.algoType, req.query.challengeName]);
-  await pgClient.query("INSERT INTO challenges VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8)", [req.query.author, req.query.desc, req.query.pubStartDate, req.query.pubEndDate, req.query.priStartDate, req.query.priEndDate, req.query.algoType, req.query.challengeName]);
+  console.log("INSERT INTO challenges VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9)", [req.query.author, req.query.desc, req.query.pubStartDate, req.query.pubEndDate, req.query.priStartDate, req.query.priEndDate, req.query.algoType, req.query.challengeName, req.query.challengeTimeLimit]);
+  await pgClient.query("INSERT INTO challenges VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9)", [req.query.author, req.query.desc, req.query.pubStartDate, req.query.pubEndDate, req.query.priStartDate, req.query.priEndDate, req.query.algoType, req.query.challengeName, req.query.challengeTimeLimit]);
   
   // return 
   const values = await pgClient.query("SELECT challenge_id FROM challenges ORDER BY challenge_id DESC LIMIT 1")
   res.send(values.rows);
   console.log(values.rows);
 });
+
+app.get("/getRemainingSubmissions", async (req, res) => {
+  console.log("SELECT COUNT(*) FROM submissions WHERE user_id = $1 AND challenge_id = $2", [req.query.user_id, req.query.challenge_id]);
+  console.log("SELECT challenge_time_limit FROM challenges WHERE challenge_id = $1",[req.query.challenge_id]);
+  // return 
+  const numSubmissions = await pgClient.query("SELECT COUNT(*) num_submissions FROM submissions WHERE user_id = $1 AND challenge_id = $2", [req.query.user_id, req.query.challenge_id]);
+  const maxSubmissions = await pgClient.query("SELECT challenge_time_limit FROM challenges WHERE challenge_id = $1",[req.query.challenge_id]);
+
+  const subCount = parseInt(numSubmissions.rows[0]['num_submissions']);
+  const maxCount = parseInt(maxSubmissions.rows[0]['challenge_time_limit']);
+  console.log('numSubmissions: ' + JSON.stringify(subCount));
+  console.log('maxSubmissions: ' + JSON.stringify(maxCount));
+  console.log('numSubmissionsT: ' + typeof(subCount));
+  console.log('maxSubmissionsT: ' + typeof(maxCount))
+  //var valid = subCount < maxCount;
+  var submissionsLeft = maxCount - subCount;
+  if (subCount < maxCount) {
+    return res.json({status: 0, submissions_left: submissionsLeft})
+  } else {
+    return res.json({status: -1, user_sub: subCount, max_sub: maxCount})
+  }
+  
+
+  //if (numSubmission)
+  //return res.json({status:0})
+  //res.send(values.rows);
+  //console.log(values.rows);
+});
+
+
 
 app.get("/getSubmissionID", async (req, res) => {
 

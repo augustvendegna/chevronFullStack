@@ -18,6 +18,7 @@ export class SubmissionsComponent {
   public is_public: boolean;
   public user_id: number;
   public score: number;
+  public challengeLimit: number;
 
   constructor(private uploadService: UploadService) {}
 
@@ -27,8 +28,9 @@ export class SubmissionsComponent {
   }
 
   submitForm() {
+    
     this.challenge_id = parseInt(localStorage.getItem('current_challenge'));
-    if (this.selectedFile) {
+    if (this.selectedFile) { 
       this.fileName = this.selectedFile.name;
       if(this.fileName.substring(this.fileName.lastIndexOf('.')+1) != "csv"){
         alert("incorrect file type")
@@ -68,27 +70,44 @@ export class SubmissionsComponent {
         console.log(this.is_public);
 
          this.uploadService.sentInfo(this.fileName, this.challenge_id, this.is_public, parseInt(localStorage.getItem('UID')), this.score).subscribe(resp => {
+          
           alert("sent");
           this.uploadService.getSubmissionID(parseInt(localStorage.getItem('UID'))).subscribe((data: Object[]) => {
+            var valid = true;
             response = data;
             var resp = JSON.stringify(response[0]);
             resp = resp.replaceAll(":", ",");
             resp = resp.replaceAll("}", ",");
             var splitResp = resp.split(",");
-            this.uploadService.addSubmission(this.selectedFile, splitResp[1]).subscribe(resp => {
-              alert("uploaded")
+            
+            console.log('user_id: ' + localStorage.getItem('UID'));
+            console.log('c_id: ' + this.challenge_id);
+            this.uploadService.checkUserSubmissions(parseInt(localStorage.getItem('UID')), this.challenge_id).subscribe((data: Object[]) => {
+              response = data;
+              if (data['status'] == '0') {
+                alert('submissions left: ' + data['submissions_left']);
+                this.uploadService.addSubmission(this.selectedFile, splitResp[1]).subscribe(resp => {
+                  alert("uploaded")
+                });
+                this.uploadService.getTestFlag(localStorage.getItem('CID')).subscribe((data: Object[]) => {
+                  testFlag = data;
+                  var resp2 = JSON.stringify(testFlag[0]);
+                  resp2 = resp2.replaceAll(":", ",");
+                  resp2 = resp2.replaceAll("}", ",");
+                  resp2 = resp2.replaceAll(/["']/g, ",");
+                  var splitResp2 = resp2.split(",");
+                  this.uploadService.computeScore(parseInt(splitResp[1]), splitResp2[4].toString()).subscribe(resp => {
+                  });
+      
+                  });
+              } else {
+                valid = false;
+                alert('no more submissions for this challenge');
+              }
+              //alert('data: ' + JSON.stringify(data));
+              //alert('status: ' + data['status']);
             });
-            this.uploadService.getTestFlag(localStorage.getItem('CID')).subscribe((data: Object[]) => {
-              testFlag = data;
-              var resp2 = JSON.stringify(testFlag[0]);
-              resp2 = resp2.replaceAll(":", ",");
-              resp2 = resp2.replaceAll("}", ",");
-              resp2 = resp2.replaceAll(/["']/g, ",");
-              var splitResp2 = resp2.split(",");
-              this.uploadService.computeScore(parseInt(splitResp[1]), splitResp2[4].toString()).subscribe(resp => {
-              });
-  
-            });
+            
             });
             alert("computed")
         });

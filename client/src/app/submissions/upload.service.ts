@@ -31,7 +31,7 @@ export class UploadService {
     );
   }
 
-  createNewChallenge(description:string, authorName:string, pubStartDate:string, pubEndDate:string, priStartDate:string, priEndDate:string, algoType:string, challengeName:string){
+  createNewChallenge(description:string, authorName:string, pubStartDate:string, pubEndDate:string, priStartDate:string, priEndDate:string, algoType:string, challengeName:string, challengeTimeLimit:number){
     // this.answerKey, this.challengeDescription, this.sampleData, this.authorName, this.pubStartDate, 
     // this.pubEndDate, this.priStartDate, this.priEndDate, this.algoType
 
@@ -46,7 +46,18 @@ export class UploadService {
     params = params.append('priEndDate', priEndDate);
     params = params.append('algoType', algoType);
     params = params.append('challengeName', challengeName);
+    params = params.append('challengeTimeLimit', challengeTimeLimit);
     return this.httpClient.get<Object[]>(`${this.configUrl}/createChallengeEntry`, {params:params});
+  }
+
+  checkUserSubmissions(user_id:number, challenge_id:number){
+    let params = new HttpParams();
+    params = params.append('user_id', user_id);
+    params = params.append('challenge_id', challenge_id);
+    return this.httpClient.get(`${this.configUrl}/getRemainingSubmissions`, {params:params})
+    .pipe(
+      catchError(err => { return this.handleError(err)})
+    );
   }
 
   uploadChallengeKey(answerKey:File, newName:string){
