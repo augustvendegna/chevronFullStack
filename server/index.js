@@ -195,7 +195,7 @@ app.get("/getLeaderboardInfo", async (req, res) => {
     console.log(values.rows);
   }
   else if(testFlag == "MAE" || testFlag == "rmse_c" || testFlag == "mse_c"){
-    const values = await pgClient.query("SELECT username, MIN(score) FROM users JOIN submissions ON users.user_id = submissions.user_id WHERE challenge_id = $1 AND is_public = true OR submissions.user_id = $2 AND challenge_id = $1 GROUP BY username ORDER BY MIN(score) DESC", [req.query.CID, req.query.UID])
+    const values = await pgClient.query("SELECT username, MIN(score) FROM users JOIN submissions ON users.user_id = submissions.user_id WHERE challenge_id = $1 AND is_public = true OR submissions.user_id = $2 AND challenge_id = $1 GROUP BY username ORDER BY MIN(score) ASC", [req.query.CID, req.query.UID])
     res.send(values.rows);
     console.log(values.rows);
   }
@@ -340,6 +340,7 @@ app.post("/computeScore", (req, res) => {
         var score = alg.calculateMeanAbsoluteError(actual, predicted);
         var tempScore = score.toPrecision(2);
         pgClient.query("UPDATE submissions SET score = $1 WHERE submission_id = $2", [score, submission_id]);
+        console.log(score);
         break;
       }
       case "mse_c":{
