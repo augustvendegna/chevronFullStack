@@ -130,8 +130,11 @@ export class ValueServiceService {
     return throwError(() => new Error('Something bad happened; please try again later.'));
   }
 
+  public getChallanges(){
+    return this.http.get<Object[]>(`${this.configUrl}/challenges`);
+  }
+  
 }
-
 
 
 

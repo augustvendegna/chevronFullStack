@@ -17,15 +17,15 @@ export class AppComponent {
   public login: LoginComponent;
   public isMenuPage : boolean = true;
   public current_chal : number;
+  public challengeList : [String[]] = [[]];
   
   event;
 
   constructor(private router:Router,private valueService: ValueServiceService){
     this.isSignedin = false;
-    //this.login = new LoginComponent;
     this.current_chal = parseInt(localStorage.getItem('currentChallenge'));
     
-    
+    this.getChallenges();
 
     this.event = this.router.events.subscribe((event : NavigationEvent) => {
       if(event instanceof NavigationEnd){
@@ -52,6 +52,25 @@ export class AppComponent {
       return localStorage.getItem(item);
   }
 
+  public getChallenges(){
+    this.valueService.getChallanges().subscribe((data: Object[]) => {
+      let rawResp = JSON.stringify(data);
+      rawResp = rawResp.replaceAll("{", "");
+      rawResp = rawResp.replaceAll("\"", "");
+      rawResp = rawResp.replaceAll("}]", "");
+      rawResp = rawResp.replaceAll(":", ",");
+
+      let useable = rawResp.split(',');
+      
+
+      for(let i = 0; i < useable.length; i+=4){
+        this.challengeList.push([useable[i+1], useable[i+3]]);
+      }
+      this.challengeList.shift();
+      console.log(this.challengeList);
+    });
+  }
+
   public updateChallenge(event : any) {
     console.log(this.current_chal);
     localStorage.setItem('current_challenge', this.current_chal.toString());
@@ -64,7 +83,7 @@ export class AppComponent {
       rawResp = rawResp.replaceAll(":", ",");
 
       let useable = rawResp.split(',')
-      
+      console.log(rawResp);
       localStorage.setItem("author", useable[1]);
       localStorage.setItem("challenge_desc", useable[3]);
       localStorage.setItem("challenge_name", useable[5]);
@@ -72,7 +91,7 @@ export class AppComponent {
 
     });
 
-    //location.reload();
+    location.reload();
   }
 
 }
