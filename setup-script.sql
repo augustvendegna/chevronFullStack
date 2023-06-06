@@ -26,7 +26,7 @@ CREATE TABLE challenges(
     private_end_date TIMESTAMP,
     testFlag TEXT,
     challenge_name TEXT,
-
+    max_submissions INT,
     PRIMARY KEY(challenge_id)
 
 );
