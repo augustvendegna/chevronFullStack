@@ -149,9 +149,17 @@ app.post("/changePassword", async (req, res) => {
 });
 
 app.get("/getLeaderboardInfo", async (req, res) => {
-  const values = await pgClient.query("SELECT username, MAX(score) FROM users JOIN submissions ON users.user_id = submissions.user_id WHERE challenge_id = $1 AND is_public = true OR submissions.user_id = $2 GROUP BY username ORDER BY MAX(score) ASC", [req.query.CID, req.query.UID])
-  res.send(values.rows);
-  console.log(values.rows);
+  const testFlag = req.query.testFlag;
+  if(testFlag == "rsq" || testFlag == "fscore" || testFlag == "recall"){
+    const values = await pgClient.query("SELECT username, MAX(score) FROM users JOIN submissions ON users.user_id = submissions.user_id WHERE challenge_id = $1 AND is_public = true OR submissions.user_id = $2 AND challenge_id = $1 GROUP BY username ORDER BY MAX(score) ASC", [req.query.CID, req.query.UID])
+    res.send(values.rows);
+    console.log(values.rows);
+  }
+  else if(testFlag == "MAE" || testFlag == "rmse_c" || testFlag == "mse_c"){
+    const values = await pgClient.query("SELECT username, MIN(score) FROM users JOIN submissions ON users.user_id = submissions.user_id WHERE challenge_id = $1 AND is_public = true OR submissions.user_id = $2 AND challenge_id = $1 GROUP BY username ORDER BY MIN(score) DESC", [req.query.CID, req.query.UID])
+    res.send(values.rows);
+    console.log(values.rows);
+  }
 });
 
 app.get("/createChallengeEntry", async (req, res) => {

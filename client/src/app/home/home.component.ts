@@ -32,7 +32,7 @@ export class HomeComponent {
     
       var formated = resp.split(",")
       var testFlag = formated[1];
-      console.log(testFlag);
+      //console.log(testFlag);
 
     //console.log(localStorage.getItem('current_challenge'));
 
@@ -42,7 +42,7 @@ export class HomeComponent {
     //check response to see if the user exists
     resp : String;
     var resp = JSON.stringify(this.response);
-    //console.log(resp);
+    
     
     resp = resp.replaceAll(":", ",");
     resp = resp.replaceAll("}", "");

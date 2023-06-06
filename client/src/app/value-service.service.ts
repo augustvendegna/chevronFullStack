@@ -67,6 +67,7 @@ export class ValueServiceService {
     params = params.append('curr_date', now);
     params = params.append('UID', UID);
     params = params.append('testFlag', testFlag);
+    console.log("test_flag: " + testFlag);
     return this.http.get<Object[]>(`${this.configUrl}/getLeaderboardInfo`, {params : params});
   }
 
