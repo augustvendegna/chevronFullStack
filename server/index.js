@@ -39,6 +39,45 @@ app.get("/users", async (req, res) => {
   res.send(values.rows);
 });
 
+app.get('/checkUniqueEmail', async(req, res) => {
+  try {
+    const values = await pgClient.query('SELECT email FROM users WHERE email = $1', [req.query.email]);
+
+    //console.log(values);
+    if (values['rowCount'] == 0) {
+      console.log('successful - no dup');
+      return res.json({status: 0});
+    } else {
+      console.log('there is a dup');
+      return res.json({status: -1});
+    }
+  } catch {
+
+  }
+
+/*
+  // return 
+  const numSubmissions = await pgClient.query("SELECT COUNT(*) num_submissions FROM submissions WHERE user_id = $1 AND challenge_id = $2", [req.query.user_id, req.query.challenge_id]);
+  const maxSubmissions = await pgClient.query("SELECT max_submissions FROM challenges WHERE challenge_id = $1",[req.query.challenge_id]);
+
+  const subCount = parseInt(numSubmissions.rows[0]['num_submissions']);
+  const maxCount = parseInt(maxSubmissions.rows[0]['max_submissions']);
+  console.log('numSubmissions: ' + JSON.stringify(subCount));
+  console.log('maxSubmissions: ' + JSON.stringify(maxCount));
+  console.log('numSubmissionsT: ' + typeof(subCount));
+  console.log('maxSubmissionsT: ' + typeof(maxCount))
+  //var valid = subCount < maxCount;
+  var submissionsLeft = maxCount - subCount;
+  if (subCount < maxCount) {
+    return res.json({status: 0, submissions_left: submissionsLeft})
+  } else {
+    return res.json({status: -1, user_sub: subCount, max_sub: maxCount})
+  }
+
+  res.send(values.rows);
+  */
+})
+
 //query for login checking
 app.get("/getUser", async (req, res) => {
   console.log(req.query);

@@ -117,4 +117,8 @@ export class SubmissionsComponent {
       alert("Please select a file first")
     }
   }
+  
+  public getItem(item:string){
+    return localStorage.getItem(item);
+  }
 }
