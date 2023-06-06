@@ -167,13 +167,13 @@ app.get("/createChallengeEntry", async (req, res) => {
 
 app.get("/getRemainingSubmissions", async (req, res) => {
   console.log("SELECT COUNT(*) FROM submissions WHERE user_id = $1 AND challenge_id = $2", [req.query.user_id, req.query.challenge_id]);
-  console.log("SELECT challenge_time_limit FROM challenges WHERE challenge_id = $1",[req.query.challenge_id]);
+  console.log("SELECT max_submissions FROM challenges WHERE challenge_id = $1",[req.query.challenge_id]);
   // return 
   const numSubmissions = await pgClient.query("SELECT COUNT(*) num_submissions FROM submissions WHERE user_id = $1 AND challenge_id = $2", [req.query.user_id, req.query.challenge_id]);
-  const maxSubmissions = await pgClient.query("SELECT challenge_time_limit FROM challenges WHERE challenge_id = $1",[req.query.challenge_id]);
+  const maxSubmissions = await pgClient.query("SELECT max_submissions FROM challenges WHERE challenge_id = $1",[req.query.challenge_id]);
 
   const subCount = parseInt(numSubmissions.rows[0]['num_submissions']);
-  const maxCount = parseInt(maxSubmissions.rows[0]['challenge_time_limit']);
+  const maxCount = parseInt(maxSubmissions.rows[0]['max_submissions']);
   console.log('numSubmissions: ' + JSON.stringify(subCount));
   console.log('maxSubmissions: ' + JSON.stringify(maxCount));
   console.log('numSubmissionsT: ' + typeof(subCount));
@@ -233,7 +233,7 @@ app.post("/computeScore", (req, res) => {
 
   //will most likely put into funciton and pass in a file name parameter to change temp.csv out with
   //instal: npm install csv-parser
-  fs.createReadStream('./uploads/user_submission_1.csv').pipe(csv())
+  fs.createReadStream('./uploads/' + submission_id +'_upload.csv').pipe(csv())
     .on('data', (data) => {
       pResults.push(data);
     }) 
