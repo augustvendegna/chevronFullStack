@@ -35,14 +35,20 @@ export class SignUpComponent {
       this.validInfo = false;
     }
 
+    
+    
+    
+    //console.log('dup email test: ' + this.validInfo);
+    
     if (this.email.includes('@chevron.com')){
       console.log("Email is valid");
       
     }
     else{
-      console.log("Email does not belong to chevron!");
+      console.log("Email does not belong to chevron or Email is a duplicate!");
       this.validInfo = false;
     }
+    
 
     if (this.passwordOne === this.passwordTwo && this.passwordOne != null) {
       console.log("Provided passwords match!");
@@ -107,18 +113,28 @@ export class SignUpComponent {
 	    this.validInfo = false;
     }*/
 
-
-    if (this.validInfo){ // all info on the sign up page was interpreted to be correct
-      console.log("Sending information to database.");
-      this.password = this.passwordOne;
-
-      this.valueService.addUser(this.first, this.last, this.email, this.password, true, false)?.subscribe(_ => {
-        //this.login();
-      });
-
-      // we need to route
-      this.router.navigate(["/login"]);
-    }
+    console.log('NOPE');
+    this.valueService.checkEmail(this.email).subscribe((data:Object[]) => {
+      if (data['status'] == '0') {
+        console.log("Email is valid");
+      } else {
+        console.log('HEREREREREE');
+        this.validInfo = false;
+        //alert('Duplicate Email');
+      }      
+      if (this.validInfo){ // all info on the sign up page was interpreted to be correct
+        console.log("Sending information to database.");
+        this.password = this.passwordOne;
+  
+        this.valueService.addUser(this.first, this.last, this.email, this.password, true, false)?.subscribe(_ => {
+          //this.login();
+        });
+  
+        // we need to route
+        this.router.navigate(["/login"]);
+      }
+    })
+    
 
 
   }

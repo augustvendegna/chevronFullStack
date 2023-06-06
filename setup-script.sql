@@ -4,7 +4,7 @@ CREATE TABLE users(
     user_id SERIAL,
     first_name TEXT,
     last_name TEXT,
-    email TEXT,
+    email TEXT UNIQUE,
     password TEXT,
     password_date TIMESTAMP,
     is_enabled BOOLEAN,
