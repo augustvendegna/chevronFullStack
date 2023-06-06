@@ -6,9 +6,11 @@
  	font-family: Helvetica;
 	position: absolute;
 	top: 30vh;
-	//left: 50vw;
-// 	transform: translate(-50%, -50%);
-	padding: 10px;
+	width: 60%;
+	left: 20vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 
@@ -61,7 +63,7 @@ input[type="file"]::file-selector-button:hover {
 }
 
 .words {
-	padding: 10px 20px;
+	padding: 20px 20px;
 	border: solid;
 	border-radius: 20px;
 	border-color: black;
@@ -70,8 +72,9 @@ input[type="file"]::file-selector-button:hover {
 }
 
 .input {
-    width: 50%;
-    max-width: 425px;
+	
+    //width: 50%;
+    //max-width: 425px;
     min-height: calc(0.2em + (0.2em * 2) + 0.2em);
     
     padding: 30px; 
@@ -88,12 +91,14 @@ input[type="file"]::file-selector-button:hover {
     .upload {
         font-family: Helvetica; 
         align-items: center;
+		padding: 0px 20px;
+		color: #0066b2;
     }
   
     .two-col {
       display: flex;
       overflow: hidden;
-      justify-content: center;
+      //justify-content: center;
     }
     .two-col .words,
     .two-col .upload {
@@ -101,10 +106,10 @@ input[type="file"]::file-selector-button:hover {
     }
     
     .two-col .words{
-      float:left;
+      float:right;
     }
     .two-col .upload{
-      float:left;
+      float:right;
     }
   
     .text-input {
