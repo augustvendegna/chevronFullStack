@@ -40,12 +40,12 @@ export class SignUpComponent {
     
     //console.log('dup email test: ' + this.validInfo);
     
-    if (this.email.includes('@chevron.com')){
+    if (this.email.includes('@chevron.com') || this.email.includes('@tengizchevroil.com')){
       console.log("Email is valid");
       
     }
     else{
-      console.log("Email does not belong to chevron or Email is a duplicate!");
+      console.log("Email does not belong to a chevron domain or Email is a duplicate!");
       this.validInfo = false;
     }
     
