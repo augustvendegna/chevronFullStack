@@ -135,6 +135,10 @@ export class ValueServiceService {
   public getChallanges(){
     return this.http.get<Object[]>(`${this.configUrl}/challenges`);
   }
+
+  public downloadSample(){
+    return this.http.get<Blob>(`${this.configUrl}/downloadSampleFile`);
+  }
   
 }
 

@@ -25,7 +25,8 @@
                 <p> private start date: {{ getItem("private_start_date") }}</p>
                 <p> private end date: {{ getItem("private_end_date") }}</p>
                 <br>
-                <a href="http://localhost:5000/" download="1_sample.csv"> download sample dataset</a>
+                <button class="button"(click) = "downloadFile()"> download sample dataset </button>
+                
         </div>
     </div>
     

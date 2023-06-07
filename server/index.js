@@ -274,6 +274,10 @@ app.get("/challenges", async (req, res) => {
   console.log(values.rows);
 });
 
+app.get("/downloadSampleFile", async (req, res) => {
+  res.download('challenges/' + req.query.CID + '_sample.csv');
+});
+
 
 //getting files and reading
 
