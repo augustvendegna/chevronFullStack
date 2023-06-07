@@ -57,7 +57,7 @@ export class HomeComponent {
     //2. missing data from query in the code, but is shown to be retrieved
     
     this.updateLeaderBoard();
-      
+
     });
   });
     
@@ -79,7 +79,8 @@ export class HomeComponent {
   }
 
   public downloadFile(){
-    window.open("https://google.com");
+    window.open("http://localhost:5000/downloadSampleFile?CID=" + localStorage.getItem("current_challenge"));
   }
+
 
 }
