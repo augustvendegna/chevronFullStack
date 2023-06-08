@@ -137,7 +137,9 @@ export class ValueServiceService {
   }
 
   public downloadSample(){
-    return this.http.get<Blob>(`${this.configUrl}/downloadSampleFile`);
+    let params = new HttpParams();
+    params = params.append('CID', localStorage.getItem('current_challenge'));
+    return this.http.get(`${this.configUrl}/downloadSampleFile` , {params : params, responseType: 'blob'} );
   }
   
 }

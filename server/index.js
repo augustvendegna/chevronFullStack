@@ -275,6 +275,8 @@ app.get("/challenges", async (req, res) => {
 });
 
 app.get("/downloadSampleFile", async (req, res) => {
+  res.setHeader('Content-Type', 'text/csv');
+  res.setHeader('Content-Disposition', 'attachment; filename=' + req.query.CID + '_sample.csv');
   res.download('challenges/' + req.query.CID + '_sample.csv');
 });
 

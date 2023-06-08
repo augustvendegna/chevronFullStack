@@ -81,6 +81,7 @@ export class AppComponent {
       let rawResp = JSON.stringify(data);
       //console.log(rawResp);
       rawResp = rawResp.replaceAll("{", "");
+      rawResp = rawResp.replaceAll('\n', " ");
       rawResp = rawResp.replaceAll("}", "");
       rawResp = rawResp.replaceAll("]", "");
       rawResp = rawResp.replaceAll("\"", "");

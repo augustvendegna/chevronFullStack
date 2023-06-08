@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ValueServiceService } from '../value-service.service';
 import { Router } from '@angular/router';
 import { UploadService } from '../submissions/upload.service';
+import { HttpResponse } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-home',
@@ -79,8 +81,13 @@ export class HomeComponent {
   }
 
   public downloadFile(){
-    window.open("http://localhost:5000/downloadSampleFile?CID=" + localStorage.getItem("current_challenge"));
+    this.valueService.downloadSample().subscribe(results => {
+      let blobUrl = URL.createObjectURL(results);
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = localStorage.getItem("current_challenge")+"_sample.csv"; // set a name for the file
+      link.click();
+    });
   }
-
 
 }
