@@ -20,7 +20,7 @@ export class SubmissionsComponent {
   public score: number;
   public challengeLimit: number;
 
-  constructor(private uploadService: UploadService) {}
+  constructor(private uploadService: UploadService, private valueService: ValueServiceService) {}
 
   onFileChange(event: any) {
     console.log(event.target.files[0])
@@ -120,5 +120,15 @@ export class SubmissionsComponent {
   
   public getItem(item:string){
     return localStorage.getItem(item);
+  }
+
+  public downloadFile(){
+    this.valueService.downloadSample().subscribe(results => {
+      let blobUrl = URL.createObjectURL(results);
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = localStorage.getItem("challenge_name")+"_sample.csv"; // set a name for the file
+      link.click();
+    });
   }
 }
