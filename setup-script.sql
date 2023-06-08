@@ -52,16 +52,30 @@ INSERT INTO users (
     password_date,
     is_enabled,
     status_date,
-    is_admin
+    is_admin,
+    username
 )VALUES(
     DEFAULT,
-    'Mr.',
-    'Smith',
-    'smith@bonks.com',
-    'smitty',
+    'admin',
+    'zero',
+    'zeroadmin@chevron.com',
+    '$2b$10$698NVC9dj8OzDxO25UPCsOP2tXywP.nqZz4rJcAkYxIXe.Necvw7q',
     '2000-12-13',
-    FALSE,
+    TRUE,
     '2000-12-13',
-    FALSE,
+    TRUE,
     'smith'
+);
+
+INSERT INTO challenges VALUES(
+    DEFAULT,
+    'admin',
+    'sample description',
+    '2000-12-13',
+    '2000-12-13',
+    '2000-12-13',
+    '2000-12-13',
+    'rsq',
+    'sample challenge',
+    0
 );

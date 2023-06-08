@@ -8,26 +8,52 @@ RUN apk update
 RUN apk add postgresql
 
 
-COPY client ./client/
-COPY server ./server/
-COPY setup-script.sql .
+COPY client /client/
+COPY server /server/
+COPY setup-script.sql /
+COPY runStack.sh /
 
 # IMPORTANT!
 # DO NOT AUTO-EXPOSE PORTS !!
-EXPOSE 4200
+EXPOSE 3000
+EXPOSE 3001
+# get rid of 5000 if not testing!!
+EXPOSE 5000 
 
-#RUN mkdir ./server/uploads
-#RUN mkdir ./server/competitions
 RUN mkdir /run/postgresql
 RUN chown postgres:postgres /run/postgresql/
+USER postgres
+RUN cd
+RUN pwd
+RUN mkdir /var/lib/postgresql/data
+RUN chmod 0700 /var/lib/postgresql/data
+RUN initdb -D /var/lib/postgresql/data
+RUN echo "host all all 0.0.0.0/0 md5" >> /var/lib/postgresql/data/pg_hba.conf
+RUN echo "listen_addresses='*'" >> /var/lib/postgresql/data/postgresql.conf
+# the following doesnt work!!
+#RUN pg_ctl start -D /var/lib/postgresql/data
 
+#RUN psql -c "\i /setup-script.sql" -U postgres
+# the rest works :)
+
+USER root
 WORKDIR /client
 RUN npm install -g @angular/cli
 RUN echo N | ng analytics off
+RUN ng build
+#RUN nohup ng serve 2>&1 >> /var/log/ng.log &
+# CMD ["ng","serve","--host", "0.0.0.0"]
+
+WORKDIR /server
+RUN npm remove bcrypt
+RUN npm install bcrypt
+RUN npm install bcryptjs
+RUN npm install --global lite-server
+#RUN node index.js
 
 # not sure if the following line is correct
 # RUN nohup node ./server/index.js
 # RUN cd ./client
 
-#CMD ["ng", “serve”]
+CMD /runStack.sh
 
