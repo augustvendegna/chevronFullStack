@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 const { Pool } = require("pg");
 const pgClient = new Pool({
   user: 'postgres',
-  host: 'localhost',
+  host: '127.0.0.1',
   database: 'postgres',
   password: 'password',
   port: '5432'
@@ -227,6 +227,7 @@ app.get("/getRemainingSubmissions", async (req, res) => {
   console.log('maxSubmissionsT: ' + typeof(maxCount))
   //var valid = subCount < maxCount;
   var submissionsLeft = maxCount - subCount;
+  console.log('sumbissionsLeft: ' + submissionsLeft);
   if (subCount < maxCount) {
     return res.json({status: 0, submissions_left: submissionsLeft})
   } else {
