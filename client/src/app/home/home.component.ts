@@ -85,7 +85,7 @@ export class HomeComponent {
       let blobUrl = URL.createObjectURL(results);
       const link = document.createElement("a");
       link.href = blobUrl;
-      link.download = localStorage.getItem("current_challenge")+"_sample.csv"; // set a name for the file
+      link.download = localStorage.getItem("challenge_name")+"_sample.csv"; // set a name for the file
       link.click();
     });
   }
