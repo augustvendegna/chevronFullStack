@@ -36,6 +36,10 @@ export class LoginComponent {
     //console.log('Username: ' + this.username);
     //console.log('Password: ' + this.password);
 
+    if (/\s/.test(this.email)){
+      alert("invalid email");
+      return;
+    }
 
     this.valueService.getUser(this.email).subscribe((data: Object[]) => {
       this.response = data;
