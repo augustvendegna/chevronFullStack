@@ -23,7 +23,6 @@ export class SubmissionsComponent {
   constructor(private uploadService: UploadService, private valueService: ValueServiceService) {}
 
   onFileChange(event: any) {
-    console.log(event.target.files[0])
 	  this.selectedFile = event.target.files[0];
   }
 
@@ -38,7 +37,6 @@ export class SubmissionsComponent {
         var testFlag: Object[];
         var splitResp2: Object[];
         localStorage.setItem('CID', this.challenge_id.toString());
-        //var dates: Number [];
 
         const compareNow = new Date();
         const timestamp = compareNow.getTime();
@@ -47,12 +45,12 @@ export class SubmissionsComponent {
         var publicED = new Date(localStorage.getItem("public_end_date")).getTime();
         var privateSD = new Date(localStorage.getItem("private_start_date")).getTime();
         if ((publicSD < timestamp) && (timestamp < privateED)) {
-          if ((timestamp > publicED) && (timestamp < privateSD)) {
-            // date > public end date
-            // date < less than private start date 
-            alert('outside of bounds - private and public')
+          // if date > public end date and date < less than private start date
+          if ((timestamp > publicED) && (timestamp < privateSD)) { 
+            alert('submission is outside of set time limit')
           } else {
             var valid = true;
+
             // Upload Service: Check User Submissions
             this.uploadService.checkUserSubmissions(parseInt(localStorage.getItem('UID')), this.challenge_id).subscribe((data: Object[]) => {
               if (data['status'] == '0') {
@@ -69,37 +67,27 @@ export class SubmissionsComponent {
                   resp = resp.replaceAll("T", " ");
                   resp = resp.replaceAll("}", ",");
                   var splitResp = resp.split(",");
-                  console.log(splitResp)
                   var public_end_date = new Date(splitResp[1]).getTime();
-                  console.log(public_end_date);
                   var private_end_date = new Date(splitResp[4]).getTime();
-                  console.log(private_end_date);
                   const now = new Date().getTime();
-                  console.log(now);
                   if(now < public_end_date) {
                     this.is_public = true;
                   } else if(now > public_end_date && now < private_end_date) {
                     this.is_public = false;
                   }
-                  //dates.push(public_end_date);
-                  //dates.push(private_end_date);
-                  console.log(this.is_public);
 
                   // Upload Service: Sent Info
                   this.uploadService.sentInfo(this.fileName, this.challenge_id, this.is_public, parseInt(localStorage.getItem('UID')), this.score).subscribe(resp => {
-                    alert("sent");
+                    //alert("sent");
 
                     // Upload Service: Get Submission ID
                     this.uploadService.getSubmissionID(parseInt(localStorage.getItem('UID'))).subscribe((data: Object[]) => {
-                      //var valid = true;
                       response = data;
                       var resp = JSON.stringify(response[0]);
                       resp = resp.replaceAll(":", ",");
                       resp = resp.replaceAll("}", ",");
                       var splitResp = resp.split(",");
-                      console.log('user_id: ' + localStorage.getItem('UID'));
-                      console.log('c_id: ' + this.challenge_id);
-
+                      
                       // Upload Service: Add Submission
                       this.uploadService.addSubmission(this.selectedFile, splitResp[1]).subscribe(resp => {
                         alert("uploaded")
@@ -113,10 +101,12 @@ export class SubmissionsComponent {
                         resp2 = resp2.replaceAll("}", ",");
                         resp2 = resp2.replaceAll(/["']/g, ",");
                         var splitResp2 = resp2.split(",");
+
+                        // Upload Service: Compute Score
                         this.uploadService.computeScore(parseInt(splitResp[1]), splitResp2[4].toString()).subscribe(resp => {});
                       });
                     });
-                    alert("computed")
+                    // alert("computed")
                   });
                 });
               } else {
@@ -125,17 +115,12 @@ export class SubmissionsComponent {
               }
             });
           }
-           
         } else {
-          console.log('public_start_date: ' + publicSD);
-          console.log('private_end_date: ' + privateED);
-          console.log('timestamp: ' + timestamp);
-          
-          alert('outside of bounds');
+          alert('submission is outside of time limit');
         }
       }
     } else {
-      alert("Please select a file first")
+      alert("please select a file first")
     }
   }
   

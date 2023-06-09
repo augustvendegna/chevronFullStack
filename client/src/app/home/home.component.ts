@@ -17,7 +17,7 @@ export class HomeComponent {
   public splitResp: String[];
   public leaderboard: [String[]] = [[]];
   
-  constructor(private valueService: ValueServiceService, private router : Router, private uploadService: UploadService){
+  constructor(private valueService: ValueServiceService, private router : Router, private uploadService: UploadService) {
     
     var currChallenge = localStorage.getItem('current_challenge');
     this.uploadService.getTestFlag(currChallenge).subscribe((data: Object[]) => {
@@ -34,34 +34,28 @@ export class HomeComponent {
     
       var formated = resp.split(",")
       var testFlag = formated[1];
-      //console.log(testFlag);
+      
+      this.valueService.getLeaderboardInfo(testFlag).subscribe((data: Object[]) => {
+        this.response = data;
+        
+        // check response to see if the user exists
+        resp : String;
+        var resp = JSON.stringify(this.response);
+        
+        resp = resp.replaceAll(":", ",");
+        resp = resp.replaceAll("}", "");
+        resp = resp.replaceAll("]", "");
+        resp = resp.replaceAll("{", "");
+        resp = resp.replaceAll("[", "");
+        resp = resp.replaceAll("\"", "");
+        this.splitResp = resp.split(",");
 
-    //console.log(localStorage.getItem('current_challenge'));
-
-    this.valueService.getLeaderboardInfo(testFlag).subscribe((data: Object[]) => {
-    this.response = data;
-    
-    //check response to see if the user exists
-    resp : String;
-    var resp = JSON.stringify(this.response);
-    
-    
-    resp = resp.replaceAll(":", ",");
-    resp = resp.replaceAll("}", "");
-    resp = resp.replaceAll("]", "");
-    resp = resp.replaceAll("{", "");
-    resp = resp.replaceAll("[", "");
-    resp = resp.replaceAll("\"", "");
-    this.splitResp = resp.split(",");
-
-    //problems:
-    //1. the data arrays aren't stored properly and are undefined
-    //2. missing data from query in the code, but is shown to be retrieved
-    
-    this.updateLeaderBoard();
-
+        // problems:
+        // 1. the data arrays aren't stored properly and are undefined
+        // 2. missing data from query in the code, but is shown to be retrieved
+        this.updateLeaderBoard();
+      });
     });
-  });
     
   }
 

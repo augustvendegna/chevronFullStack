@@ -23,29 +23,12 @@ export class ValueServiceService {
     );
 
   }
-/*
-  addSubmission(selectedFile:File, challenge_id:number, is_public:boolean){
-    now: String;
-    const now = formatDate(new Date());
-    return this.http.post(`${this.configUrl}/addSubmission`, { selectedFile, now, challenge_id, is_public})
-    .pipe(
-      catchError(err => { return this.handleError(err) })
-    );
-
-  }
-*/
 
   getUser(email:string){
     result:Array<Object>; 
     let params = new HttpParams();
-    //const salt = 10;
-    //const key = salt + Date.now();
     params = params.append('email', email);
     return this.http.get<Object[]>(`${this.configUrl}/getUser`, {params: params});
-    // result.subscribe();
-    //console.log(result);
-    //result.unsubscribe();
-
   }
 
   checkEmail(email:string) {
@@ -60,10 +43,6 @@ export class ValueServiceService {
     let params = new HttpParams();
     params = params.append('email', email);
     return this.http.get<Object[]>(`${this.configUrl}/getTargetUserInfo`, {params: params});
-    // result.subscribe();
-    //console.log(result);
-    //result.unsubscribe();
-
   }
 
   getLeaderboardInfo(testFlag: string){
@@ -75,7 +54,6 @@ export class ValueServiceService {
     params = params.append('curr_date', now);
     params = params.append('UID', UID);
     params = params.append('testFlag', testFlag);
-    console.log("test_flag: " + testFlag);
     return this.http.get<Object[]>(`${this.configUrl}/getLeaderboardInfo`, {params : params});
   }
 
@@ -107,17 +85,6 @@ export class ValueServiceService {
     return this.http.get<Object[]>(`${this.configUrl}/getChallengeInfo`, {params : params});
   }
 
-  /*
-  updatePassword(email:string, password:string){
-    now: String;
-    const now = formatDate(new Date());
-    return this.http.post(`${this.configUrl}/changePassword`, { email, password, now})
-    .pipe(
-      catchError(err => { return this.handleError(err) })
-    );
-  }
-  */
-
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
@@ -143,8 +110,6 @@ export class ValueServiceService {
   }
   
 }
-
-
 
 function padTo2Digits(num: number) {
   return num.toString().padStart(2, '0');

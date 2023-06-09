@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 const { Pool } = require("pg");
 const pgClient = new Pool({
   user: 'postgres',
-  host: 'localhost',
+  host: '127.0.0.1',
   database: 'postgres',
   password: 'password',
   port: '5432'
@@ -35,82 +35,36 @@ app.get("/", (req, res) => {
 // get the values
 app.get("/users", async (req, res) => {
   const values = await pgClient.query("SELECT * FROM users");
-  //const result = [values.rows.map(row => (row.first_name + " " + row.last_name))];
   res.send(values.rows);
 });
 
 app.get('/checkUniqueEmail', async(req, res) => {
   try {
     const values = await pgClient.query('SELECT email FROM users WHERE email = $1', [req.query.email]);
-
-    //console.log(values);
     if (values['rowCount'] == 0) {
-      console.log('successful - no dup');
       return res.json({status: 0});
     } else {
-      console.log('there is a dup');
       return res.json({status: -1});
     }
   } catch {
 
   }
-
-/*
-  // return 
-  const numSubmissions = await pgClient.query("SELECT COUNT(*) num_submissions FROM submissions WHERE user_id = $1 AND challenge_id = $2", [req.query.user_id, req.query.challenge_id]);
-  const maxSubmissions = await pgClient.query("SELECT max_submissions FROM challenges WHERE challenge_id = $1",[req.query.challenge_id]);
-
-  const subCount = parseInt(numSubmissions.rows[0]['num_submissions']);
-  const maxCount = parseInt(maxSubmissions.rows[0]['max_submissions']);
-  console.log('numSubmissions: ' + JSON.stringify(subCount));
-  console.log('maxSubmissions: ' + JSON.stringify(maxCount));
-  console.log('numSubmissionsT: ' + typeof(subCount));
-  console.log('maxSubmissionsT: ' + typeof(maxCount))
-  //var valid = subCount < maxCount;
-  var submissionsLeft = maxCount - subCount;
-  if (subCount < maxCount) {
-    return res.json({status: 0, submissions_left: submissionsLeft})
-  } else {
-    return res.json({status: -1, user_sub: subCount, max_sub: maxCount})
-  }
-
-  res.send(values.rows);
-  */
 })
 
 //query for login checking
 app.get("/getUser", async (req, res) => {
-  console.log(req.query);
   const values = await pgClient.query("SELECT * FROM users WHERE email = $1", [req.query.email]);
   res.send(values.rows);
-  //console.log(values);
 });
 
-//const salt = 10;
-// now the post -> insert value
 app.post("/addUser", async (req, res) => {
   if (!req.body.value) res.send({ working: false });
-  /*
-  bcrypt.genSalt(saltRounds).then(salt => {
-    console.log('Salt: ', salt);
-    return bcrypt.hash(req.body.password, salt)
-  }).then(hash => {
-    console.log('Hash: ', hash)
-  }).catch(err => console.error(err.message))
-  */
-  //const timestamp = Date.now();
-  //const key = salt + timestamp;
   const encodedPass = bcrypt.hashSync(req.body.password, 10);
-  console.log('Salted Pass: ', encodedPass);
-
   pgClient.query("INSERT INTO users VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9)", [req.body.first, req.body.last, req.body.email, encodedPass, req.body.now, req.body.is_enabled, req.body.now, req.body.is_admin, req.body.username]);
-
-  //res.send({ working: true });
 });
 
 app.get("/submissions", async (req, res) => {
   const values = await pgClient.query("SELECT * FROM submissions");
-  //const result = [values.rows.map(row => (row.first_name + " " + row.last_name))];
   res.send(values.rows);
 });
 
@@ -132,14 +86,11 @@ var storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-
-
 app.post('/addSubmission', upload.single('file'), function(req,res) {
   debug(req.file);
   console.log('storage location is', req.hostname +'/' + req.file.path);
   return res.send(req.file);
 });
-
 
 var challengeStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -153,10 +104,8 @@ var challengeStorage = multer.diskStorage({
 const challengeUpload = multer({ storage :challengeStorage});
 
 app.post('/addChallengeKey', challengeUpload.single('file'), async function(req,res) {
-  //console.log("what");
   debug(req.file);
-  console.log('storage location is', req.hostname +'/' + req.file.path);
-  
+  console.log('storage location is', req.hostname +'/' + req.file.path);  
   return res.send(req.file);
 });
 
@@ -164,26 +113,21 @@ app.post('/addChallengeKey', challengeUpload.single('file'), async function(req,
 app.post("/addSubmissionInfo", async (req, res) => {
   if (!req.body.value) res.send({ working: false });
   pgClient.query("INSERT INTO submissions VALUES($1, DEFAULT, $2, $3, $4, $5, $6)", [req.body.fileName, req.body.now, req.body.challenge_id, req.body.is_public, req.body.user_id, req.body.score]);
-
-  //res.send({ working: true });
 });
 
 app.get("/getTargetUserInfo", async (req, res) => {
   const values = await pgClient.query("SELECT * FROM users WHERE email = $1", [req.query.email]);
   res.send(values.rows);
-  console.log(values.rows);
 });
 
 app.post("/updateTargetUser", async (req, res) => {
   if (!req.body.value) res.send({ working: false });
-  console.log("UPDATE users SET is_enabled = $1, is_admin = $2, status_date = $4 WHERE email = $3", [req.body.is_enabled, req.body.is_admin, req.body.email, req.body.now]);
   pgClient.query("UPDATE users SET is_enabled = $1, is_admin = $2, status_date = $4 WHERE email = $3", [req.body.is_enabled, req.body.is_admin, req.body.email, req.body.now]);
 });
 
 app.post("/changePassword", async (req, res) => {
   if (!req.body.value) res.send({ working: false });
   const encodedPass = bcrypt.hashSync(req.body.password, 10);
-  console.log("UPDATE users SET password = $2, password_date = $3 WHERE email = $1", [req.body.email, encodedPass, req.body.now]);
   pgClient.query("UPDATE users SET password = $2, password_date = $3 WHERE email = $1", [req.body.email, encodedPass, req.body.now]);
 });
 
@@ -192,87 +136,62 @@ app.get("/getLeaderboardInfo", async (req, res) => {
   if(testFlag == "rsq" || testFlag == "fscore" || testFlag == "recall"){
     const values = await pgClient.query("SELECT username, MAX(score) FROM users JOIN submissions ON users.user_id = submissions.user_id WHERE challenge_id = $1 AND is_public = true OR submissions.user_id = $2 AND challenge_id = $1 GROUP BY username ORDER BY MAX(score) ASC", [req.query.CID, req.query.UID])
     res.send(values.rows);
-    console.log(values.rows);
   }
   else if(testFlag == "MAE" || testFlag == "rmse_c" || testFlag == "mse_c"){
     const values = await pgClient.query("SELECT username, MIN(score) FROM users JOIN submissions ON users.user_id = submissions.user_id WHERE challenge_id = $1 AND is_public = true OR submissions.user_id = $2 AND challenge_id = $1 GROUP BY username ORDER BY MIN(score) ASC", [req.query.CID, req.query.UID])
     res.send(values.rows);
-    console.log(values.rows);
   }
 });
 
 app.get("/createChallengeEntry", async (req, res) => {
 
-  console.log("INSERT INTO challenges VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9)", [req.query.author, req.query.desc, req.query.pubStartDate, req.query.pubEndDate, req.query.priStartDate, req.query.priEndDate, req.query.algoType, req.query.challengeName, req.query.challengeTimeLimit]);
   await pgClient.query("INSERT INTO challenges VALUES(DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9)", [req.query.author, req.query.desc, req.query.pubStartDate, req.query.pubEndDate, req.query.priStartDate, req.query.priEndDate, req.query.algoType, req.query.challengeName, req.query.challengeTimeLimit]);
   
   // return 
   const values = await pgClient.query("SELECT challenge_id FROM challenges ORDER BY challenge_id DESC LIMIT 1")
   res.send(values.rows);
-  console.log(values.rows);
 });
 
 app.get("/getRemainingSubmissions", async (req, res) => {
-  console.log("SELECT COUNT(*) FROM submissions WHERE user_id = $1 AND challenge_id = $2", [req.query.user_id, req.query.challenge_id]);
-  console.log("SELECT max_submissions FROM challenges WHERE challenge_id = $1",[req.query.challenge_id]);
   // return 
   const numSubmissions = await pgClient.query("SELECT COUNT(*) num_submissions FROM submissions WHERE user_id = $1 AND challenge_id = $2", [req.query.user_id, req.query.challenge_id]);
   const maxSubmissions = await pgClient.query("SELECT max_submissions FROM challenges WHERE challenge_id = $1",[req.query.challenge_id]);
 
   const subCount = parseInt(numSubmissions.rows[0]['num_submissions']);
   const maxCount = parseInt(maxSubmissions.rows[0]['max_submissions']);
-  console.log('numSubmissions: ' + JSON.stringify(subCount));
-  console.log('maxSubmissions: ' + JSON.stringify(maxCount));
-  console.log('numSubmissionsT: ' + typeof(subCount));
-  console.log('maxSubmissionsT: ' + typeof(maxCount))
-  //var valid = subCount < maxCount;
   var submissionsLeft = maxCount - subCount;
-  console.log('sumbissionsLeft: ' + submissionsLeft);
   if (subCount < maxCount) {
     return res.json({status: 0, submissions_left: submissionsLeft})
   } else {
     return res.json({status: -1, user_sub: subCount, max_sub: maxCount})
   }
-  
-
-  //if (numSubmission)
-  //return res.json({status:0})
-  //res.send(values.rows);
-  //console.log(values.rows);
 });
 
 
 
 app.get("/getSubmissionID", async (req, res) => {
-
   const values = await pgClient.query("SELECT submission_id FROM submissions WHERE user_id = $1 ORDER BY submission_id DESC LIMIT 1", [req.query.UID])
   res.send(values.rows);
-  console.log(values.rows);
-
 });
 
 app.get("/getTestFlag", async (req, res) => {
   const values = await pgClient.query("SELECT testFlag FROM challenges WHERE challenge_id = $1", [req.query.CID]);
   res.send(values.rows);
-  console.log(values.rows);
 });
 
 app.get("/getDates", async (req, res) => {
   const values = await pgClient.query("SELECT public_end_date, private_end_date FROM challenges WHERE challenge_id = $1", [req.query.CID]);
   res.send(values.rows);
-  console.log(values.rows);
 });
 
 app.get("/getChallengeInfo", async (req, res) => {
   const values = await pgClient.query("SELECT author, description, challenge_name, public_start_date, public_end_date, private_start_date, private_end_date FROM challenges WHERE challenge_id = $1", [req.query.CID]);
   res.send(values.rows);
-  console.log(values.rows);
 });
 
 app.get("/challenges", async (req, res) => {
   const values = await pgClient.query("SELECT challenge_id, challenge_name FROM challenges ");
   res.send(values.rows);
-  console.log(values.rows);
 });
 
 app.get("/downloadSampleFile", async (req, res) => {
@@ -283,12 +202,10 @@ app.get("/downloadSampleFile", async (req, res) => {
 
 
 //getting files and reading
-
 app.post("/computeScore", (req, res) => {
   var testFlag = req.body.testFlag;
   var submission_id = req.body.submission_id;
   var CID = req.body.CID;
-  
 
   const csv = require('csv-parser')
   const fs = require('fs');
@@ -297,8 +214,8 @@ app.post("/computeScore", (req, res) => {
   var predicted = [];
   var actual = [];
 
-  //will most likely put into funciton and pass in a file name parameter to change temp.csv out with
-  //instal: npm install csv-parser
+  // Will most likely put into funciton and pass in a file name parameter to change temp.csv out with
+  // install: npm install csv-parser
   fs.createReadStream('./uploads/' + submission_id +'_upload.csv').pipe(csv())
     .on('data', (data) => {
       pResults.push(data);
@@ -315,9 +232,8 @@ app.post("/computeScore", (req, res) => {
 
   });
 
-  //getting key to compare to
+  // getting key to compare to
   var keyName = "./challenges/" + CID + "_key.csv"
-  console.log(keyName);
 
   setTimeout(() =>
   fs.createReadStream(keyName).pipe(csv())
@@ -347,7 +263,6 @@ app.post("/computeScore", (req, res) => {
         var score = alg.calculateMeanAbsoluteError(actual, predicted);
         var tempScore = score.toPrecision(2);
         pgClient.query("UPDATE submissions SET score = $1 WHERE submission_id = $2", [score, submission_id]);
-        console.log(score);
         break;
       }
       case "mse_c":{
@@ -359,7 +274,6 @@ app.post("/computeScore", (req, res) => {
       case "rsq":{
         var score = alg.rsq(actual, predicted);
         var tempScore = parseFloat(score.toPrecision(2));
-        console.log(tempScore);
         pgClient.query("UPDATE submissions SET score = $1 WHERE submission_id = $2", [tempScore, submission_id]);
         break;
       }
@@ -380,13 +294,6 @@ app.post("/computeScore", (req, res) => {
 
   }), 5000);
 });
-
-
-//running tests on files
-//write switch or if statements to check for testing flags
-//OR write a function that takes in the results 
-
-
 
 app.listen(5000, err => {
   console.log("Listening on port 5000");

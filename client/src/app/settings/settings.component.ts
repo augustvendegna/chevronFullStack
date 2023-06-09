@@ -31,7 +31,6 @@ export class SettingsComponent {
   public challengeName: string;
   public challengeTimeLimit: number;
 
-
   constructor(private valueService: ValueServiceService, private uploadService: UploadService){
     this.isChangingAccount = false;
     this.invalidUser = false;
@@ -39,7 +38,6 @@ export class SettingsComponent {
   }
 
   public changePassword(){
-
     if (this.passwordOne != this.passwordTwo){
       alert("passwords do not match!");
       return;
@@ -47,8 +45,7 @@ export class SettingsComponent {
     if (this.passwordOne.length >= 8) {
 	    console.log("minimum length achieved");
     } else {
-	    console.log("not minimum length");
-	    alert("password does not meet requirements");
+	    alert("password is not 8 characters");
       return;
     }
 
@@ -58,13 +55,12 @@ export class SettingsComponent {
 	    character = this.passwordOne.charAt(i);
       if (character.match(character.toUpperCase()) && isNaN(parseInt(character))) {
 			  console.log("character is uppercase");
-        console.log(character);
 			  break;
 		  } else {
         console.log("character is not uppercase");
       }
       if (i === this.passwordOne.length - 1) {
-        alert("password does not meet requirements");
+        alert("password does not have an uppercase letter");
         return;
       }
 	    i++;
@@ -76,14 +72,12 @@ export class SettingsComponent {
 	    character = this.passwordOne.charAt(i);
 	    if (!isNaN(parseInt(character))) {
 		    console.log("character is a number");
-        console.log(character);
-		    break;
-	
+		    break;	
 	    } else {
         console.log("character is not a number");
       }
       if (i === this.passwordOne.length - 1) {
-        alert("password does not meet requirements");
+        alert("password does not have a number");
         return;
       }
       i++;
@@ -112,30 +106,26 @@ export class SettingsComponent {
     var respString: string;
     this.valueService.getTargetUserInfo(this.targetEmail).subscribe((data: Object[]) => {
       this.response = data;
-    
+      var resp = JSON.stringify(this.response);
 
-    var resp = JSON.stringify(this.response);
+      resp = resp.replaceAll(":", ",");
+      resp = resp.replaceAll("}]", "");
+      var splitResp = resp.split(",");
+  
+      if (splitResp.length == 1){
+        this.invalidUser = true;
+        return;
+      } else { this.invalidUser = false }
 
-    resp = resp.replaceAll(":", ",");
-    resp = resp.replaceAll("}]", "");
-    var splitResp = resp.split(",");
-    console.log(splitResp);
-    //console.log(splitResp);
+      if (splitResp[21] == 'false'){
+        this.targetUserIsAdmin = false;
+      } else { this.targetUserIsAdmin = true; }
 
-    if (splitResp.length == 1){
-      this.invalidUser = true;
-      return;
-    } else {this.invalidUser = false}
+      if (splitResp[15] == 'false'){
+        this.targetUserIsEnabled = false;
+      } else { this.targetUserIsEnabled = true; }
 
-    if (splitResp[21] == 'false'){
-      this.targetUserIsAdmin = false;
-    }
-    else { this.targetUserIsAdmin = true; }
-    if (splitResp[15] == 'false'){
-      this.targetUserIsEnabled = false;
-    }
-    else { this.targetUserIsEnabled = true; }
-    this.isChangingAccount = true;
+      this.isChangingAccount = true;
     });
   }
 
@@ -152,17 +142,14 @@ export class SettingsComponent {
       });
       this.resetTargetUserPassword = false;
     }
-
     this.isChangingAccount = false;
   }
 
   public onKeyFileChange(event: any){
-    //console.log(event.target.files[0]);
     this.answerKey = event.target.files[0];
   }
 
   public onSampleFileChange(event: any){
-    //console.log(event.target.files[0]);
     this.sampleData = event.target.files[0];
   }
 
@@ -175,7 +162,6 @@ export class SettingsComponent {
       jsonResp.replaceAll('}', "");
       let splitResp = jsonResp.split(":");
       let CID = splitResp[1].replaceAll("}", "");
-      //console.log(CID);
       let newName = CID + "_key.csv";
       this.uploadService.uploadChallengeKey(this.answerKey, newName).subscribe( resp => {});
       let sampleName = CID + "_sample.csv"

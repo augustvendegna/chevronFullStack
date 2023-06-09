@@ -11,7 +11,6 @@
     box-sizing:border-box;
     color: white;
     font-size: 7px;
-    //box-shadow: 0px 1px 10px 1px #0066b2;
     border-radius: 30px;
     height: 35px;
     padding: 0px 16px;
@@ -28,7 +27,7 @@
   padding: 10px 10px;
 }
   
-  /* CSS */
+/* CSS */
 button {
   appearance: button;
   backface-visibility: hidden;
@@ -36,7 +35,6 @@ button {
   border-radius: 20px;
   border-width: 1;
   box-shadow: 0px 1px 6px 1px #0b2d71;
-  //box-sizing: border-box;
   color: #fff;
   cursor: pointer;
   font-family: Helvetica;
@@ -56,27 +54,27 @@ button {
   }
   
   .button:disabled {
-  cursor: default;
+    cursor: default;
   }
   
   .button:focus {
-  box-shadow: rgba(50, 50, 93, .1) 0 0 0 3px inset, rgba(50, 50, 93, .2) 0 6px 15px 0, rgba(0, 0, 0, .1) 0 2px 2px 0, rgba(50, 151, 211, .3) 0 0 0 4px;
+    box-shadow: rgba(50, 50, 93, .1) 0 0 0 3px inset, rgba(50, 50, 93, .2) 0 6px 15px 0, rgba(0, 0, 0, .1) 0 2px 2px 0, rgba(50, 151, 211, .3) 0 0 0 4px;
   }
   
   .input {
-  width: 80%;
-  max-width: 425px;
-  min-height: calc(0.2em + (0.2em * 2) + 0.2em);
-  
-  padding: 10px; 
-  font-size: 0.9em;
-  font-family: Helvetica; 
-  outline: none;
-  border: 1px solid #dddddd;
-  
-  border-radius: 4px;
-  background: #f9f9f9;
-  transition: background 0.25s, border-color 0.25s, color 0.25s;
+    width: 80%;
+    max-width: 425px;
+    min-height: calc(0.2em + (0.2em * 2) + 0.2em);
+    
+    padding: 10px; 
+    font-size: 0.9em;
+    font-family: Helvetica; 
+    outline: none;
+    border: 1px solid #dddddd;
+    
+    border-radius: 4px;
+    background: #f9f9f9;
+    transition: background 0.25s, border-color 0.25s, color 0.25s;
   }
 
   .two-col {

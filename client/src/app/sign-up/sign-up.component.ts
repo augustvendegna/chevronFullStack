@@ -26,39 +26,27 @@ export class SignUpComponent {
     this.validInfo = true;
   }
 
-
   public createAccount(){
-    console.log("user wants to create account");
-
     if (this.first == null || this.last == null || this.email == null || this.passwordOne == null || this.passwordTwo == null) {
       console.log("Empty fields found.")
       this.validInfo = false;
     }
-
-    
-    
-    
-    //console.log('dup email test: ' + this.validInfo);
     
     if (this.email.includes('@chevron.com') || this.email.includes('@tengizchevroil.com')){
       console.log("Email is valid");
-      
     }
     else{
       console.log("Email does not belong to a chevron domain or Email is a duplicate!");
       this.validInfo = false;
     }
     
-
     if (this.passwordOne === this.passwordTwo && this.passwordOne != null) {
       console.log("Provided passwords match!");
-      
     }
     else{
       console.log("Passwords do not match!");
       this.validInfo = false;
     }
-
 
     if (this.passwordOne.length >= 8) {
 	    console.log("minimum length achieved");
@@ -73,13 +61,11 @@ export class SignUpComponent {
 	    character = this.passwordOne.charAt(i);
       if (character.match(character.toUpperCase()) && isNaN(parseInt(character))) {
 			  console.log("character is uppercase");
-        console.log(character);
 			  break;
 		  } else {
         console.log("character is not uppercase");
       }
       if (i === this.passwordOne.length - 1) {
-        console.log("hello?");
         this.validInfo = false;
         break;
       }
@@ -92,33 +78,23 @@ export class SignUpComponent {
 	    character = this.passwordOne.charAt(i);
 	    if (!isNaN(parseInt(character))) {
 		    console.log("character is a number");
-        console.log(character);
 		    break;
 	
 	    } else {
         console.log("character is not a number");
       }
       if (i === this.passwordOne.length - 1) {
-        console.log("hello");
         this.validInfo = false;
         break;
       }
       i++;
     }
 
-    /*if (this.passwordOne.match('^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d@$!%*?&]{8,}$')) {
-	    console.log("Minimum password requirements are met!"); 
-    } else{
-	    console.log("At least one of the password requirements are not met!");
-	    this.validInfo = false;
-    }*/
-
-    console.log('NOPE');
     this.valueService.checkEmail(this.email).subscribe((data:Object[]) => {
       if (data['status'] == '0') {
-        console.log("Email is valid");
+        console.log("Email is not a duplicate");
       } else {
-        console.log('HEREREREREE');
+        console.log('Email is a duplicate');
         this.validInfo = false;
         //alert('Duplicate Email');
       }      

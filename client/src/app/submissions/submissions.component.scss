@@ -51,7 +51,7 @@ input::file-selector-button {
 	font-weight: bold;
 	color: #0b2d71;
 	padding: 0.5em;
-        border: thin solid grey;
+    border: thin solid grey;
 	border-radius: 3px;
 	transition: 1s;
 }
@@ -72,10 +72,7 @@ input[type="file"]::file-selector-button:hover {
 }
 
 .input {
-	
-    //width: 50%;
-    //max-width: 425px;
-    min-height: calc(0.2em + (0.2em * 2) + 0.2em);
+	min-height: calc(0.2em + (0.2em * 2) + 0.2em);
     
     padding: 30px; 
     font-size: 0.9em;

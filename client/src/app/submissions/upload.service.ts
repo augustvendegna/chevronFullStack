@@ -14,7 +14,6 @@ export class UploadService {
   
   addSubmission(selectedFile:File, SID:string){
     let formParams = new FormData();
-    //console.log(SID+"_upload.csv");
     formParams.append('file', selectedFile, SID+"_upload.csv")
     return this.httpClient.post(`${this.configUrl}/addSubmission`, formParams)
     .pipe(
@@ -32,11 +31,6 @@ export class UploadService {
   }
 
   createNewChallenge(description:string, authorName:string, pubStartDate:string, pubEndDate:string, priStartDate:string, priEndDate:string, algoType:string, challengeName:string, challengeTimeLimit:number){
-    // this.answerKey, this.challengeDescription, this.sampleData, this.authorName, this.pubStartDate, 
-    // this.pubEndDate, this.priStartDate, this.priEndDate, this.algoType
-
-    // add relevant information into the challenge table
-    
     let params = new HttpParams();
     params = params.append('desc', description);
     params = params.append('author', authorName);
@@ -81,7 +75,6 @@ export class UploadService {
   }
 
   computeScore(submission_id:number, testFlag:string) {
-    console.log("here");
     var CID = localStorage.getItem('CID')
     return this.httpClient.post(`${this.configUrl}/computeScore`, { submission_id , testFlag, CID})
     .pipe(
@@ -118,7 +111,7 @@ export class UploadService {
   }
 
   setChallengeID(CID: string){
-    //will work on later when we get the navbar choice working
+    // Will work on later when we get the navbar choice working
     //localStorage.setItem('current_challenge', CID);
   }
 
@@ -138,9 +131,6 @@ export class UploadService {
 
   
 }
-
-
-
 
 function padTo2Digits(num: number) {
   return num.toString().padStart(2, '0');

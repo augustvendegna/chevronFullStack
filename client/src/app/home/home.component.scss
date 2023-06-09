@@ -14,7 +14,6 @@ table {
     border-color: #ffffff;
     border-width: 2px;
     overflow: hidden;
-    //text-align: right;
 }
 
 th {
@@ -78,7 +77,6 @@ time {
 }
     
   .input {
-    //width: 50%;
     max-width: 425px;
     min-height: calc(0.2em + (0.2em * 2) + 0.2em);
     
@@ -95,8 +93,6 @@ time {
 
     .upload {
         font-family: Helvetica; 
-        //align-items: center;
-        //width: 50%;
         padding: 0px 10px; 
     }
   
@@ -106,9 +102,7 @@ time {
       justify-content: center;
     }
     .two-col .words,
-    .two-col .upload {
-        //width: 50%;
-    }
+    .two-col .upload {}
     
     .two-col .words{
       float:left;
