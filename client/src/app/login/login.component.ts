@@ -24,6 +24,8 @@ export class LoginComponent {
   public login() {
     
     if (/\s/.test(this.email)){
+      // a space exists, maybe someone is trying SQL injection?
+      // either way, make them try again
       alert("invalid email");
       return;
     }
@@ -56,15 +58,13 @@ export class LoginComponent {
         localStorage.setItem('UID', splitResp[1]);
         localStorage.setItem('current_challenge', '1');
         localStorage.setItem('email', this.email);
-        localStorage.setItem('password', this.password); // probably not needed? dont think we will need it again
-        this.router.navigate(['home']);
+        localStorage.setItem('password', this.password); // probably not needed? It's the hash, so just in case!
+        this.router.navigate(['home']); // authguard should let us do this now
       }
       else {
         alert("invalid username or password")
       }
 
     });
-    // maybe unsubscribe?
-    //this.writeCreds();
   }
 }

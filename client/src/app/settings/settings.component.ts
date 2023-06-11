@@ -136,7 +136,6 @@ export class SettingsComponent {
     });
     
     if (this.resetTargetUserPassword){
-      // THIS NEEDS TO BE CHANGED
       this.valueService.updatePassword(this.targetEmail, "Chevron!3")?.subscribe(_ => {
         //this.login();
       });
@@ -167,7 +166,7 @@ export class SettingsComponent {
       let sampleName = CID + "_sample.csv"
       this.uploadService.uploadSampleData(this.sampleData, sampleName).subscribe( resp => {});
 
-      alert("made in DB");
+      alert("challenge created in DB");
       location.reload();
     });
   }

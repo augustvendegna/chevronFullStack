@@ -40,6 +40,7 @@ export class AppComponent {
   }
   public setMenuPage(bool:boolean){
     this.isMenuPage = true;
+    // reset email and password, since that what the authguard uses to verify login status!
     localStorage.removeItem('email');
     localStorage.removeItem('password');
     localStorage.setItem('first_name', "YOU'RE NOT SIGNED IN!");
@@ -50,6 +51,7 @@ export class AppComponent {
   }
 
   public getChallenges(){
+    // dropdown to select challenge on the navbar
     this.valueService.getChallanges().subscribe((data: Object[]) => {
       let rawResp = JSON.stringify(data);
       rawResp = rawResp.replaceAll("{", "");
@@ -89,7 +91,7 @@ export class AppComponent {
       rawResp2 = rawResp2.replaceAll('public_end_date:', "public_end_date,");
       rawResp2 = rawResp2.replaceAll('private_start_date:', "private_start_date,");
       rawResp2 = rawResp2.replaceAll('private_end_date:', "private_end_date,");
-      rawResp2 = rawResp2.replaceAll("T", " ");
+      rawResp2 = rawResp2.replaceAll("T", " "); // weird formatting thing in timestamp/datetime
 
       let useable = rawResp.split(',')
       let useable2 = rawResp2.split(',')
@@ -106,7 +108,8 @@ export class AppComponent {
       localStorage.setItem("private_start_date", private_start_date);
       localStorage.setItem("private_end_date", private_end_date);
 
-      location.reload();
+      location.reload(); // reload page to force changes (since they are held in some component constuctors)
+      // would like a better way to do that, but it works...
     });
   }
 }

@@ -15,9 +15,10 @@ COPY runStack.sh /
 
 # IMPORTANT!
 # DO NOT AUTO-EXPOSE PORTS !!
+# Frontend
 EXPOSE 3000
-EXPOSE 3001
-# get rid of 5000 if not testing!!
+# EXPOSE 3001
+# Backend
 EXPOSE 5000 
 
 RUN mkdir /run/postgresql
@@ -39,19 +40,12 @@ WORKDIR /client
 RUN npm install -g @angular/cli
 RUN echo N | ng analytics off
 RUN ng build
-#RUN nohup ng serve 2>&1 >> /var/log/ng.log &
-# CMD ["ng","serve","--host", "0.0.0.0"]
 
 WORKDIR /server
 RUN npm remove bcrypt
 RUN npm install bcrypt
 RUN npm install bcryptjs
 RUN npm install --global lite-server
-#RUN node index.js
-
-# not sure if the following line is correct
-# RUN nohup node ./server/index.js
-# RUN cd ./client
 
 CMD /runStack.sh
 

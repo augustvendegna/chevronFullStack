@@ -25,6 +25,7 @@ export class HomeComponent {
       var temp : Object[] = data;
       var resp = JSON.stringify(temp);
       
+      //format json into something readable + universal
       resp = resp.replaceAll(":", ",");
       resp = resp.replaceAll("}", "");
       resp = resp.replaceAll("]", "");
@@ -50,9 +51,6 @@ export class HomeComponent {
         resp = resp.replaceAll("\"", "");
         this.splitResp = resp.split(",");
 
-        // problems:
-        // 1. the data arrays aren't stored properly and are undefined
-        // 2. missing data from query in the code, but is shown to be retrieved
         this.updateLeaderBoard();
       });
     });
@@ -60,6 +58,7 @@ export class HomeComponent {
   }
 
   public getItem(item:string){
+    // getter since you cannot access localstorage direct from HTML
     return localStorage.getItem(item);
   }
 

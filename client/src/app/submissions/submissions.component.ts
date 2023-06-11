@@ -129,6 +129,7 @@ export class SubmissionsComponent {
   }
 
   public downloadFile(){
+    // allows user to download the sample data for that challenge
     this.valueService.downloadSample().subscribe(results => {
       let blobUrl = URL.createObjectURL(results);
       const link = document.createElement("a");

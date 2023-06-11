@@ -31,6 +31,8 @@ export class UploadService {
   }
 
   createNewChallenge(description:string, authorName:string, pubStartDate:string, pubEndDate:string, priStartDate:string, priEndDate:string, algoType:string, challengeName:string, challengeTimeLimit:number){
+    // this just writes challenge info into the database
+    // for some reason, we cant handle all of challenge creation (file upload) in the same service function :(
     let params = new HttpParams();
     params = params.append('desc', description);
     params = params.append('author', authorName);
@@ -110,10 +112,6 @@ export class UploadService {
     );
   }
 
-  setChallengeID(CID: string){
-    // Will work on later when we get the navbar choice working
-    //localStorage.setItem('current_challenge', CID);
-  }
 
   private handleError(error: HttpErrorResponse) {
     if (error.status === 0) {
@@ -132,6 +130,8 @@ export class UploadService {
   
 }
 
+
+// for formatting dates
 function padTo2Digits(num: number) {
   return num.toString().padStart(2, '0');
 }
