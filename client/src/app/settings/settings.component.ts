@@ -156,6 +156,7 @@ export class SettingsComponent {
     // needs answer key, description, sample dataset, author name, public phase start/end dates, private start + end, 
     // and test algorihtm
     this.challengeDescription = this.challengeDescription.replaceAll(", ", "  ");
+    this.challengeDescription = this.challengeDescription.replaceAll("\n", " ");
     this.uploadService.createNewChallenge(this.challengeDescription, this.authorName, this.pubStartDate, this.pubEndDate, this.priStartDate, this.priEndDate, this.algoType, this.challengeName, this.challengeTimeLimit).subscribe((data: Object[]) => {
       let jsonResp = JSON.stringify(data[0]);
       jsonResp.replaceAll('}', "");
